@@ -1,0 +1,1 @@
+{"root":["./webpack.config.js","./webpack.development.js","./webpack.distribution.js","./src/main.ts","./src/config/config.ts","./src/config/gameOptions.ts","./src/scenes/playGame.ts","./src/scenes/preloadAssets.ts"],"version":"5.7.3"}
