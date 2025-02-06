@@ -6,7 +6,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 module.exports = {
   entry: './src/main.ts', 
   output: {
-    filename: 'bundle.js',
+    filename: './docs/bundle.js',
     path: path.resolve(__dirname, 'docs'), // Pasta onde o arquivo será salvo
     publicPath: '/arretadov1.0.02/', // Ajuste para o caminho correto no GitHub Pages
   },
