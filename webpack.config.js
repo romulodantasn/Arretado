@@ -4,7 +4,7 @@ module.exports = {
   entry: './src/main.ts', // Arquivo principal do seu projeto
   output: {
     filename: 'bundle.js', // Arquivo de saída
-    path: path.resolve(__dirname, 'dist'), // Pasta onde o arquivo será salvo
+    path: path.resolve(__dirname, 'src'), // Pasta onde o arquivo será salvo
   },
   resolve: {
     extensions: ['.ts', '.js'], // Extensões que o Webpack irá resolver

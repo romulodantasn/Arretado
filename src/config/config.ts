@@ -3,6 +3,7 @@
 import { GameOptions } from './gameOptions';
 import { PreloadAssets } from '../scenes/preloadAssets';
 import { PlayGame } from '../scenes/playGame';
+import { pauseScene } from '../scenes/pauseScene';
 
 export const scaleObject: Phaser.Types.Core.ScaleConfig = {
     mode        : Phaser.Scale.FIT,                     
@@ -18,7 +19,8 @@ export const configObject: Phaser.Types.Core.GameConfig = {
     scale: scaleObject,
     scene: [
         PreloadAssets,
-        PlayGame
+        PlayGame,
+        pauseScene
     ],
     physics: {
         default: 'arcade'
