@@ -8,7 +8,7 @@ module.exports = {
   output: {
     filename: 'bundle.js', // Arquivo de saída
     path: path.resolve(__dirname, 'docs'), // Pasta onde o arquivo será salvo
-    publicPath: '/', // Ajuste para o caminho correto no GitHub Pages
+    publicPath: '/arretadov1.0.02/', // Ajuste para o caminho correto no GitHub Pages
   },
   resolve: {
     extensions: ['.ts', '.js'], // Extensões que o Webpack irá resolver
