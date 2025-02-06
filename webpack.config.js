@@ -1,12 +1,12 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin'); // Importando corretamente o CleanWebpackPlugin
+const { CleanWebpackPlugin } = require('clean-webpack-plugin'); 
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  entry: './src/main.ts', // Arquivo principal do seu projeto
+  entry: './src/main.ts', 
   output: {
-    filename: 'bundle.js', // Arquivo de saída
+    filename: 'bundle.js',
     path: path.resolve(__dirname, 'docs'), // Pasta onde o arquivo será salvo
     publicPath: '/arretadov1.0.02/', // Ajuste para o caminho correto no GitHub Pages
   },
@@ -30,11 +30,11 @@ module.exports = {
     ],
   },
   plugins: [
-    new CleanWebpackPlugin(), // Adiciona o CleanWebpackPlugin para limpar a pasta docs antes de cada build
-    // Configuração do HtmlWebpackPlugin
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: 'src/index.html', // Caminho para o seu arquivo HTML de origem
       filename: 'index.html', // Nome do arquivo de saída na pasta docs
+      publicPath: '/arretadov1.0.02'
     }),
     new CopyPlugin({
       patterns: [
