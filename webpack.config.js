@@ -4,12 +4,12 @@ module.exports = {
   entry: './src/main.ts', // Arquivo principal do seu projeto
   output: {
     filename: 'bundle.js', // Arquivo de saída
-    path: path.resolve(__dirname, 'src'), // Pasta onde o arquivo será salvo
+    path: path.resolve(__dirname, 'docs'), // Pasta onde o arquivo será salvo
   },
   resolve: {
     extensions: ['.ts', '.js'], // Extensões que o Webpack irá resolver
   },
-  odule: {
+  module: {
     rules: [
       {
         test: /\.(png|jpg|jpeg|gif)$/i,
@@ -19,7 +19,7 @@ module.exports = {
         }
       },
       {
-        test: /\.ts$/,
+        test: /\.ts$/,  
         use: 'ts-loader',
         exclude: /node_modules/,
       },
