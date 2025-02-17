@@ -15,7 +15,6 @@ export const scaleObject: Phaser.Types.Core.ScaleConfig = {
 
 export const configObject: Phaser.Types.Core.GameConfig = {
     type: Phaser.WEBGL,
-    backgroundColor: GameOptions.gameBackgroundColor,
     scale: scaleObject,
     scene: [
         PreloadAssets,

@@ -17,6 +17,11 @@ export class PlayGame extends Phaser.Scene {
 
     // Métodos principais
     create(): void {
+        
+        console.log("PlayGame carregado!");
+
+        // Adicionando o background
+        this.add.image(0, 0, 'gameBackgroundLimbo').setOrigin(0, 0).setDisplaySize(GameOptions.gameSize.width, GameOptions.gameSize.height);
         // Configuração do cronômetro
         this.initializeTimer();
 
@@ -30,6 +35,7 @@ export class PlayGame extends Phaser.Scene {
 
         // Configuração de colisões
         this.setupCollisions();
+        
     }
 
     update(): void {
@@ -133,10 +139,10 @@ export class PlayGame extends Phaser.Scene {
         const keyboard = this.input.keyboard as Phaser.Input.Keyboard.KeyboardPlugin;
 
         this.controlKeys = keyboard.addKeys({
-            up: Phaser.Input.Keyboard.KeyCodes.W, UP,
-            left: Phaser.Input.Keyboard.KeyCodes.A, LEFT,
-            down: Phaser.Input.Keyboard.KeyCodes.S, DOWN,
-            right: Phaser.Input.Keyboard.KeyCodes.D, RIGHT,
+            up: Phaser.Input.Keyboard.KeyCodes.W,
+            left: Phaser.Input.Keyboard.KeyCodes.A,
+            down: Phaser.Input.Keyboard.KeyCodes.S,
+            right: Phaser.Input.Keyboard.KeyCodes.D,
             pause: Phaser.Input.Keyboard.KeyCodes.ESC,
         });
     }
