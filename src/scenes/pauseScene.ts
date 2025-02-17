@@ -8,14 +8,14 @@ export class pauseScene extends Phaser.Scene {
     }
 
     create () : void {
-        this.add.text(400, 300, "Pausado", {
+        this.add.text(960, 510, "Pausado", {
             fontSize: '32px',
-            color: '#ffffff',
+            color: '#fff',
         }).setOrigin(0.5);
 
-        this.add.text(400, 350, "Pressione Esc para voltar ao jogo", {
+        this.add.text(960, 550, "Pressione Esc para voltar ao jogo", {
             fontSize: '16px',
-            color: '#ffffff',
+            color: '#fff',
         }).setOrigin(0.5);
 
         const keyboard = this.input.keyboard as Phaser.Input.Keyboard.KeyboardPlugin;

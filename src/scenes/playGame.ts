@@ -7,6 +7,10 @@ export class PlayGame extends Phaser.Scene {
     // Atributos
     private timeLeft: number = 45;
     private timerText: Phaser.GameObjects.Text;
+    private waveCount: number = 1;
+    private waveText: Phaser.GameObjects.Text;
+    private actCount: number = 1;
+    private actText: Phaser.GameObjects.Text;
     controlKeys: any; // teclas pra mover o player
     player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody; // player
     enemyGroup: Phaser.Physics.Arcade.Group; // grupo com todos os inimigos
@@ -24,6 +28,7 @@ export class PlayGame extends Phaser.Scene {
         this.add.image(0, 0, 'gameBackgroundLimbo').setOrigin(0, 0).setDisplaySize(GameOptions.gameSize.width, GameOptions.gameSize.height);
         // Configuração do cronômetro
         this.initializeTimer();
+        this.phaseCount();
 
         // Adicionando player, grupo de inimigos e balas
         this.initializePlayer();
@@ -47,7 +52,7 @@ export class PlayGame extends Phaser.Scene {
     // Métodos auxiliares
     private initializeTimer(): void {
         this.timeLeft = 45;
-        this.timerText = this.add.text(16, 16, `Tempo: ${this.timeLeft}`, {
+        this.timerText = this.add.text(920, 16, `00:${this.timeLeft}`, {
             fontSize: '24px',
             color: '#fff',
         });
@@ -59,6 +64,20 @@ export class PlayGame extends Phaser.Scene {
             loop: true,
         });
     }
+
+    private phaseCount() : void {
+        this.waveCount = 1;
+        this.waveText = this.add.text(1740, 48, `Onda:${this.waveCount}`, {
+            fontSize: '36px',
+            color: '#fff',
+        });
+        this.actCount = 1;
+        this.actText = this.add.text(1744,8, `Ato:${this.actCount}`, {
+            fontSize: '36px',
+            color: '#fff',
+        })
+    }
+
 
     private initializePlayer(): void {
         this.player = this.physics.add.sprite(
@@ -209,7 +228,7 @@ export class PlayGame extends Phaser.Scene {
     private updateTimer(): void {
         if (this.timeLeft > 0) {
             this.timeLeft--;
-            this.timerText.setText(`Tempo: ${this.timeLeft}`);
+            this.timerText.setText(`00:${this.timeLeft}`);
         }
 
         if (this.timeLeft <= 0) {
