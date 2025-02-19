@@ -8,7 +8,7 @@ export const GameOptions = {
   },
     gameBackground: 'gameBackgroundLimbo',
     type: Phaser.AUTO,
-    playerSpeed: 100, // velocidade do jogador em pixels por segundo
+    playerSpeed: 300, // velocidade do jogador em pixels por segundo
     enemySpeed: 50, // velocidade do inimigo, em pixels por segundo
     bulletSpeed: 100, // velocidade da bala, em pixels por segundo
     bulletRate: 1000, // rate da bala, balas por milisegundos
