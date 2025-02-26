@@ -11,11 +11,12 @@ export class PlayGame extends Phaser.Scene {
   waveText: Phaser.GameObjects.Text;
   actCount: number = 1;
   actText: Phaser.GameObjects.Text;
+  coinGame: number;
+  coinText: Phaser.GameObjects.Text;
   controlKeys: any; 
   player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
   enemyGroup: Phaser.Physics.Arcade.Group;
   enemySprite : Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
-  
 
   constructor() {
     super({ key: "PlayGame" });
@@ -33,12 +34,15 @@ export class PlayGame extends Phaser.Scene {
     this.phaseCount();
     this.initializeBullets();
     this.initializeControls();
+    this.coinCount();
+    
    
     
-    this.add
-      .image(0, 0, "gameBackgroundLimbo")
-      .setOrigin(0, 0)
-      .setDisplaySize(GameOptions.gameSize.width, GameOptions.gameSize.height);
+    this.add.image(0, 0, "gameBackgroundLimbo").setOrigin(0, 0).setDisplaySize(GameOptions.gameSize.width, GameOptions.gameSize.height);
+    this.add.image(80, 40, "health-bar").setDisplaySize(120,120);
+    this.add.image(60, 130, "gun").setDisplaySize(90,90);
+    this.add.image(1770, 130, "coin").setDisplaySize(60,60);
+    
 
     this.anims.create({
       key: "run",
@@ -61,9 +65,7 @@ export class PlayGame extends Phaser.Scene {
     this.handlePlayerMovement();
     this.updateEnemyMovement();
   }
-
   
-  // Métodos auxiliares
   private initializeTimer(): void {
     this.timeLeft = 45;
     this.timerText = this.add.text(920, 16, `00:${this.timeLeft}`, {
@@ -78,7 +80,6 @@ export class PlayGame extends Phaser.Scene {
       loop: true,
     });
   }
-
   private phaseCount(): void {
     this.waveCount = 1;
     this.waveText = this.add.text(1740, 48, `Onda:${this.waveCount}`, {
@@ -91,6 +92,14 @@ export class PlayGame extends Phaser.Scene {
       color: "#fff",
     })
     .setDepth(10);
+  }
+  
+  private coinCount() : void {
+    this.coinGame = 10;
+    this.waveText = this.add.text(1820, 110, `${this.coinGame}`, {
+      fontSize: "36px",
+      color: "#fff",
+    }).setDepth(10);
   }
 
   private initializePlayer(): void {

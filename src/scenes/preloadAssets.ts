@@ -25,6 +25,9 @@ export class PreloadAssets extends Phaser.Scene {
       frameHeight: 40,
     });
     this.load.image("bullet", "assets/sprites/bullet.png");
+    this.load.image("coin", "assets/sprites/coin.png");
+    this.load.image("health-bar", "assets/sprites/health-bar.png");
+    this.load.image("gun", "assets/sprites/gun.png");
   }
 
   create() {
