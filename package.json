@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "webpack serve --open --config webpack.development.js",
     "distribution": "webpack --config webpack.distribution.js",
-    "build": "webpack"
+    "build": "webpack",
+    "commit": "cz"
   },
   "keywords": [],
   "author": "",
