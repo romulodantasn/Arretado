@@ -12,7 +12,11 @@ export class PreloadAssets extends Phaser.Scene {
   }
 
   preload() {
-    this.load.spritesheet("player", "assets/sprites/playerBrotatoRun.png", {
+    this.load.spritesheet("playerWalk", "assets/sprites/playerBrotatoWalk.png", {
+      frameWidth: 40,
+      frameHeight: 40,
+    });
+    this.load.spritesheet("playerRun", "assets/sprites/playerBrotatoRun.png", {
       frameWidth: 40,
       frameHeight: 40,
     });

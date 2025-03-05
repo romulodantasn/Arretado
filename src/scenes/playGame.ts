@@ -36,6 +36,7 @@ export class PlayGame extends Phaser.Scene {
     this.initializeControls();
     this.coinCount();
     
+    
    
     
     this.add.image(0, 0, "gameBackgroundLimbo").setOrigin(0, 0).setDisplaySize(GameOptions.gameSize.width, GameOptions.gameSize.height);
@@ -45,12 +46,21 @@ export class PlayGame extends Phaser.Scene {
     
 
     this.anims.create({
-      key: "run",
-      frames: this.anims.generateFrameNumbers("player", { start: 0, end: 6 }),
+      key: "playerWalk",
+      frames: this.anims.generateFrameNumbers("playerWalk", { start: 0, end: 4}),
       frameRate: 16,
       repeat: -1,
     });
-    this.player.play("run", true);
+    this.player.play("playerWalk", true);
+    
+    this.anims.create({
+      key: "playerRun",
+      frames: this.anims.generateFrameNumbers("playerRun", { start: 0, end: 6}),
+      frameRate: 16,
+      repeat: -1,
+    });
+    this.player.play("playerRun", true);
+    
     
     this.anims.create({
       key: "enemy",
@@ -64,6 +74,7 @@ export class PlayGame extends Phaser.Scene {
     this.handlePause();
     this.handlePlayerMovement();
     this.updateEnemyMovement();
+    this.animationPlayerControl();
   }
   
   private initializeTimer(): void {
@@ -205,9 +216,6 @@ export class PlayGame extends Phaser.Scene {
     });
   }
 
-  
-  
-
   private handlePause(): void {
     if (
       Phaser.Input.Keyboard.JustDown(
@@ -240,20 +248,25 @@ export class PlayGame extends Phaser.Scene {
     });
   }
 
-  private handlePlayerMovement(): void {
+  private handlePlayerMovement() {
     let movementDirection = new Phaser.Math.Vector2(0, 0);
+    let isMoving = false;
 
     if (this.controlKeys.right.isDown) {
       movementDirection.x++;
+       isMoving = true;
     }
     if (this.controlKeys.left.isDown) {
       movementDirection.x--;
+       isMoving = true;
     }
     if (this.controlKeys.up.isDown) {
       movementDirection.y--;
+       isMoving = true;
     }
     if (this.controlKeys.down.isDown) {
       movementDirection.y++;
+       isMoving = true;
     }
 
     this.player.setVelocity(0, 0);
@@ -269,6 +282,19 @@ export class PlayGame extends Phaser.Scene {
         (movementDirection.y * GameOptions.playerSpeed) / Math.sqrt(2)
       );
     }
+    return isMoving;
+  }
+
+  private animationPlayerControl() {
+    if (this.handlePlayerMovement()) {
+      if (this.player.anims.currentAnim?.key !== "playerRun") {
+        this.player.play("playerRun", true);
+      }
+    } else {
+      if (this.player.anims.currentAnim?.key !== "playerWalk") {
+        this.player.play("playerWalk", true);
+      }
+    }    
   }
 
   private updateEnemyMovement(): void {
