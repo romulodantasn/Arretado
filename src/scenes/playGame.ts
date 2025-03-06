@@ -47,7 +47,7 @@ export class PlayGame extends Phaser.Scene {
 
     this.anims.create({
       key: "playerWalk",
-      frames: this.anims.generateFrameNumbers("playerWalk", { start: 0, end: 4}),
+      frames: this.anims.generateFrameNumbers("playerWalk", { start: 0, end: 3}),
       frameRate: 16,
       repeat: -1,
     });
@@ -77,7 +77,7 @@ export class PlayGame extends Phaser.Scene {
     this.animationPlayerControl();
   }
   
-  private initializeTimer(): void {
+  private initializeTimer() {
     this.timeLeft = 45;
     this.timerText = this.add.text(920, 16, `00:${this.timeLeft}`, {
       fontSize: "24px",
@@ -91,7 +91,7 @@ export class PlayGame extends Phaser.Scene {
       loop: true,
     });
   }
-  private phaseCount(): void {
+  private phaseCount() {
     this.waveCount = 1;
     this.waveText = this.add.text(1740, 48, `Onda:${this.waveCount}`, {
       fontSize: "36px",
@@ -105,7 +105,7 @@ export class PlayGame extends Phaser.Scene {
     .setDepth(10);
   }
   
-  private coinCount() : void {
+  private coinCount() {
     this.coinGame = 10;
     this.waveText = this.add.text(1820, 110, `${this.coinGame}`, {
       fontSize: "36px",
@@ -113,7 +113,7 @@ export class PlayGame extends Phaser.Scene {
     }).setDepth(10);
   }
 
-  private initializePlayer(): void {
+  private initializePlayer() {
     console.log("Player inicializado!");
     this.player = this.physics.add.sprite(
       GameOptions.gameSize.width / 2,
@@ -125,7 +125,7 @@ export class PlayGame extends Phaser.Scene {
     .setDepth(10);
   }
 
-  private initializeEnemyGroup(): void {
+  private initializeEnemyGroup() {
     this.enemyGroup = this.physics.add.group();
     
 
@@ -162,7 +162,7 @@ export class PlayGame extends Phaser.Scene {
     });
   }
 
-  private initializeBullets(): void {
+  private initializeBullets() {
     const bulletGroup: Phaser.Physics.Arcade.Group = this.physics.add.group();
 
     this.time.addEvent({
@@ -208,7 +208,7 @@ export class PlayGame extends Phaser.Scene {
     );
   }
   
-  private setupCollisions(): void {
+  private setupCollisions() {
     this.physics.add.collider(this.player, this.enemyGroup,() => {
       console.log("Eita macho tu perdesse. Reiniciando.");
       this.resetGameSettings();
@@ -216,7 +216,7 @@ export class PlayGame extends Phaser.Scene {
     });
   }
 
-  private handlePause(): void {
+  private handlePause() {
     if (
       Phaser.Input.Keyboard.JustDown(
         this.controlKeys.pause as Phaser.Input.Keyboard.Key
@@ -235,7 +235,7 @@ export class PlayGame extends Phaser.Scene {
   }
 
 
-  private initializeControls(): void {
+  private initializeControls() {
     const keyboard = this.input
       .keyboard as Phaser.Input.Keyboard.KeyboardPlugin;
 
@@ -297,13 +297,13 @@ export class PlayGame extends Phaser.Scene {
     }    
   }
 
-  private updateEnemyMovement(): void {
+  private updateEnemyMovement() {
     this.enemyGroup.getMatching("visible", true).forEach((enemy: any) => {
       this.physics.moveToObject(enemy, this.player, GameOptions.enemySpeed);
     });
   }
 
-  private updateTimer(): void {
+  private updateTimer() {
     if (this.timeLeft > 0) {
       this.timeLeft--;
       this.timerText.setText(`00:${this.timeLeft}`);
@@ -314,7 +314,7 @@ export class PlayGame extends Phaser.Scene {
     }
   }
 
-  private advanceToNextPhase(): void {
+  private advanceToNextPhase() {
     console.log("Eita caba danado! Sobreviveu! Avançando para a próxima fase");
     this.timeLeft = 45;
     GameOptions.enemyRate -= 500;
