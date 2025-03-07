@@ -1,4 +1,3 @@
-import { PlayGame } from "./playGame";
 
 export class pauseScene extends Phaser.Scene {
     constructor () {
