@@ -1,6 +1,6 @@
 import { GameOptions } from './gameOptions';
-import { PreloadAssets } from '../scenes/preloadAssets';
-import { PlayGame } from '../scenes/playGame';
+import { PreloadAssets } from '../assets/preloadAssets';
+import { PlayGame } from '../scenes/gameScene';
 import { pauseScene } from '../scenes/pauseScene';
 
 export const scaleObject: Phaser.Types.Core.ScaleConfig = {
