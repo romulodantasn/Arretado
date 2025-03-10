@@ -1,35 +1,21 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import Phaser from 'phaser';
+import { Player } from '../objects/player/player';
+import { gameOptions } from '../config/gameOptions';
+import { controls } from '../components/input/controls';
 
-import { GameOptions } from '../config/gameOptions';
-
-export class PlayGame extends Phaser.Scene {
-  timeLeft: number = 45;
-  timerText: Phaser.GameObjects.Text;
-  waveCount: number = 1;
-  waveText: Phaser.GameObjects.Text;
-  actCount: number = 1;
-  actText: Phaser.GameObjects.Text;
-  coinGame: number;
-  coinText: Phaser.GameObjects.Text;
-  controlKeys: any;
-  player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
-  enemyGroup: Phaser.Physics.Arcade.Group;
-  enemySprite: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+export class gameScene extends Phaser.Scene {
+  private player: Player;
+  private controlKeys: { [key: string]: Phaser.Input.Keyboard.Key };
 
   constructor() {
-    super({ key: 'PlayGame' });
+    super({ key: 'gameScene' });
   }
 
-  create(): void {
-    this.initializePlayer();
-    this.initializeEnemyGroup();
-    this.setupCollisions();
-    this.initializeTimer();
-    this.phaseCount();
-    this.initializeBullets();
-    this.initializeControls();
-    this.coinCount();
+  preload() {
+    this.load.pack('asset_pack', 'assets/data/assets.json');
   }
 
-  update(): void {}
+  create() {}
+
+  update() {}
 }

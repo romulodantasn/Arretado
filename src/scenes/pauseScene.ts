@@ -1,4 +1,5 @@
 export class pauseScene extends Phaser.Scene {
+  controlKeys: any;
   constructor() {
     super({
       key: 'pauseScene',
@@ -29,7 +30,12 @@ export class pauseScene extends Phaser.Scene {
       this.scene.resume('PlayGame');
     });
   }
-  private handlePause() {
+
+  update() {
+    this.handlePause();
+  }
+
+  public handlePause() {
     if (Phaser.Input.Keyboard.JustDown(this.controlKeys.pause as Phaser.Input.Keyboard.Key)) {
       if (this.scene.isPaused('PlayGame')) {
         console.log('Jogo retomado');

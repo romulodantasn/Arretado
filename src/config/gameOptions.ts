@@ -1,7 +1,4 @@
-// Opções de configuração
-import { PreloadAssets } from '../assets/preloadAssets';
-
-export const GameOptions = {
+export const gameOptions = {
   gameSize: {
     width: 1920,
     height: 1080,
