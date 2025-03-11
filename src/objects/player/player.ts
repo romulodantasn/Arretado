@@ -32,7 +32,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.playerAnimation();
   }
 
-  private playerMovement() {
+  public playerMovement() {
     let movementDirection = new Phaser.Math.Vector2(0, 0);
     let isMoving = false;
 
@@ -66,7 +66,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     return isMoving;
   }
 
-  private playerAnimation() {
+  public playerAnimation() {
     if (this.playerMovement()) {
       if (this.anims.currentAnim?.key !== 'playerRun') {
         this.play('playerRun', true);

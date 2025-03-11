@@ -15,7 +15,7 @@ export const scaleObject: Phaser.Types.Core.ScaleConfig = {
 export const configObject: Phaser.Types.Core.GameConfig = {
   type: Phaser.WEBGL,
   scale: scaleObject,
-  scene: [bootScene, preloadAssets, gameScene, pauseScene],
+  scene: [bootScene, preloadAssets, gameScene],
   physics: {
     default: 'arcade',
     arcade: {

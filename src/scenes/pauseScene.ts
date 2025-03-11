@@ -1,5 +1,6 @@
+import Phaser from 'phaser';
+
 export class pauseScene extends Phaser.Scene {
-  controlKeys: any;
   constructor() {
     super({
       key: 'pauseScene',
@@ -27,25 +28,7 @@ export class pauseScene extends Phaser.Scene {
     escKey.on('down', () => {
       console.log('Jogo Reiniciado');
       this.scene.stop('pauseScene');
-      this.scene.resume('PlayGame');
+      this.scene.resume('gameScene');
     });
-  }
-
-  update() {
-    this.handlePause();
-  }
-
-  public handlePause() {
-    if (Phaser.Input.Keyboard.JustDown(this.controlKeys.pause as Phaser.Input.Keyboard.Key)) {
-      if (this.scene.isPaused('PlayGame')) {
-        console.log('Jogo retomado');
-        this.scene.resume('PlayGame');
-        this.scene.stop('pauseScene');
-      } else {
-        console.log('Jogo Pausado');
-        this.scene.pause('PlayGame');
-        this.scene.launch('pauseScene');
-      }
-    }
   }
 }
