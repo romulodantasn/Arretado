@@ -1,41 +1,34 @@
 import Phaser from 'phaser';
-import { gameOptions } from '../../config/gameOptions';
+import { nextPhase } from '../events/nextPhase';
 
-export class timer extends Phaser.Scene {
-  timeLeft: number;
-  timerText: Phaser.GameObjects.Text;
-  nextPhaseText: Phaser.GameObjects.Text;
+export class timer {
+  private scene: Phaser.Scene;
+  private timerEvent: Phaser.Time.TimerEvent;
+  private timeLeft: number;
+  private timerText: Phaser.GameObjects.Text;
+  private nextPhaseInstance: nextPhase;
 
-  create() {
-    this.timer();
-    this.updateTimer();
-    this.nextPhase();
-  }
-  public nextPhase() {
-    console.log('Eita caba danado! Sobreviveu! Avançando para a próxima fase');
-    this.nextPhaseText = this.add
-      .text(1744, 8, `Eita caba danado! Sobreviveu! Avançando para a próxima fase:${this.nextPhaseText}`, {
-        fontSize: '36px',
-        color: '#fff',
-      })
-      .setDepth(10);
-    this.timeLeft = 45;
-    gameOptions.enemyRate -= 500;
-    this.scene.restart();
+  constructor(scene: Phaser.Scene) {
+    this.scene = scene;
+    this.nextPhaseInstance = new nextPhase(this.scene);
   }
 
-  public timer() {
+  public create() {
+    this.initializeTimer();
+  }
+
+  public initializeTimer() {
     this.timeLeft = 45;
-    this.timerText = this.add
+    this.timerText = this.scene.add
       .text(920, 16, `00:${this.timeLeft}`, {
         fontSize: '24px',
         color: '#fff',
       })
       .setDepth(10);
 
-    this.time.addEvent({
-      delay: 1000, // milissegundos
-      callback: this.nextPhase,
+    this.timerEvent = this.scene.time.addEvent({
+      delay: 1000, // milliseconds
+      callback: this.updateTimer,
       callbackScope: this,
       loop: true,
     });
@@ -46,9 +39,20 @@ export class timer extends Phaser.Scene {
       this.timeLeft--;
       this.timerText.setText(`00:${this.timeLeft}`);
     }
-
     if (this.timeLeft <= 0) {
-      this.nextPhase();
+      this.nextPhaseInstance.nextPhase();
+    }
+  }
+
+  public pauseTimer() {
+    if (this.timerEvent) {
+      this.timerEvent.paused = true;
+    }
+  }
+
+  public resumeTimer() {
+    if (this.timerEvent) {
+      this.timerEvent.paused = false;
     }
   }
 }

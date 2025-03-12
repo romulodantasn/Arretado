@@ -1,11 +1,11 @@
 import Phaser from 'phaser';
-import { Player } from '../objects/player/player';
 import { gameOptions } from '../config/gameOptions';
 import { inputManager } from '../components/input/inputManager';
-import { timer } from '../components/timer/timer';
+import { gameHud } from '../objects/ui/gameHud';
+import { pauseScene } from './pauseScene';
+
 export class gameScene extends Phaser.Scene {
-  private player: Player;
-  private gameTimer: timer;
+  public keys: any;
 
   constructor() {
     super({ key: 'gameScene' });
@@ -17,29 +17,37 @@ export class gameScene extends Phaser.Scene {
 
   create() {
     console.log('gameScene carregado');
-    inputManager.setupControls(this);
     this.add
       .image(0, 0, 'gameBackgroundLimbo')
       .setOrigin(0, 0)
       .setDisplaySize(gameOptions.gameSize.width, gameOptions.gameSize.height);
     this.add.image(80, 40, 'health-bar').setDisplaySize(120, 120);
-    this.add.image(60, 130, 'gun').setDisplaySize(90, 90);
-    this.add.image(1770, 130, 'coin').setDisplaySize(60, 60);
     this.scene.launch('gameHud');
-    this.setupPauseKey();
-    this.gameTimer = new timer(this);
-    this.gameTimer.create();
+    inputManager.setupControls(this);
+    this.keys = inputManager.getKeys();
   }
 
-  update() {}
+  update() {
+    this.handlePause();
+  }
 
-  // Gerenciando Botão de Pausa
-  private setupPauseKey() {
-    const keys = inputManager.getKeys();
-    keys.pause.on('down', () => {
-      console.log('Jogo Pausado');
-      this.scene.pause('gameScene');
-      this.scene.launch('pauseScene');
-    });
+  private handlePause() {
+    if (Phaser.Input.Keyboard.JustDown(this.keys.pause)) {
+      if (this.scene.isPaused('gameScene')) {
+        console.log('Jogo retomado');
+        this.scene.resume('gameScene');
+        if (this.scene.isPaused('gameHud')) {
+          this.scene.resume('gameHud');
+        }
+        this.scene.stop('pauseScene');
+      } else {
+        console.log('Jogo Pausado');
+        this.scene.pause('gameScene');
+        if (this.scene.isActive('gameHud')) {
+          this.scene.pause('gameHud');
+        }
+        this.scene.launch('pauseScene');
+      }
+    }
   }
 }
