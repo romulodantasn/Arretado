@@ -9,5 +9,4 @@ import { nextPhaseScene } from './scenes/nextPhaseScene';
 
 configObject.scene = [bootScene, preloadAssets, gameScene, gameHud, pauseScene, nextPhaseScene];
 
-// Inicializando o jogo
 new Phaser.Game(configObject);
