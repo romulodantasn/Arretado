@@ -1,24 +1,21 @@
 import Phaser from 'phaser';
-import { nextPhase } from '../events/nextPhase';
 
 export class timer {
   private scene: Phaser.Scene;
   private timerEvent: Phaser.Time.TimerEvent;
   private timeLeft: number;
   private timerText: Phaser.GameObjects.Text;
-  private nextPhaseInstance: nextPhase;
 
   constructor(scene: Phaser.Scene) {
     this.scene = scene;
-    this.nextPhaseInstance = new nextPhase(this.scene);
   }
 
-  public create() {
+  create() {
     this.initializeTimer();
   }
 
   public initializeTimer() {
-    this.timeLeft = 45;
+    this.timeLeft = 3;
     this.timerText = this.scene.add
       .text(920, 16, `00:${this.timeLeft}`, {
         fontSize: '24px',
@@ -27,7 +24,7 @@ export class timer {
       .setDepth(10);
 
     this.timerEvent = this.scene.time.addEvent({
-      delay: 1000, // milliseconds
+      delay: 1000,
       callback: this.updateTimer,
       callbackScope: this,
       loop: true,
@@ -38,9 +35,8 @@ export class timer {
     if (this.timeLeft > 0) {
       this.timeLeft--;
       this.timerText.setText(`00:${this.timeLeft}`);
-    }
-    if (this.timeLeft <= 0) {
-      this.nextPhaseInstance.nextPhase();
+    } else {
+      this.scene.scene.start('nextPhaseScene');
     }
   }
 
