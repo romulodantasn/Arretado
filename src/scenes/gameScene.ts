@@ -33,17 +33,20 @@ export class gameScene extends Phaser.Scene {
 
   private handlePause() {
     if (Phaser.Input.Keyboard.JustDown(this.keys.pause)) {
-      if (this.scene.isPaused('gameScene')) {
+      const isGameScenePaused = this.scene.isPaused('gameScene');
+      const isGameHudPaused = this.scene.isPaused('gameHud');
+      const isGameHudActive = this.scene.isActive('gameHud');
+      if (isGameScenePaused) {
         console.log('Jogo retomado');
         this.scene.resume('gameScene');
-        if (this.scene.isPaused('gameHud')) {
+        if (isGameHudPaused) {
           this.scene.resume('gameHud');
         }
         this.scene.stop('pauseScene');
       } else {
         console.log('Jogo Pausado');
         this.scene.pause('gameScene');
-        if (this.scene.isActive('gameHud')) {
+        if (isGameHudActive) {
           this.scene.pause('gameHud');
         }
         this.scene.launch('pauseScene');

@@ -26,9 +26,10 @@ export class pauseScene extends Phaser.Scene {
     const escKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
 
     escKey.on('down', () => {
-      console.log('Jogo Reiniciado');
+      console.log('Jogo Retomado');
       this.scene.stop('pauseScene');
       this.scene.resume('gameScene');
+      this.scene.resume('gameHud');
     });
   }
 }
