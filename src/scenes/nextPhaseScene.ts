@@ -35,6 +35,6 @@ export class nextPhaseScene extends Phaser.Scene {
     this.time.delayedCall(2000, () => {
       this.scene.start('gameScene');
     });
-    gameOptions.enemyRate -= 500;
+    gameOptions.enemyRate -= 100;
   }
 }
