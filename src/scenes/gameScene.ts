@@ -1,9 +1,15 @@
 import Phaser from 'phaser';
 import { gameOptions } from '../config/gameOptions';
 import { inputManager } from '../components/input/inputManager';
+import { player } from '../objects/player/player';
+import { enemyGroup } from '../objects/enemies/enemy';
+import { collider } from '../components/collider/collider';
 
 export class gameScene extends Phaser.Scene {
   private keys: any;
+  private player: player;
+  private enemy: enemyGroup;
+  private collisionHandler: collider;
 
   constructor() {
     super({ key: 'gameScene' });
@@ -23,11 +29,20 @@ export class gameScene extends Phaser.Scene {
     inputManager.setupControls(this);
     this.keys = inputManager.getKeys();
 
+    this.player = new player(this, gameOptions.gameSize.width / 2, gameOptions.gameSize.height / 2);
+    this.enemy = new enemyGroup(this, this.player);
+
+    this.collisionHandler = new collider(this, this.player, this.enemy);
+    this.collisionHandler.create();
+
     this.events.on('nextPhase', this.triggerNextPhase, this);
   }
 
   update() {
     this.handlePause();
+    this.player.update();
+    this.enemy.updateEnemyMovement(this);
+    console.log(gameOptions.enemyRate, 'enemyRate');
   }
 
   private handlePause() {

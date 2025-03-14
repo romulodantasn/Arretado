@@ -1,33 +1,23 @@
 import Phaser from 'phaser';
+import { inputManager } from '../../components/input/inputManager';
 import { gameOptions } from '../../config/gameOptions';
 
-export class Player extends Phaser.Physics.Arcade.Sprite {
-  controlKeys: {
-    up: Phaser.Input.Keyboard.Key;
-    down: Phaser.Input.Keyboard.Key;
-    left: Phaser.Input.Keyboard.Key;
-    right: Phaser.Input.Keyboard.Key;
-  };
+export class player extends Phaser.Physics.Arcade.Sprite {
+  controlKeys: any;
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, 'player');
     scene.add.existing(this);
     scene.physics.add.existing(this);
 
+    this.body = this.body as Phaser.Physics.Arcade.Body;
     this.setCollideWorldBounds(true);
     this.setDepth(10);
+
+    this.controlKeys = inputManager.getKeys();
   }
 
-  public setControls(controlKeys: {
-    up: Phaser.Input.Keyboard.Key;
-    down: Phaser.Input.Keyboard.Key;
-    left: Phaser.Input.Keyboard.Key;
-    right: Phaser.Input.Keyboard.Key;
-  }) {
-    this.controlKeys = controlKeys;
-  }
-
-  public update() {
+  update() {
     this.playerMovement();
     this.playerAnimation();
   }
