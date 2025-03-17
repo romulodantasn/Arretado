@@ -15,7 +15,7 @@ export class timer {
   }
 
   public initializeTimer() {
-    this.timeLeft = 3;
+    this.timeLeft = 10;
     this.timerText = this.scene.add
       .text(920, 16, `00:${this.timeLeft}`, {
         fontSize: '24px',

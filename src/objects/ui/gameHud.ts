@@ -31,7 +31,7 @@ export class gameHud extends Phaser.Scene {
 
   public phaseCount() {
     this.waveCount ? this.waveCount++ : (this.waveCount = 1);
-    this.actCount && this.waveCount > 9 ? this.actCount++ : (this.actCount = 1);
+    this.waveCount > 9 ? this.actCount++ : (this.actCount = 1);
     this.waveText = this.add
       .text(1740, 48, `Onda:${this.waveCount}`, {
         fontSize: '36px',
