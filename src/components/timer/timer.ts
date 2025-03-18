@@ -19,6 +19,7 @@ export class timer {
     this.timerText = this.scene.add
       .text(920, 16, `00:${this.timeLeft}`, {
         fontSize: '24px',
+        fontFamily: 'Cordelina',
         color: '#fff',
       })
       .setDepth(10);
@@ -36,19 +37,9 @@ export class timer {
       this.timeLeft--;
       this.timerText.setText(`00:${this.timeLeft}`);
     } else {
+      this.scene.events.emit('timeUp');
+      this.timerEvent.remove(false);
       this.scene.scene.start('nextPhaseScene');
-    }
-  }
-
-  public pauseTimer() {
-    if (this.timerEvent) {
-      this.timerEvent.paused = true;
-    }
-  }
-
-  public resumeTimer() {
-    if (this.timerEvent) {
-      this.timerEvent.paused = false;
     }
   }
 }
