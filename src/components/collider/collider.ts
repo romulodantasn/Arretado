@@ -21,7 +21,6 @@ export class collider {
     this.scene.physics.add.collider(this.player, this.enemy, () => {
       console.log('Eita macho tu perdesse. Reiniciando.');
 
-      // Reseta as ondas ao reiniciar
       const gameHud = this.scene.scene.get('gameHud') as gameHud;
       if (gameHud) {
         gameHud.waveNumber = 1;

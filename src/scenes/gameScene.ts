@@ -4,11 +4,13 @@ import { inputManager } from '../components/input/inputManager';
 import { player } from '../objects/player/player';
 import { enemyGroup } from '../objects/enemies/enemy';
 import { collider } from '../components/collider/collider';
+import { bulletManager } from '../components/weapon/bullets';
 
 export class gameScene extends Phaser.Scene {
   private keys: any;
   private player: player;
   private enemy: enemyGroup;
+  private bullet: bulletManager;
   private collisionHandler: collider;
 
   constructor() {
@@ -21,12 +23,14 @@ export class gameScene extends Phaser.Scene {
 
   create() {
     console.log('gameScene carregado');
+    this.scene.launch('gameHud');
+    console.log('gameHud carregada');
+
     this.add
       .image(0, 0, 'gameBackgroundLimbo')
       .setOrigin(0, 0)
       .setDisplaySize(gameOptions.gameSize.width, gameOptions.gameSize.height);
-    this.scene.launch('gameHud');
-    console.log('gameHud carregada');
+
     inputManager.setupControls(this);
     this.keys = inputManager.getKeys();
 
@@ -35,6 +39,8 @@ export class gameScene extends Phaser.Scene {
 
     this.collisionHandler = new collider(this, this.player, this.enemy);
     this.collisionHandler.create();
+
+    this.bullet = new bulletManager(this, this.player, this.enemy);
 
     this.events.on('nextPhase', this.triggerNextPhase, this);
   }

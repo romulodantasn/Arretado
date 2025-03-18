@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { gameOptions } from '../../config/gameOptions';
 import { timer } from '../../components/timer/timer';
 
 export class gameHud extends Phaser.Scene {
@@ -23,11 +24,12 @@ export class gameHud extends Phaser.Scene {
   create() {
     const gameScene = this.scene.get('gameScene') as Phaser.Scene;
 
-    this.events.off('timeUp'); // Remove qualquer evento já registrado
+    this.events.off('timeUp');
     this.events.on('timeUp', () => {
       console.log('timeUp disparado');
       this.phaseCount();
     });
+    
     console.log('actNumber: ', this.actNumber, 'waveNumber: ', this.waveNumber);
     this.add.image(80, 40, 'health-bar').setDisplaySize(120, 120);
     this.add.image(60, 130, 'gun').setDisplaySize(90, 90);
