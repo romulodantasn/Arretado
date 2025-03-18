@@ -18,6 +18,7 @@ export class nextPhaseScene extends Phaser.Scene {
 
   create() {
     this.nextPhase();
+    console.log('nexPhaseScene Carregada');
   }
 
   public nextPhase() {
@@ -27,7 +28,7 @@ export class nextPhaseScene extends Phaser.Scene {
         color: '#fff',
       })
       .setDepth(10);
-
+    console.log('Eita caba danado! Sobreviveu! Avançando para a próxima fase..');
     const hudScene = this.scene.get('gameHud') as gameHud;
     if (hudScene) {
       hudScene.advanceWaveCount();
@@ -36,5 +37,6 @@ export class nextPhaseScene extends Phaser.Scene {
       this.scene.start('gameScene');
     });
     gameOptions.enemyRate -= 100;
+    console.log('enemyRateUpdated: ' + gameOptions.enemyRate);
   }
 }

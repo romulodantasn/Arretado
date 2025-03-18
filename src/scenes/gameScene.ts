@@ -26,6 +26,7 @@ export class gameScene extends Phaser.Scene {
       .setOrigin(0, 0)
       .setDisplaySize(gameOptions.gameSize.width, gameOptions.gameSize.height);
     this.scene.launch('gameHud');
+    console.log('gameHud carregada');
     inputManager.setupControls(this);
     this.keys = inputManager.getKeys();
 
@@ -42,7 +43,6 @@ export class gameScene extends Phaser.Scene {
     this.handlePause();
     this.player.update();
     this.enemy.updateEnemyMovement(this);
-    console.log(gameOptions.enemyRate, 'enemyRate');
   }
 
   private handlePause() {
