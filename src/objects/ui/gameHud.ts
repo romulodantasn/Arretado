@@ -10,9 +10,6 @@ export class gameHud extends Phaser.Scene {
   private actText: Phaser.GameObjects.Text;
   private coinGame: number;
   private coinText: Phaser.GameObjects.Text;
-  private timeLeft: number;
-  private timerText: Phaser.GameObjects.Text;
-  private nextPhaseText: Phaser.GameObjects.Text;
   public shouldIncrementWave: boolean = true;
 
   constructor() {
