@@ -1,6 +1,7 @@
 import { gameScene } from '../../scenes/gameScene';
 import { player } from '../../objects/player/player';
 import { enemyGroup } from '../../objects/enemies/enemy';
+import { gameOptions } from '../../config/gameOptions';
 import { gameHud } from '../../objects/ui/gameHud';
 
 export class collider {
@@ -25,6 +26,8 @@ export class collider {
       if (gameHud) {
         gameHud.waveNumber = 1;
         gameHud.actNumber = 1;
+        gameOptions.enemyRate = 800;
+        console.log('enemyRate Reset: ' + gameOptions.enemyRate)
         gameHud.shouldIncrementWave = true;
         gameHud.updateHud();
       }
