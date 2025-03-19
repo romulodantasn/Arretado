@@ -10,13 +10,14 @@ export class inputManager {
       left: Phaser.Input.Keyboard.KeyCodes.A,
       down: Phaser.Input.Keyboard.KeyCodes.S,
       right: Phaser.Input.Keyboard.KeyCodes.D,
+      enter: Phaser.Input.Keyboard.KeyCodes.ENTER,
       pause: Phaser.Input.Keyboard.KeyCodes.ESC,
     });
   }
 
   static getKeys() {
     if (!inputManager.controlKeys) {
-      throw new Error('Control keys not initialized. Please call setupControls first.');
+      throw new Error('Control keys não foram inicializadas.');
     }
     return inputManager.controlKeys;
   }
