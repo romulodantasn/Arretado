@@ -13,8 +13,10 @@ export class preloadAssets extends Phaser.Scene {
   create() {
     this.#createAnimations();
     console.log('preloadAssets carregado');
-    this.scene.start('gameScene');
+    this.scene.start('titleScene');
+    //this.scene.start('gameScene');
   }
+  
   //Metodo privado para criar e carregar as animações
 
   #createAnimations() {
