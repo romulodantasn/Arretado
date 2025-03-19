@@ -27,6 +27,11 @@
       "url": "background-limbo.png"
     },
     {
+      "type": "image",
+      "key": "titleSceneBackground",
+      "url": "titleSceneBackground.png"
+    },
+    {
       "type": "spritesheet",
       "key": "playerWalk",
       "url": "playerBrotatoWalk.png",
