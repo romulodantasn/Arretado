@@ -27,11 +27,11 @@ export class collider {
         gameHud.waveNumber = 1;
         gameHud.actNumber = 1;
         gameOptions.enemyRate = 800;
-        console.log('enemyRate Reset: ' + gameOptions.enemyRate)
+        console.log('enemyRate Reset: ' + gameOptions.enemyRate);
         gameHud.shouldIncrementWave = true;
         gameHud.updateHud();
       }
-
+      this.scene.scene.start('colliderScene');
       this.scene.scene.restart();
     });
   }
