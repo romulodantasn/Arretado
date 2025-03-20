@@ -37,6 +37,8 @@ export class nextPhaseScene extends Phaser.Scene {
       this.scene.start('gameScene');
     });
     gameOptions.enemyRate -= 100;
+    gameOptions.enemySpeed += 10;
+    console.log('enemySpeedUpdated: ' + gameOptions.enemySpeed);
     console.log('enemyRateUpdated: ' + gameOptions.enemyRate);
   }
 }
