@@ -13,6 +13,7 @@ export class preloadAssets extends Phaser.Scene {
   create() {
     this.#createAnimations();
     console.log('preloadAssets carregado');
+    this.load.audio('titleSceneMusic', 'assets/audio/titleSceneMusic.wav');
     this.scene.start('titleScene');
     //this.scene.start('gameScene');
   }

@@ -12,21 +12,22 @@ export class titleScene extends Phaser.Scene {
     {
         console.log('titleScene carregada');
         const textStyle = { fontFamily: 'Cordelina', color: '#ffffff', stroke: '#000000', strokeThickness: 8 };
-
         this.add
              .image(0, 0, 'titleSceneBackground')
              .setOrigin(0, 0)
              .setDisplaySize(gameOptions.gameSize.width, gameOptions.gameSize.height);
-
-        const gameName =  [
+       
+        const music = this.sound.add('titleSceneMusic', { loop: true });
+         music.play();
+        
+         const gameName =  [
             'ARRETADO'
         ]
-        this.add.text(960, 550, gameName, textStyle).setFontSize(64).setAlign('center').setOrigin(0.5);
-        
         const instructions = [
             "Pressione ENTER para começar"
         ]
 
+        this.add.text(960, 550, gameName, textStyle).setFontSize(64).setAlign('center').setOrigin(0.5);
         this.add.text(980, 850, instructions, textStyle).setFontSize(48).setAlign('center').setOrigin(0.5);
         
         const keyboard = this.input.keyboard as Phaser.Input.Keyboard.KeyboardPlugin;
