@@ -3,11 +3,6 @@ import { gameOptions } from '../config/gameOptions';
 import { gameHud } from '../objects/ui/gameHud';
 
 export class nextPhaseScene extends Phaser.Scene {
-  private waveCount: number = 0;
-  private waveText: Phaser.GameObjects.Text;
-  private actCount: number = 0;
-  private timerLeft: number;
-  private actText: Phaser.GameObjects.Text;
   private nextPhaseText: Phaser.GameObjects.Text;
 
   constructor() {
