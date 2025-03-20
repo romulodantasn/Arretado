@@ -1,0 +1,53 @@
+{
+  "path": "assets/images",
+  "files": [
+    {
+      "type": "image",
+      "key": "bullet",
+      "url": "bullet.png"
+    },
+    {
+      "type": "image",
+      "key": "coin",
+      "url": "coin.png"
+    },
+    {
+      "type": "image",
+      "key": "health-bar",
+      "url": "health-bar.png"
+    },
+    {
+      "type": "image",
+      "key": "gun",
+      "url": "gun.png"
+    },
+    {
+      "type": "image",
+      "key": "gameBackgroundLimbo",
+      "url": "background-limbo.png"
+    },
+    {
+      "type": "image",
+      "key": "titleSceneBackground",
+      "url": "titleSceneBackground.png"
+    },
+    {
+      "type": "spritesheet",
+      "key": "playerWalk",
+      "url": "playerBrotatoWalk.png",
+      "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
+    },
+    {
+      "type": "spritesheet",
+      "key": "playerRun",
+      "url": "playerBrotatoRun.png",
+      "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
+    },
+    {
+      "type": "spritesheet",
+      "key": "enemy",
+      "url": "enemyBrotato.png",
+      "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
+    }
+  ]
+}

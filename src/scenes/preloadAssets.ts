@@ -1,32 +1,35 @@
 import Phaser from 'phaser';
-export class PreloadAssets extends Phaser.Scene {
+export class preloadAssets extends Phaser.Scene {
   constructor() {
     super({
-      key: 'PreloadAssets',
+      key: 'preloadAssets',
     });
   }
 
   preload() {
-    this.load.spritesheet('playerWalk', 'assets/sprites/playerBrotatoWalk.png', {
-      frameWidth: 40,
-      frameHeight: 40,
-    });
-    this.load.spritesheet('playerRun', 'assets/sprites/playerBrotatoRun.png', {
-      frameWidth: 40,
-      frameHeight: 40,
-    });
-    this.load.image('gameBackgroundLimbo', 'assets/backgrounds/background-limbo.png');
-    this.load.spritesheet('enemy', 'assets/sprites/enemyBrotato.png', {
-      frameWidth: 40,
-      frameHeight: 40,
-    });
-    this.load.image('bullet', 'assets/sprites/bullet.png');
-    this.load.image('coin', 'assets/sprites/coin.png');
-    this.load.image('health-bar', 'assets/sprites/health-bar.png');
-    this.load.image('gun', 'assets/sprites/gun.png');
+    this.load.pack('asset_pack', 'assets/data/assets.json');
   }
 
   create() {
-    this.scene.start('PlayGame');
+    this.#createAnimations();
+    console.log('preloadAssets carregado');
+    this.scene.start('titleScene');
+  }
+
+  //Metodo privado para criar e carregar as animações
+
+  #createAnimations() {
+    const data = this.cache.json.get('animations_json');
+    data.forEach((animation: { frames: any; assetKey: string; key: any; frameRate: any; repeat: any }) => {
+      const frames = animation.frames
+        ? this.anims.generateFrameNumbers(animation.assetKey, { frames: animation.frames })
+        : this.anims.generateFrameNumbers(animation.assetKey);
+      this.anims.create({
+        key: animation.key,
+        frames: frames,
+        frameRate: animation.frameRate,
+        repeat: animation.repeat,
+      });
+    });
   }
 }

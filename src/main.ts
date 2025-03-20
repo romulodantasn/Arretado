@@ -1,12 +1,23 @@
-// main.ts
 import Phaser from 'phaser';
 import { configObject } from './config/config';
-import { PreloadAssets } from './scenes/preloadAssets';
-import { PlayGame } from './scenes/playGame';
+import { bootScene } from './scenes/bootScene';
+import { preloadAssets } from './scenes/preloadAssets';
+import { titleScene } from './scenes/titleScene';
+import { gameScene } from './scenes/gameScene';
 import { pauseScene } from './scenes/pauseScene';
+import { gameHud } from './objects/ui/gameHud';
+import { nextPhaseScene } from './scenes/nextPhaseScene';
+import { colliderScene } from './scenes/colliderScene';
 
+configObject.scene = [
+  bootScene,
+  preloadAssets,
+  titleScene,
+  gameScene,
+  gameHud,
+  pauseScene,
+  colliderScene,
+  nextPhaseScene,
+];
 
-configObject.scene = [PreloadAssets, PlayGame, pauseScene]
-
-// Inicializando o jogo
 new Phaser.Game(configObject);
