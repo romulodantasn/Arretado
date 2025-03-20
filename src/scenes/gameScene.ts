@@ -1,10 +1,10 @@
 import Phaser from 'phaser';
-import { gameOptions } from '../config/gameOptions';
-import { inputManager } from '../components/input/inputManager';
-import { player } from '../objects/player/player';
-import { enemyGroup } from '../objects/enemies/enemy';
-import { collider } from '../components/collider/collider';
-import { bulletManager } from '../components/weapon/bullets';
+import { gameOptions } from '../config/gameOptionsConfig';
+import { inputManager } from '../components/input/inputManagerComponent';
+import { player } from '../objects/player/playerObject';
+import { enemyGroup } from '../objects/enemies/enemyObject';
+import { collider } from '../components/collider/colliderComponent';
+import { bulletManager } from '../components/bullet/bulletComponent';
 
 export class gameScene extends Phaser.Scene {
   private keys: any;

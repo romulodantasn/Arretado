@@ -1,8 +1,8 @@
 // BulletManager.ts
 import Phaser from 'phaser';
-import { gameOptions } from '../../config/gameOptions';
-import { player } from '../../objects/player/player';
-import { enemyGroup } from '../../objects/enemies/enemy';
+import { gameOptions } from '../../config/gameOptionsConfig';
+import { player } from '../../objects/player/playerObject';
+import { enemyGroup } from '../../objects/enemies/enemyObject';
 
 export class bulletManager {
   private scene: Phaser.Scene;

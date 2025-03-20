@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
-import { gameOptions } from '../config/gameOptions';
-import { gameHud } from '../objects/ui/gameHud';
+import { gameOptions } from '../config/gameOptionsConfig';
+import { gameHud } from '../objects/ui/gameHudObject';
 
 export class nextPhaseScene extends Phaser.Scene {
   private nextPhaseText: Phaser.GameObjects.Text;

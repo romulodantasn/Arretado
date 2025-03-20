@@ -1,4 +1,4 @@
-import { gameOptions } from './gameOptions';
+import { gameOptions } from './gameOptionsConfig';
 import { bootScene } from '../scenes/bootScene';
 import { preloadAssets } from '../scenes/preloadAssets';
 import { titleScene } from '../scenes/titleScene';

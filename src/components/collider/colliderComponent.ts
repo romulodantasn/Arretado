@@ -1,8 +1,8 @@
 import { gameScene } from '../../scenes/gameScene';
-import { player } from '../../objects/player/player';
-import { enemyGroup } from '../../objects/enemies/enemy';
-import { gameOptions } from '../../config/gameOptions';
-import { gameHud } from '../../objects/ui/gameHud';
+import { player } from '../../objects/player/playerObject';
+import { enemyGroup } from '../../objects/enemies/enemyObject';
+import { gameOptions } from '../../config/gameOptionsConfig';
+import { gameHud } from '../../objects/ui/gameHudObject';
 
 export class collider {
   private scene: gameScene;

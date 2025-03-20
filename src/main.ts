@@ -5,7 +5,7 @@ import { preloadAssets } from './scenes/preloadAssets';
 import { titleScene } from './scenes/titleScene';
 import { gameScene } from './scenes/gameScene';
 import { pauseScene } from './scenes/pauseScene';
-import { gameHud } from './objects/ui/gameHud';
+import { gameHud } from './objects/ui/gameHudObject';
 import { nextPhaseScene } from './scenes/nextPhaseScene';
 import { colliderScene } from './scenes/colliderScene';
 

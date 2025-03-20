@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
-import { gameOptions } from '../../config/gameOptions';
-import { timer } from '../../components/timer/timer';
+import { gameOptions } from '../../config/gameOptionsConfig';
+import { timer } from '../../components/timer/timerComponent';
 
 export class gameHud extends Phaser.Scene {
   private timerInstance: timer;
@@ -26,7 +26,7 @@ export class gameHud extends Phaser.Scene {
       console.log('timeUp disparado');
       this.phaseCount();
     });
-    
+
     console.log('actNumber: ', this.actNumber, 'waveNumber: ', this.waveNumber);
     this.add.image(80, 40, 'health-bar').setDisplaySize(120, 120);
     this.add.image(60, 130, 'gun').setDisplaySize(90, 90);

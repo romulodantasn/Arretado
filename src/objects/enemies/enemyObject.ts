@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
-import { gameOptions } from '../../config/gameOptions';
-import { player } from '../player/player';
+import { gameOptions } from '../../config/gameOptionsConfig';
+import { player } from '../player/playerObject';
 
 export class enemyGroup extends Phaser.Physics.Arcade.Group {
   private player: player;

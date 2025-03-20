@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { gameHud } from '../objects/ui/gameHud';
+import { gameHud } from '../objects/ui/gameHudObject';
 
 export class colliderScene extends Phaser.Scene {
   private colliderSceneText: Phaser.GameObjects.Text;

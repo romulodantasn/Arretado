@@ -1,5 +1,5 @@
-import { gameOptions } from '../config/gameOptions';
-import { inputManager } from '../components/input/inputManager';
+import { gameOptions } from '../config/gameOptionsConfig';
+import { inputManager } from '../components/input/inputManagerComponent';
 
 export class titleScene extends Phaser.Scene {
   static controlKeys: any;

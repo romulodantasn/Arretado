@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
-import { inputManager } from '../../components/input/inputManager';
-import { gameOptions } from '../../config/gameOptions';
+import { inputManager } from '../../components/input/inputManagerComponent';
+import { gameOptions } from '../../config/gameOptionsConfig';
 
 export class player extends Phaser.Physics.Arcade.Sprite {
   controlKeys: any;
