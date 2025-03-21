@@ -20,7 +20,11 @@ export class gameHud extends Phaser.Scene {
 
   create() {
     const gameScene = this.scene.get('gameScene') as Phaser.Scene;
-
+    const textStyle = { fontFamily: 'Cordelina',  color: '#ffffff',stroke: '#000000', strokeThickness: 8, };
+    const waveText = [`Onda:${this.waveNumber}`];
+    const actText = [`Ato:${this.actNumber}`];
+    const cointText = [`10`];
+   
     this.events.off('timeUp');
     this.events.on('timeUp', () => {
       console.log('timeUp disparado');
@@ -31,27 +35,10 @@ export class gameHud extends Phaser.Scene {
     this.add.image(80, 40, 'health-bar').setDisplaySize(120, 120);
     this.add.image(60, 130, 'gun').setDisplaySize(90, 90);
     this.add.image(1770, 130, 'coin').setDisplaySize(60, 60);
-    this.waveText = this.add
-      .text(1740, 48, `Onda:${this.waveNumber}`, {
-        fontSize: '36px',
-        fontFamily: 'Cordelina',
-        color: '#fff',
-      })
-      .setDepth(10);
-    this.actText = this.add
-      .text(1744, 8, `Ato:${this.actNumber}`, {
-        fontSize: '36px',
-        fontFamily: 'Cordelina',
-        color: '#fff',
-      })
-      .setDepth(10);
-    this.coinText = this.add
-      .text(1820, 110, `10`, {
-        fontSize: '36px',
-        fontFamily: 'Cordelina',
-        color: '#fff',
-      })
-      .setDepth(10);
+   
+    this.add.text(1785, 80, waveText, textStyle).setFontSize(36).setAlign('center').setOrigin(0.5);
+    this.add.text(1780, 40, actText, textStyle).setFontSize(36).setAlign('center').setOrigin(0.5);
+    this.add.text(1820, 130, cointText, textStyle).setFontSize(48).setAlign('center').setOrigin(0.5);
 
     this.updateHud();
 
