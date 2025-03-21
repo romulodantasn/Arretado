@@ -1,26 +1,27 @@
 import { gameOptions } from '../config/gameOptionsConfig';
-import { inputManager } from '../components/input/inputManagerComponent';
 
 export class titleScene extends Phaser.Scene {
   static controlKeys: any;
   static titleSceneAudio: Phaser.Sound.BaseSound;
+ 
   constructor() {
     super('titleScene');
   }
 
   preload() {
     this.load.audio('titleSceneAudio', 'assets/audio/titleSceneAudio.mp3', 'assets/audio/titleSceneAudio.wav');
+    this.load.font('Cordelina', 'assets/font/cordelina.otf');
   }
 
   create() {
     console.log('titleScene carregada');
-    const textStyle = { fontFamily: 'Cordelina', color: '#ffffff', stroke: '#000000', strokeThickness: 8 };
+    const textStyle = { fontFamily: 'Cordelina',  color: '#ffffff', stroke: '#000000', strokeThickness: 8, };
     this.add
       .image(0, 0, 'titleSceneBackground')
       .setOrigin(0, 0)
       .setDisplaySize(gameOptions.gameSize.width, gameOptions.gameSize.height);
 
-    titleScene.titleSceneAudio = this.sound.add('titleSceneAudio', { loop: true, volume: 0.5 });
+    titleScene.titleSceneAudio = this.sound.add('titleSceneAudio', { loop: true, volume: 0.15 });
     titleScene.titleSceneAudio.play();
     this.events.once('shutdown', () => {
       titleScene.titleSceneAudio.stop();
