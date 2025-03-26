@@ -3,6 +3,7 @@ import { inputManager } from '../../components/input/inputManagerComponent';
 import { gameOptions } from '../../config/gameOptionsConfig';
 
 export class player extends Phaser.Physics.Arcade.Sprite {
+  direction: number = 0;
   controlKeys: any;
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
@@ -13,6 +14,7 @@ export class player extends Phaser.Physics.Arcade.Sprite {
     this.body = this.body as Phaser.Physics.Arcade.Body;
     this.setCollideWorldBounds(true);
     this.setDepth(10);
+    this.setOffset(4, 4);
 
     this.controlKeys = inputManager.getKeys();
   }
