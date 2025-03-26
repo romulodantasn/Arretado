@@ -10,18 +10,20 @@ export class colliderScene extends Phaser.Scene {
     });
   }
 
+  preload() {
+    this.load.font('Cordelina', 'assets/font/cordelina.otf');
+  }
   create() {
     this.colliderScene();
     console.log('colliderScene Carregada');
   }
 
   public colliderScene() {
-    this.colliderSceneText = this.add
-      .text(560, 410, `Eita macho tu perdesse. Reiniciando...`, {
-        fontSize: '36px',
-        color: '#fff',
-      })
-      .setDepth(10);
+    const textStyle = { fontFamily: 'Cordelina', color: '#ffffff', stroke: '#000000', strokeThickness: 5 };
+    const colliderSceneText = ['Eita macho tu perdesse. Reiniciando...'];
+    this.add.text(960, 510, colliderSceneText, textStyle).setFontSize(36).setAlign('center').setOrigin(0.5);
+    console.log('Eita macho tu perdesse. Reiniciando...');
+
     this.time.delayedCall(2500, () => {
       this.scene.start('gameScene');
     });

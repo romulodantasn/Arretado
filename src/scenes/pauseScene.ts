@@ -7,20 +7,22 @@ export class pauseScene extends Phaser.Scene {
     });
   }
 
-  create(): void {
-    this.add
-      .text(960, 510, 'Pausado', {
-        fontSize: '32px',
-        color: '#fff',
-      })
-      .setOrigin(0.5);
+  preload() {
+    this.load.font('Cordelina', 'assets/font/cordelina.otf');
+  }
 
-    this.add
-      .text(960, 550, 'Pressione Esc para voltar ao jogo', {
-        fontSize: '16px',
-        color: '#fff',
-      })
-      .setOrigin(0.5);
+  create(): void {
+    const textStyle = {
+      fontFamily: 'Cordelina',
+      color: '#ffffff',
+      stroke: '#000000',
+      strokeThickness: 4,
+    };
+    const pauseText = ['Pausado'];
+    const returnText = ['Pressione Esc para voltar ao jogo'];
+    this.add.text(960, 510, pauseText, textStyle).setFontSize(36).setAlign('center').setOrigin(0.5);
+
+    this.add.text(960, 550, returnText, textStyle).setFontSize(24).setAlign('center').setOrigin(0.5);
 
     const keyboard = this.input.keyboard as Phaser.Input.Keyboard.KeyboardPlugin;
     const escKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
