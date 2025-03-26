@@ -9,7 +9,6 @@ export class enemyGroup extends Phaser.Physics.Arcade.Group {
     super(scene.physics.world, scene);
     this.player = player;
     scene.add.existing(this);
-
     this.initializeEnemyGroup(scene);
     this.setDepth(10);
   }

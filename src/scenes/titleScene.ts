@@ -3,7 +3,7 @@ import { gameOptions } from '../config/gameOptionsConfig';
 export class titleScene extends Phaser.Scene {
   static controlKeys: any;
   static titleSceneAudio: Phaser.Sound.BaseSound;
- 
+
   constructor() {
     super('titleScene');
   }
@@ -15,7 +15,7 @@ export class titleScene extends Phaser.Scene {
 
   create() {
     console.log('titleScene carregada');
-    const textStyle = { fontFamily: 'Cordelina',  color: '#ffffff', stroke: '#000000', strokeThickness: 8, };
+    const textStyle = { fontFamily: 'Cordelina', color: '#ffffff', stroke: '#000000', strokeThickness: 6 };
     this.add
       .image(0, 0, 'titleSceneBackground')
       .setOrigin(0, 0)

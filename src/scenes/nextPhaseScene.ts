@@ -21,8 +21,8 @@ export class nextPhaseScene extends Phaser.Scene {
   }
 
   public nextPhase() {
-    const textStyle = { fontFamily: 'Cordelina',  color: '#ffffff', stroke: '#000000', strokeThickness: 8, };
-    const nextPhaseText = ['Eita caba danado! Sobreviveu! Avançando para a próxima fase...']
+    const textStyle = { fontFamily: 'Cordelina', color: '#ffffff', stroke: '#000000', strokeThickness: 4 };
+    const nextPhaseText = ['Eita caba danado! Sobreviveu! Avançando para a próxima fase...'];
     this.add.text(980, 510, nextPhaseText, textStyle).setFontSize(36).setAlign('center').setOrigin(0.5);
     console.log('Eita caba danado! Sobreviveu! Avançando para a próxima fase..');
     const hudScene = this.scene.get('gameHud') as gameHud;
