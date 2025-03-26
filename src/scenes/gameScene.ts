@@ -4,14 +4,17 @@ import { inputManager } from '../components/input/inputManagerComponent';
 import { player } from '../objects/player/playerObject';
 import { enemyGroup } from '../objects/enemies/enemyObject';
 import { collider } from '../components/collider/colliderComponent';
-import { bulletManager } from '../components/bullet/bulletComponent';
+import { bulletComponent } from '../objects/bullet/bulletComponent';
 
 export class gameScene extends Phaser.Scene {
   private keys: any;
+  private click: Phaser.Input.Mouse.MouseManager;
   private player: player;
   private enemy: enemyGroup;
-  private bullet: bulletManager;
+  private bullet: bulletComponent;
   private collisionHandler: collider;
+  private reticle: Phaser.GameObjects.Sprite;
+  private pointer: Phaser.Input.Pointer;
 
   constructor() {
     super({ key: 'gameScene' });
@@ -33,19 +36,20 @@ export class gameScene extends Phaser.Scene {
 
     inputManager.setupControls(this);
     this.keys = inputManager.getKeys();
-
     this.player = new player(this, gameOptions.gameSize.width / 2, gameOptions.gameSize.height / 2);
     this.enemy = new enemyGroup(this, this.player);
 
+    this.bullet = new bulletComponent(this, this.player, this.enemy, this.reticle, this.input.activePointer);
     this.collisionHandler = new collider(this, this.player, this.enemy);
     this.collisionHandler.create();
-
-    this.bullet = new bulletManager(this, this.player, this.enemy);
-
+    this.bullet = new bulletComponent(this, this.player, this.enemy, this.reticle, this.input.activePointer);
+    this.bullet.reticleMovement();
+    this.bullet.setupShooting();
     this.events.on('nextPhase', this.triggerNextPhase, this);
   }
 
   update() {
+    this.bullet.containReticle();
     this.handlePause();
     this.player.update();
     this.enemy.updateEnemyMovement(this);
