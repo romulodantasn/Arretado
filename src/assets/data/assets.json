@@ -23,6 +23,11 @@
     },
     {
       "type": "image",
+      "key": "reticle",
+      "url": "reticle.png"
+    },
+    {
+      "type": "image",
       "key": "gameBackgroundLimbo",
       "url": "background-limbo.png"
     },
