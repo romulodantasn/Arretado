@@ -1,6 +1,5 @@
 // BulletManager.ts
 import Phaser, { Scene } from 'phaser';
-import { bulletManager } from '../../components/bullet/bulletComponent';
 import { inputManager } from '../../components/input/inputManagerComponent';
 import { gameOptions } from '../../config/gameOptionsConfig';
 import { player } from '../player/playerObject';
@@ -64,7 +63,7 @@ export class bulletComponent {
 
   public setupShooting() {
     inputManager.setupClicks(this.scene, {
-      onFire: (pointer) => {
+      onFire: () => {
         console.log('Atirando!');
         this.createBullet(this.player, this.reticle);
       },
@@ -81,18 +80,20 @@ export class bulletComponent {
     this.bulletGroup.add(bullet);
     bullet.setVelocity(Math.cos(angle) * speed, Math.sin(angle) * speed);
     bullet.setActive(true).setVisible(true);
+    this.scene.physics.add.collider(this.bulletGroup, this.enemy, this.handleBulletCollision, undefined, this);
+    
+    
     console.log(`Criando bala em (${shooter.x}, ${shooter.y})`);
     console.log(`Atirando em direção a (${target.x}, ${target.y})`);
-  }
-
-  private handleBulletCollision(bullet: any, enemy: any) {
     console.log(`Colisão detectada entre bala e inimigo`);
     console.log(`Posição da bala: (${bullet.x}, ${bullet.y})`);
-    console.log(`Posição do inimigo: (${enemy.x}, ${enemy.y})`);
-    // Desativa a colisão entre a bala e o inimigo
+    console.log(`Posição do inimigo: (${target.x}, ${target.y})`);
+  }
+
+  private handleBulletCollision(bullet: any, target: any) {
     this.bulletGroup.killAndHide(bullet);
     bullet.body.checkCollision.none = true;
-    this.enemy.killAndHide(enemy);
-    enemy.body.checkCollision.none = true;
+    this.enemy.killAndHide(target);
+    target.body.checkCollision.none = true;
   }
 }
