@@ -5,7 +5,8 @@ import { titleScene } from '../scenes/titleScene';
 import { gameScene } from '../scenes/gameScene';
 import { pauseScene } from '../scenes/pauseScene';
 import { nextPhaseScene } from '../scenes/nextPhaseScene';
-import { colliderScene } from '../scenes/colliderScene';
+import { GameOverScene } from '../scenes/GameOverScene';
+import { healthUi } from '../objects/ui/healthUi';
 
 export const scaleObject: Phaser.Types.Core.ScaleConfig = {
   mode: Phaser.Scale.FIT,
@@ -18,11 +19,11 @@ export const scaleObject: Phaser.Types.Core.ScaleConfig = {
 export const configObject: Phaser.Types.Core.GameConfig = {
   type: Phaser.WEBGL,
   scale: scaleObject,
-  scene: [bootScene, preloadAssets, gameScene, colliderScene, nextPhaseScene, pauseScene, titleScene],
+  scene: [bootScene, preloadAssets, gameScene, healthUi, GameOverScene, nextPhaseScene, pauseScene, titleScene],
   physics: {
     default: 'arcade',
     arcade: {
-      debug: false,
+      debug: true,
       gravity: { y: 0, x: 0 },
     },
   },
