@@ -7,10 +7,6 @@ export class pauseScene extends Phaser.Scene {
     });
   }
 
-  preload() {
-    this.load.font('Cordelina', 'assets/font/cordelina.otf');
-  }
-
   create(): void {
     const textStyle = {
       fontFamily: 'Cordelina',

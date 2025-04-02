@@ -10,7 +10,6 @@ export class titleScene extends Phaser.Scene {
 
   preload() {
     this.load.audio('titleSceneAudio', 'assets/audio/titleSceneAudio.mp3', 'assets/audio/titleSceneAudio.wav');
-    this.load.font('Cordelina', 'assets/font/cordelina.otf');
   }
 
   create() {
