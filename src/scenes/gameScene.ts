@@ -5,16 +5,16 @@ import { player } from '../objects/player/playerObject';
 import { enemyGroup } from '../objects/enemies/enemyObject';
 import { collider } from '../components/collider/colliderComponent';
 import { bulletComponent } from '../objects/bullet/bulletComponent';
+import { healthComponent } from '../components/health/healthComponent';
 
 export class gameScene extends Phaser.Scene {
-  private keys: any;
-  private click: Phaser.Input.Mouse.MouseManager;
-  private player: player;
-  private enemy: enemyGroup;
-  private bullet: bulletComponent;
-  private collisionHandler: collider;
-  private reticle: Phaser.GameObjects.Sprite;
-  private pointer: Phaser.Input.Pointer;
+  #keys: any;
+  #player: player;
+  #enemy: enemyGroup;
+  #bullet: bulletComponent;
+  #collisionHandler: collider;
+  #health: healthComponent;
+  #reticle: Phaser.GameObjects.Sprite;
 
   constructor() {
     super({ key: 'gameScene' });
@@ -27,7 +27,11 @@ export class gameScene extends Phaser.Scene {
   create() {
     console.log('gameScene carregado');
     this.scene.launch('gameHud');
-    console.log('gameHud carregada');
+    this.time.delayedCall(100, () => {
+      this.scene.launch('healthUi', { emitter: this.events, health: this.#health });
+    });
+
+    console.log('healthUi carregada');
 
     this.add
       .image(0, 0, 'gameBackgroundLimbo')
@@ -35,28 +39,34 @@ export class gameScene extends Phaser.Scene {
       .setDisplaySize(gameOptions.gameSize.width, gameOptions.gameSize.height);
 
     inputManager.setupControls(this);
-    this.keys = inputManager.getKeys();
-    this.player = new player(this, gameOptions.gameSize.width / 2, gameOptions.gameSize.height / 2);
-    this.enemy = new enemyGroup(this, this.player);
+    this.#keys = inputManager.getKeys();
 
-    this.bullet = new bulletComponent(this, this.player, this.enemy, this.reticle, this.input.activePointer);
-    this.collisionHandler = new collider(this, this.player, this.enemy);
-    this.collisionHandler.create();
-    this.bullet = new bulletComponent(this, this.player, this.enemy, this.reticle, this.input.activePointer);
-    this.bullet.reticleMovement();
-    this.bullet.setupShooting();
+    this.#player = new player(this, gameOptions.gameSize.width / 2, gameOptions.gameSize.height / 2);
+
+    this.#enemy = new enemyGroup(this, this.#player);
+
+    this.#bullet = new bulletComponent(this, this.#player, this.#enemy, this.#reticle, this.input.activePointer);
+    this.#bullet.reticleMovement();
+    this.#bullet.setupShooting();
+
+    const customEventEmitter = new Phaser.Events.EventEmitter();
+    this.#health = new healthComponent(customEventEmitter);
+
+    this.#collisionHandler = new collider(this, this.#player, this.#enemy, this.#health);
+    this.#collisionHandler.create();
+
     this.events.on('nextPhase', this.triggerNextPhase, this);
   }
 
   update() {
-    this.bullet.containReticle();
+    this.#bullet.containReticle();
     this.handlePause();
-    this.player.update();
-    this.enemy.updateEnemyMovement(this);
+    this.#player.update();
+    this.#enemy.updateEnemyMovement(this);
   }
 
   private handlePause() {
-    if (!Phaser.Input.Keyboard.JustDown(this.keys.pause)) return;
+    if (!Phaser.Input.Keyboard.JustDown(this.#keys.pause)) return;
     const gameScene = 'gameScene';
     const gameHud = 'gameHud';
     const pauseScene = 'pauseScene';
