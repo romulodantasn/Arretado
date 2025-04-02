@@ -13,11 +13,6 @@
     },
     {
       "type": "image",
-      "key": "health-bar",
-      "url": "health-bar.png"
-    },
-    {
-      "type": "image",
       "key": "gun",
       "url": "gun.png"
     },
@@ -33,8 +28,103 @@
     },
     {
       "type": "image",
+      "key": "cordel",
+      "url": "cordel.png"
+    },
+    {
+      "type": "image",
+      "key": "bodega",
+      "url": "bodega.png"
+    },
+    {
+      "type": "image",
+      "key": "chapeu",
+      "url": "chapeu.png"
+    },
+    {
+      "type": "image",
+      "key": "dadoCangaceiro",
+      "url": "dadoCangaceiro.png"
+    },
+    {
+      "type": "image",
+      "key": "esporaDeAco",
+      "url": "esporaDeAço.png"
+    },
+    {
+      "type": "image",
+      "key": "ferradura",
+      "url": "ferradura.png"
+    },
+    {
+      "type": "image",
+      "key": "guaranaJesus",
+      "url": "guaranaJesus.png"
+    },
+    {
+      "type": "image",
+      "key": "guine",
+      "url": "guine.png"
+    },
+    {
+      "type": "image",
+      "key": "mandiga",
+      "url": "mandiga.png"
+    },
+    {
+      "type": "image",
+      "key": "mocoto",
+      "url": "mocoto.png"
+    },
+    {
+      "type": "image",
+      "key": "munguza",
+      "url": "munguza.png"
+    },
+    {
+      "type": "image",
+      "key": "olhoDeCobra",
+      "url": "olhoDeCobra.png"
+    },
+    {
+      "type": "image",
+      "key": "patuaSaoJorge",
+      "url": "patuaSaoJorge.png"
+    },
+    {
+      "type": "image",
+      "key": "peDePano",
+      "url": "peDePano.png"
+    },
+    {
+      "type": "image",
       "key": "titleSceneBackground",
       "url": "titleSceneBackground.png"
+    },
+    {
+      "type": "image",
+      "key": "pimenta",
+      "url": "pimenta.png"
+    },
+    {
+      "type": "image",
+      "key": "pitu",
+      "url": "pitu.png"
+    },
+    {
+      "type": "image",
+      "key": "poeira",
+      "url": "poeira.png"
+    },
+    {
+      "type": "image",
+      "key": "rapadura",
+      "url": "rapadura.png"
+    },
+    {
+      "type": "image",
+      "key": "sandaliaJesus",
+      "url": "sandaliaJesus.png"
     },
     {
       "type": "spritesheet",
@@ -53,6 +143,12 @@
       "key": "enemy",
       "url": "enemyBrotato.png",
       "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
+    },
+    {
+      "type": "spritesheet",
+      "key": "health-bar",
+      "url": "health-bar.png",
+      "frameConfig": { "frameWidth": 35, "frameHeight": 7 }
     }
   ]
 }

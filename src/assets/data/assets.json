@@ -13,11 +13,6 @@
     },
     {
       "type": "image",
-      "key": "health-bar",
-      "url": "health-bar.png"
-    },
-    {
-      "type": "image",
       "key": "gun",
       "url": "gun.png"
     },
@@ -148,6 +143,12 @@
       "key": "enemy",
       "url": "enemyBrotato.png",
       "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
+    },
+    {
+      "type": "spritesheet",
+      "key": "health-bar",
+      "url": "health-bar.png",
+      "frameConfig": { "frameWidth": 35, "frameHeight": 7 }
     }
   ]
 }

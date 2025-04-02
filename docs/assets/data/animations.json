@@ -19,5 +19,11 @@
     "frames": [0, 1, 2, 3, 4, 5, 6],
     "repeat": -1,
     "assetKey": "enemy"
+  },
+  {
+    "key": "health-bar",
+    "frameRate": 10,
+    "frames": [0, 1, 2, 3, 4],
+    "assetKey": "health-bar"
   }
 ]
