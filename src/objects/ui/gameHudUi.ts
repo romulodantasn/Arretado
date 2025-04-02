@@ -1,29 +1,31 @@
 import Phaser from 'phaser';
 import { gameOptions } from '../../config/gameOptionsConfig';
 import { timer } from '../../components/timer/timerComponent';
+import { healthComponent } from '../../components/health/healthComponent';
 
 export class gameHud extends Phaser.Scene {
-  private timerInstance: timer;
-  public waveNumber: number = 1;
-  private waveText: Phaser.GameObjects.Text;
-  public actNumber: number = 1;
-  private actText: Phaser.GameObjects.Text;
-  private coinGame: number;
-  private coinText: Phaser.GameObjects.Text;
-  public shouldIncrementWave: boolean = true;
+  #customEventEmitter: Phaser.Events.EventEmitter;
+  #health: healthComponent;
+  #timerInstance: timer;
+  waveNumber: number = 1;
+  #waveText: Phaser.GameObjects.Text;
+  actNumber: number = 1;
+  #actText: Phaser.GameObjects.Text;
+  #coinGame: number;
+  #coinText: Phaser.GameObjects.Text;
+  shouldIncrementWave: boolean = true;
 
   constructor() {
     super({
       key: 'gameHud',
     });
+
+    this.#customEventEmitter = new Phaser.Events.EventEmitter();
+    this.#health = new healthComponent(this.#customEventEmitter);
   }
 
   create() {
-    const gameScene = this.scene.get('gameScene') as Phaser.Scene;
     const textStyle = { fontFamily: 'Cordelina', color: '#ffffff', stroke: '#000000', strokeThickness: 6 };
-    const waveText = [`Onda: ${this.waveNumber}`];
-    const actText = [`Ato: ${this.actNumber}`];
-    const cointText = [`10`];
 
     this.events.off('timeUp');
     this.events.on('timeUp', () => {
@@ -32,20 +34,24 @@ export class gameHud extends Phaser.Scene {
     });
 
     console.log('actNumber: ', this.actNumber, 'waveNumber: ', this.waveNumber);
-    this.add.image(80, 40, 'health-bar').setDisplaySize(120, 120);
     this.add.image(60, 130, 'gun').setDisplaySize(90, 90);
     this.add.image(1770, 130, 'coin').setDisplaySize(60, 60);
 
-    this.add.text(1785, 80, waveText, textStyle).setFontSize(36).setAlign('center').setOrigin(0.5);
-    this.add.text(1780, 40, actText, textStyle).setFontSize(36).setAlign('center').setOrigin(0.5);
-    this.add.text(1820, 130, cointText, textStyle).setFontSize(48).setAlign('center').setOrigin(0.5);
+    this.#waveText = this.add.text(1785, 80, `Onda: ${this.waveNumber}`, textStyle).setFontSize(36).setOrigin(0.5);
+
+    this.#actText = this.add.text(1780, 40, `Ato: ${this.actNumber}`, textStyle).setFontSize(36).setOrigin(0.5);
+
+    this.#coinText = this.add.text(1820, 130, ' 10', textStyle).setFontSize(36).setOrigin(0.5);
 
     this.updateHud();
 
-    this.coinCount();
+    this.#timerInstance = new timer(this);
+    this.#timerInstance.create();
 
-    this.timerInstance = new timer(this);
-    this.timerInstance.create();
+    this.scene.launch('healthUi', {
+      emitter: this.#customEventEmitter,
+      health: this.#health,
+    });
   }
 
   public phaseCount() {
@@ -66,9 +72,9 @@ export class gameHud extends Phaser.Scene {
   }
 
   public updateHud() {
-    if (this.waveText && this.actText) {
-      this.waveText.setText(`Onda: ${this.waveNumber}`);
-      this.actText.setText(`Ato: ${this.actNumber}`);
+    if (this.#waveText && this.#actText) {
+      this.#waveText.setText(`Onda: ${this.waveNumber}`);
+      this.#actText.setText(`Ato: ${this.actNumber}`);
     }
   }
 
@@ -85,6 +91,9 @@ export class gameHud extends Phaser.Scene {
   }
 
   public coinCount() {
-    this.coinGame = 10;
+    this.#coinGame = 10;
+    if (this.#coinText) {
+      this.#coinText.setText(`${this.#coinGame}`);
+    }
   }
 }
