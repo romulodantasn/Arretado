@@ -5,9 +5,10 @@ import { preloadAssets } from './scenes/preloadAssets';
 import { titleScene } from './scenes/titleScene';
 import { gameScene } from './scenes/gameScene';
 import { pauseScene } from './scenes/pauseScene';
-import { gameHud } from './objects/ui/gameHudObject';
+import { gameHud } from './objects/ui/gameHudUi';
 import { nextPhaseScene } from './scenes/nextPhaseScene';
-import { colliderScene } from './scenes/colliderScene';
+import { GameOverScene } from './scenes/GameOverScene';
+import { healthUi } from './objects/ui/healthUi';
 
 configObject.scene = [
   bootScene,
@@ -15,8 +16,9 @@ configObject.scene = [
   titleScene,
   gameScene,
   gameHud,
+  healthUi,
   pauseScene,
-  colliderScene,
+  GameOverScene,
   nextPhaseScene,
 ];
 
