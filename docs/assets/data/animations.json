@@ -21,9 +21,15 @@
     "assetKey": "enemy"
   },
   {
-    "key": "health-bar",
+    "key": "loseFirstHalf",
     "frameRate": 10,
-    "frames": [0, 1, 2, 3, 4],
+    "frames": [0, 1, 2],
+    "assetKey": "health-bar"
+  },
+  {
+    "key": "loseSecondHalf",
+    "frameRate": 10,
+    "frames":[2, 3, 4],
     "assetKey": "health-bar"
   }
 ]
