@@ -60,10 +60,6 @@ export class collider {
 
         this.#collider.active = false;
 
-        this.#scene.time.delayedCall(100, () => {
-          this.#scene.scene.launch('healthUi', { emitter: Phaser.Events.EventEmitter, health: this.#health });
-        });
-
         this.#scene.time.delayedCall(gameOptions.invulnerabilityDuration, () => {
           this.#isInvulnerable = false;
           this.#collider.active = true;
