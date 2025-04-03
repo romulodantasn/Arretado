@@ -17,7 +17,6 @@ export class preloadAssets extends Phaser.Scene {
 
   create() {
     console.log('preloadAssets carregado');
-    console.log('Frames disponíveis em health-bar:', this.textures.get('health-bar').getFrameNames());
     this.#createAnimations();
     this.scene.start('gameScene');
     //this.scene.start('titleScene');

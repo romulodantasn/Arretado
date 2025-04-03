@@ -25,7 +25,6 @@ export class inputManager {
   static setupClicks(scene: Phaser.Scene, callbacks: { onFire?: (pointer: Phaser.Input.Pointer) => void }) {
     scene.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
       if (pointer.leftButtonDown()) {
-        console.log('Clique esquerdo');
         if (callbacks.onFire) {
           callbacks.onFire(pointer);
         }

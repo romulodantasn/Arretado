@@ -77,12 +77,6 @@ export class bulletComponent {
     bullet.setVelocity(Math.cos(angle) * speed, Math.sin(angle) * speed);
     bullet.setActive(true).setVisible(true);
     this.#scene.physics.add.collider(this.#bulletGroup, this.#enemy, this.handleBulletCollision, undefined, this);
-
-    //cconsole.log(`Criando bala em (${shooter.x}, ${shooter.y})`);
-    //console.log(`Atirando em direção a (${target.x}, ${target.y})`);
-    //console.log(`Colisão detectada entre bala e inimigo`);
-    //console.log(`Posição da bala: (${bullet.x}, ${bullet.y})`);
-    //console.log(`Posição do inimigo: (${target.x}, ${target.y})`);
   }
 
   private handleBulletCollision(bullet: any, target: any) {
