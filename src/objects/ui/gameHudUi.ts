@@ -2,10 +2,9 @@ import Phaser from 'phaser';
 import { gameOptions } from '../../config/gameOptionsConfig';
 import { timer } from '../../components/timer/timerComponent';
 import { healthComponent } from '../../components/health/healthComponent';
+import { globalEventEmitter } from '../../components/events/globalEventEmitter';
 
 export class gameHud extends Phaser.Scene {
-  #customEventEmitter: Phaser.Events.EventEmitter;
-  #health: healthComponent;
   #timerInstance: timer;
   waveNumber: number = 1;
   #waveText: Phaser.GameObjects.Text;
@@ -19,9 +18,6 @@ export class gameHud extends Phaser.Scene {
     super({
       key: 'gameHud',
     });
-
-    this.#customEventEmitter = new Phaser.Events.EventEmitter();
-    this.#health = new healthComponent(this.#customEventEmitter);
   }
 
   create() {
@@ -44,14 +40,9 @@ export class gameHud extends Phaser.Scene {
     this.#coinText = this.add.text(1820, 130, ' 10', textStyle).setFontSize(36).setOrigin(0.5);
 
     this.updateHud();
-
+    
     this.#timerInstance = new timer(this);
     this.#timerInstance.create();
-
-    this.scene.launch('healthUi', {
-      emitter: this.#customEventEmitter,
-      health: this.#health,
-    });
   }
 
   public phaseCount() {

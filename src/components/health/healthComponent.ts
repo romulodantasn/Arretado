@@ -1,15 +1,17 @@
 import { gameOptions } from '../../config/gameOptionsConfig';
 import { healthEvents } from '../events/healthEvent';
+import { globalEventEmitter } from '../events/globalEventEmitter';
+
+
 
 export class healthComponent {
-  #customEventEmitter: Phaser.Events.EventEmitter;
   #currentHealth: number;
   #maxHealth: number;
 
-  constructor(customEventEmitter: Phaser.Events.EventEmitter) {
+  constructor() {
     this.#currentHealth = gameOptions.playerHealth;
     this.#maxHealth = gameOptions.playerHealth;
-    this.#customEventEmitter = customEventEmitter;
+    console.log(`healthComponent criado. maxHleaht: ${this.#maxHealth})`);
   }
 
   get maxHealth(): number {
@@ -29,11 +31,7 @@ export class healthComponent {
         this.#currentHealth = 0;
       }
 
-      this.#customEventEmitter.emit(healthEvents.loseHealth, this.#currentHealth, prevHealth);
-      console.log('Evento loseHealth emitido:', {
-        currentHealth: this.#currentHealth,
-        prevHealth,
-      });
+      globalEventEmitter.emit(healthEvents.loseHealth, this.#currentHealth, prevHealth);
       console.log(`Jogador perdeu ${damage} ponto(s) de vida. Vida atual: ${this.#currentHealth}`);
     }
   }
