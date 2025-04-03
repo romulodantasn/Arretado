@@ -25,6 +25,7 @@ export class nextPhaseScene extends Phaser.Scene {
       hudScene.advanceWaveCount();
     }
     this.time.delayedCall(2000, () => {
+      this.scene.stop('healthUi');
       this.scene.start('gameScene');
     });
 
