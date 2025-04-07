@@ -2,8 +2,6 @@ import { gameOptions } from '../../config/gameOptionsConfig';
 import { healthEvents } from '../events/healthEvent';
 import { globalEventEmitter } from '../events/globalEventEmitter';
 
-
-
 export class healthComponent {
   #currentHealth: number;
   #maxHealth: number;
@@ -11,7 +9,7 @@ export class healthComponent {
   constructor() {
     this.#currentHealth = gameOptions.playerHealth;
     this.#maxHealth = gameOptions.playerHealth;
-    console.log(`healthComponent criado. maxHleaht: ${this.#maxHealth})`);
+    console.log(`healthComponent criado. MaxHealth: ${this.#maxHealth})`);
   }
 
   get maxHealth(): number {

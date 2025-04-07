@@ -17,13 +17,11 @@ export class healthUi extends Phaser.Scene {
   }
 
   init(data: { health: healthComponent }) {
-    this.#health = data.health
+    this.#health = data.health;
     this.#createHearts();
   }
 
   create() {
-  
-
     globalEventEmitter.on(healthEvents.loseHealth, (newHealth: number, prevHealth: number) => {
       console.log('Evento loseHealth recebido:', { newHealth, prevHealth });
       this.#handleHealthLoss(newHealth, prevHealth);
@@ -31,7 +29,6 @@ export class healthUi extends Phaser.Scene {
   }
 
   #handleHealthLoss(newHealth: number, prevHealth: number) {
-  
     const heartIndex = Math.floor(prevHealth / 2) - 1;
     const isHalfHeart = prevHealth % 2 === 1;
 
@@ -44,14 +41,11 @@ export class healthUi extends Phaser.Scene {
     } else {
       console.warn(`Índice inválido para coração: ${heartIndex}`);
     }
-
-    console.log(`Vida Atualizada: ${newHealth}/${this.#health.maxHealth}`);
   }
 
   #createHearts(): void {
     this.#hearts = [];
     const numberOfHearts = Math.floor(this.#health.maxHealth / 2);
-    console.log(`Creating ${numberOfHearts}hearts`)
 
     for (let i = 0; i < numberOfHearts; i++) {
       const heart = this.add
@@ -59,7 +53,6 @@ export class healthUi extends Phaser.Scene {
         .setScale(6)
         .setOrigin(0);
       this.#hearts.push(heart);
-      console.log(`Coração ${i} criado e adicionado ao array #hearts`)
     }
   }
 }

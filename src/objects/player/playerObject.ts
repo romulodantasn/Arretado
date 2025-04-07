@@ -48,11 +48,14 @@ export class player extends Phaser.Physics.Arcade.Sprite {
     this.setVelocity(0, 0);
 
     if (movementDirection.x === 0 || movementDirection.y === 0) {
-      this.setVelocity(movementDirection.x * gameOptions.playerSpeed, movementDirection.y * gameOptions.playerSpeed);
+      this.setVelocity(
+        movementDirection.x * gameOptions.playerMoveSpeed,
+        movementDirection.y * gameOptions.playerMoveSpeed
+      );
     } else {
       this.setVelocity(
-        (movementDirection.x * gameOptions.playerSpeed) / Math.sqrt(2),
-        (movementDirection.y * gameOptions.playerSpeed) / Math.sqrt(2)
+        (movementDirection.x * gameOptions.playerMoveSpeed) / Math.sqrt(2),
+        (movementDirection.y * gameOptions.playerMoveSpeed) / Math.sqrt(2)
       );
     }
     return isMoving;

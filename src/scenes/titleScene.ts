@@ -39,6 +39,7 @@ export class titleScene extends Phaser.Scene {
       this.scene.start('gameScene');
     });
   }
+
   shutdown() {
     if (titleScene.titleSceneAudio) {
       titleScene.titleSceneAudio.stop();
