@@ -13,7 +13,7 @@ export class nextPhaseScene extends Phaser.Scene {
 
   create() {
     this.nextPhase();
-    console.log('nexPhaseScene Carregada');
+    console.log('nextPhaseScene Carregada');
   }
 
   public nextPhase() {
@@ -26,7 +26,11 @@ export class nextPhaseScene extends Phaser.Scene {
     }
     this.time.delayedCall(2000, () => {
       this.scene.stop('healthUi');
-      this.scene.start('gameScene');
+      this.scene.stop('gameHud');
+      this.scene.stop('gameScene');
+      this.scene.stop('nextPhaseScene');
+      this.scene.start('upgradeScene');
+      //this.scene.start('gameScene');
     });
 
     this.add.text(980, 510, nextPhaseText, textStyle).setFontSize(36).setAlign('center').setOrigin(0.5);
