@@ -7,6 +7,7 @@ import { pauseScene } from '../scenes/pauseScene';
 import { nextPhaseScene } from '../scenes/nextPhaseScene';
 import { GameOverScene } from '../scenes/GameOverScene';
 import { healthUi } from '../objects/ui/healthUi';
+import { upgradeScene } from '../scenes/upgradeScene';
 
 export const scaleObject: Phaser.Types.Core.ScaleConfig = {
   mode: Phaser.Scale.FIT,
@@ -19,7 +20,17 @@ export const scaleObject: Phaser.Types.Core.ScaleConfig = {
 export const configObject: Phaser.Types.Core.GameConfig = {
   type: Phaser.WEBGL,
   scale: scaleObject,
-  scene: [bootScene, preloadAssets, gameScene, healthUi, GameOverScene, nextPhaseScene, pauseScene, titleScene],
+  scene: [
+    bootScene,
+    preloadAssets,
+    gameScene,
+    healthUi,
+    GameOverScene,
+    nextPhaseScene,
+    pauseScene,
+    upgradeScene,
+    titleScene,
+  ],
   physics: {
     default: 'arcade',
     arcade: {
