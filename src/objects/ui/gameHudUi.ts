@@ -1,8 +1,6 @@
 import Phaser from 'phaser';
 import { gameOptions } from '../../config/gameOptionsConfig';
 import { timer } from '../../components/timer/timerComponent';
-import { healthComponent } from '../../components/health/healthComponent';
-import { globalEventEmitter } from '../../components/events/globalEventEmitter';
 
 export class gameHud extends Phaser.Scene {
   #timerInstance: timer;
@@ -21,6 +19,7 @@ export class gameHud extends Phaser.Scene {
   }
 
   create() {
+    this.coinCount();
     const textStyle = { fontFamily: 'Cordelina', color: '#ffffff', stroke: '#000000', strokeThickness: 6 };
 
     this.events.off('timeUp');
@@ -37,10 +36,10 @@ export class gameHud extends Phaser.Scene {
 
     this.#actText = this.add.text(1780, 40, `Ato: ${this.actNumber}`, textStyle).setFontSize(36).setOrigin(0.5);
 
-    this.#coinText = this.add.text(1820, 130, ' 10', textStyle).setFontSize(36).setOrigin(0.5);
+    this.#coinText = this.add.text(1840, 130, `${this.#coinGame}`, textStyle).setFontSize(36).setOrigin(0.5);
 
     this.updateHud();
-    
+
     this.#timerInstance = new timer(this);
     this.#timerInstance.create();
   }
@@ -82,7 +81,7 @@ export class gameHud extends Phaser.Scene {
   }
 
   public coinCount() {
-    this.#coinGame = 10;
+    this.#coinGame = gameOptions.playerCoinGame;
     if (this.#coinText) {
       this.#coinText.setText(`${this.#coinGame}`);
     }
