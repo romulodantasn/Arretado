@@ -7,7 +7,7 @@ import { pauseScene } from '../scenes/pauseScene';
 import { nextPhaseScene } from '../scenes/nextPhaseScene';
 import { GameOverScene } from '../scenes/GameOverScene';
 import { healthUi } from '../objects/ui/healthUi';
-import { upgradeScene } from '../scenes/upgradeScene';
+import { itemsScene } from '../scenes/itemsScene';
 
 export const scaleObject: Phaser.Types.Core.ScaleConfig = {
   mode: Phaser.Scale.FIT,
@@ -28,7 +28,7 @@ export const configObject: Phaser.Types.Core.GameConfig = {
     GameOverScene,
     nextPhaseScene,
     pauseScene,
-    upgradeScene,
+    itemsScene,
     titleScene,
   ],
   physics: {
