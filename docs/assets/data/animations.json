@@ -29,7 +29,7 @@
   {
     "key": "loseSecondHalf",
     "frameRate": 10,
-    "frames":[2, 3, 4],
+    "frames": [2, 3, 4],
     "assetKey": "health-bar"
   }
 ]
