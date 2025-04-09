@@ -44,8 +44,8 @@ export class collider {
 
           const gameHud = this.#scene.scene.get('gameHud') as gameHud;
           if (gameHud) {
-            gameHud.waveNumber = 1;
-            gameHud.actNumber = 1;
+            gameOptions.currentWave = 1;
+            gameOptions.currentAct = 1;
             gameOptions.enemyRate = 800;
             console.log('enemyRate Reset: ' + gameOptions.enemyRate);
             gameHud.shouldIncrementWave = true;
