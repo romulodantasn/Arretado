@@ -3,7 +3,7 @@ import { gameOptions } from '../../config/gameOptionsConfig';
 export interface itemsContainer {
   imageKey: string;
   name: string;
-  type: 'dano' | 'vida' | 'velocidadeDeMovimento' | 'sorte';
+  type: 'dano' | 'vida' | 'Velocidade' | 'sorte';
   description: string;
   sentence: string;
   cost: number;
@@ -16,7 +16,7 @@ export const damageItems: itemsContainer[] = [
     name: 'Munguzá',
     type: 'dano',
     description: '+10 de Dano',
-    sentence: 'Sustança na veia  e força no braço',
+    sentence: '"Sustança na veia  e força no braço"',
     cost: 10,
     effect: () => {
       // Implement the effect of this upgrade
@@ -29,7 +29,7 @@ export const damageItems: itemsContainer[] = [
     name: 'Chifre',
     type: 'dano',
     description: '+30 de Dano',
-    sentence: 'É chifre, mas é power-up. Força dos corno é descomunal.',
+    sentence: '"É chifre, mas é power-up. Força dos corno é descomunal."',
     cost: 15,
     effect: () => {
       // Implement the effect of this upgrade
@@ -42,7 +42,7 @@ export const damageItems: itemsContainer[] = [
     name: 'Pitu',
     type: 'dano',
     description: '+ 20 de Dano no final de cada onda',
-    sentence: 'Depois de uma dose de Pitú, ninguém segura o caba!',
+    sentence: '"Depois de uma dose de Pitú, ninguém segura o caba!"',
     cost: 20,
     effect: () => {
       // Implement the effect of this upgrade
@@ -55,7 +55,7 @@ export const damageItems: itemsContainer[] = [
     name: 'Espora de Aço',
     type: 'dano',
     description: '+10 de dano',
-    sentence: 'Com uma espora dessas, até um djabo corre de medo!',
+    sentence: '"Com uma espora dessas, até um djabo corre de medo!"',
     cost: 20,
     effect: () => {
       // Implement the effect of this upgrade
@@ -68,7 +68,7 @@ export const damageItems: itemsContainer[] = [
     name: 'pimenta',
     type: 'dano',
     description: '+10 de dano',
-    sentence: 'Arde mais que briga de vizinho com som alto no domingo',
+    sentence: '"Arde mais que briga de vizinho com som alto no domingo."',
     cost: 20,
     effect: () => {
       // Implement the effect of this upgrade
@@ -81,10 +81,10 @@ export const damageItems: itemsContainer[] = [
 export const lifeItems: itemsContainer[] = [
   {
     imageKey: 'bodega',
-    name: 'Bodega do Seu Lunga',
+    name: 'Bodega',
     type: 'vida',
     description: 'Restaura 50% de Vida ao final de cada onda',
-    sentence: 'Mais forte que café coado em pano de chão',
+    sentence: '"Mais forte que café coado em pano de chão"',
     cost: 200,
     effect: () => {
       // Implement the effect of this upgrade
@@ -97,7 +97,7 @@ export const lifeItems: itemsContainer[] = [
     name: 'Chapéu',
     type: 'vida',
     description: '+30 de Vida',
-    sentence: 'Proteção de cabeça e alma, igual chapéu de cangaceiro',
+    sentence: '"Proteção de cabeça e alma, igual chapéu de cangaceiro"',
     cost: 50,
     effect: () => {
       // Implement the effect of this upgrade
@@ -110,7 +110,7 @@ export const lifeItems: itemsContainer[] = [
     name: 'Mandiga de velho',
     type: 'vida',
     description: 'Chance de evitar a morte uma vez por onda',
-    sentence: 'Só morre se quiser, com mandinga dessas até encosto foge',
+    sentence: '"Só morre se quiser, com mandinga dessas até encosto foge"',
     cost: 250,
     effect: () => {
       // Implement the effect of this upgrade
@@ -123,7 +123,7 @@ export const lifeItems: itemsContainer[] = [
     name: 'Rapadura',
     type: 'vida',
     description: '+20 de vida',
-    sentence: 'É sweet mas não é soft não.',
+    sentence: '"É sweet mas não é soft não."',
     cost: 100,
     effect: () => {
       // Implement the effect of this upgrade
@@ -136,7 +136,7 @@ export const lifeItems: itemsContainer[] = [
     name: 'Mocotó',
     type: 'vida',
     description: '+ 35 de vida',
-    sentence: 'Com esse mocotó tu aguenta até missa de ressaca.',
+    sentence: '"Com esse mocotó tu aguenta até missa de ressaca."',
     cost: 20,
     effect: () => {
       // Implement the effect of this upgrade
@@ -150,9 +150,9 @@ export const moveSpeedItems: itemsContainer[] = [
   {
     imageKey: 'peDePano',
     name: 'Pé de Pano',
-    type: 'velocidadeDeMovimento',
+    type: 'Velocidade',
     description: '+30% de Velocidade de Movimento',
-    sentence: 'Foi por essa droga que você se apaixonou, Pé de Pano?',
+    sentence: '"Foi por essa droga que você se apaixonou, Pé de Pano?"',
     cost: 100,
     effect: () => {
       // Implement the effect of this upgrade
@@ -163,9 +163,9 @@ export const moveSpeedItems: itemsContainer[] = [
   {
     imageKey: 'sandaliaJesus',
     name: 'sandaliaJesus',
-    type: 'velocidadeDeMovimento',
+    type: 'Velocidade',
     description: '+10% de Velocidade de Movimento',
-    sentence: 'Corre mais que notícia ruim no grupo do zap',
+    sentence: '"Corre mais que notícia ruim no grupo do zap"',
     cost: 50,
     effect: () => {
       // Implement the effect of this upgrade
@@ -176,9 +176,9 @@ export const moveSpeedItems: itemsContainer[] = [
   {
     imageKey: 'guaranaJesus',
     name: 'guaranaJesus',
-    type: 'velocidadeDeMovimento',
+    type: 'Velocidade',
     description: '+25% de velocidade por 10s após beber, depois -10% de velocidade',
-    sentence: 'Igual promessa de político, primeiro adoça, depois derruba.',
+    sentence: '"Igual promessa de político, primeiro adoça, depois derruba."',
     cost: 50,
     effect: () => {
       // Implement the effect of this upgrade
@@ -189,9 +189,9 @@ export const moveSpeedItems: itemsContainer[] = [
   {
     imageKey: 'poeira',
     name: 'poeira',
-    type: 'velocidadeDeMovimento',
+    type: 'Velocidade',
     description: '+20 de MoveSpeed',
-    sentence: 'Oque que há velhinho?',
+    sentence: '"Oque que há velhinho?"',
     cost: 100,
     effect: () => {
       // Implement the effect of this upgrade
@@ -202,9 +202,9 @@ export const moveSpeedItems: itemsContainer[] = [
   {
     imageKey: 'patuaSaoJorge',
     name: 'patuaSaoJorge',
-    type: 'velocidadeDeMovimento',
+    type: 'Velocidade',
     description: '+35 de MoveSpeed',
-    sentence: 'Para que meus inimigos tendo pés não me alcancem',
+    sentence: '"Para que meus inimigos tendo pés não me alcancem"',
     cost: 200,
     effect: () => {
       // Implement the effect of this upgrade
@@ -217,14 +217,14 @@ export const moveSpeedItems: itemsContainer[] = [
 export const luckyItems: itemsContainer[] = [
   {
     imageKey: 'olhoDeCobra',
-    name: 'olhoDeCobra',
+    name: 'Olho de Cobra',
     type: 'sorte',
     description: '+5% de Crítico',
-    sentence: 'Veneno bom é o da tua cobra',
+    sentence: '"Veneno bom é o da tua cobra"',
     cost: 100,
     effect: () => {
       // Implement the effect of this upgrade
-      console.log('Movespeed item choosed!');
+      console.log('Lucky item choosed!');
       gameOptions.playerLucky += 30;
     },
   },
@@ -233,7 +233,7 @@ export const luckyItems: itemsContainer[] = [
     name: 'cordel',
     type: 'sorte',
     description: '+10% de Crítico',
-    sentence: 'Cordel escrito à mão, destino traçado com emoção!',
+    sentence: '"Cordel escrito à mão, destino traçado com emoção!"',
     cost: 50,
     effect: () => {
       // Implement the effect of this upgrade
@@ -246,7 +246,7 @@ export const luckyItems: itemsContainer[] = [
     name: 'dadoCangaceiro',
     type: 'sorte',
     description: 'Críticos causam +50% de dano',
-    sentence: 'Dado de 6 lados, 1 lado é a morte',
+    sentence: '"Dado de 6 lados, 1 lado é a morte"',
     cost: 50,
     effect: () => {
       // Implement the effect of this upgrade
@@ -259,7 +259,7 @@ export const luckyItems: itemsContainer[] = [
     name: 'ferradura',
     type: 'sorte',
     description: '+10% de chance de critico',
-    sentence: 'Dizem que dá sorte ou azar, depende de como cair',
+    sentence: '"Dizem que dá sorte ou azar, depende de como cair"',
     cost: 100,
     effect: () => {
       // Implement the effect of this upgrade
@@ -272,11 +272,11 @@ export const luckyItems: itemsContainer[] = [
     name: 'guine',
     type: 'sorte',
     description: '+15% de chance de critico apos ficar com pouca vida',
-    sentence: 'Fica fraco, mas vira bicho',
+    sentence: '"Fica fraco, mas vira bicho"',
     cost: 200,
     effect: () => {
       // Implement the effect of this upgrade
-      console.log('Damage increased!');
+      console.log('Lucky increased!');
       gameOptions.playerLucky += 15;
     },
   },
