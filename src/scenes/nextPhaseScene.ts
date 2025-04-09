@@ -29,8 +29,8 @@ export class nextPhaseScene extends Phaser.Scene {
       this.scene.stop('gameHud');
       this.scene.stop('gameScene');
       this.scene.stop('nextPhaseScene');
-      this.scene.start('upgradeScene');
-      //this.scene.start('gameScene');
+      this.scene.stop('gameScene');
+      this.scene.start('itemScene');
     });
 
     this.add.text(980, 510, nextPhaseText, textStyle).setFontSize(36).setAlign('center').setOrigin(0.5);
