@@ -9,7 +9,7 @@ import { gameHud } from './objects/ui/gameHudUi';
 import { nextPhaseScene } from './scenes/nextPhaseScene';
 import { GameOverScene } from './scenes/GameOverScene';
 import { healthUi } from './objects/ui/healthUi';
-import { itemsScene } from './scenes/itemsScene';
+import { itemScene } from './scenes/itemScene';
 
 configObject.scene = [
   bootScene,
@@ -21,7 +21,7 @@ configObject.scene = [
   pauseScene,
   GameOverScene,
   nextPhaseScene,
-  itemsScene,
+  itemScene,
 ];
 
 new Phaser.Game(configObject);
