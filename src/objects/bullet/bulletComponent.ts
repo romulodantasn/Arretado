@@ -1,9 +1,9 @@
-import Phaser, { Scene } from 'phaser';
 import { inputManager } from '../../components/input/inputManagerComponent';
+import { gameScene } from '../../scenes/gameScene';
 import { gameOptions } from '../../config/gameOptionsConfig';
 import { player } from '../player/playerObject';
 import { enemyGroup } from '../enemies/enemyObject';
-import { gameScene } from '../../scenes/gameScene';
+import { PauseScene } from '../../scenes/PauseScene';
 
 export class bulletComponent {
   #scene: Phaser.Scene;
@@ -12,18 +12,12 @@ export class bulletComponent {
   #bulletGroup: Phaser.Physics.Arcade.Group;
   #reticle: Phaser.GameObjects.Sprite;
   #keys: any;
-  #pointer: Phaser.Input.Pointer;
 
-  constructor(
-    scene: Phaser.Scene,
-    player: player,
-    enemyGroup: enemyGroup,
-    reticle: Phaser.GameObjects.Sprite,
-    pointer: Phaser.Input.Pointer
-  ) {
+  constructor(scene: Phaser.Scene, player: player, enemyGroup: enemyGroup, reticle: Phaser.GameObjects.Sprite) {
     this.#scene = scene;
     this.#player = player;
-    this.#pointer = pointer;
+    this.#reticle = reticle;
+
     this.#enemy = enemyGroup;
     this.#bulletGroup = this.#scene.physics.add.group();
     this.#keys = inputManager.getKeys();
@@ -36,19 +30,15 @@ export class bulletComponent {
     console.log('BulletComponent criado');
   }
 
-  update() {
-    this.#player.rotation = Phaser.Math.Angle.Between(this.#player.x, this.#player.y, this.#reticle.x, this.#reticle.y);
-  }
-
   public reticleMovement() {
     this.#reticle = this.#scene.add.sprite(this.#player.x, this.#player.y - 50, 'reticle');
     this.#reticle.setOrigin(0.5, 0.5).setDisplaySize(40, 40);
     this.#reticle.setActive(true).setVisible(true);
     this.#scene.input.setDefaultCursor('none');
 
-    this.#scene.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
-      this.#reticle.x = pointer.worldX;
-      this.#reticle.y = pointer.worldY;
+    this.#scene.input.on('pointermove', (reticle: Phaser.Input.Pointer) => {
+      this.#reticle.x = reticle.worldX;
+      this.#reticle.y = reticle.worldY;
     });
   }
 
