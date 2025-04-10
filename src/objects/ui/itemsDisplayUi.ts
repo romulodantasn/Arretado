@@ -1,35 +1,32 @@
 import Phaser from 'phaser';
 import { gameOptions } from '../../config/gameOptionsConfig';
-import { gameHud } from './gameHudUi';
 import { damageItems, lifeItems, moveSpeedItems, luckyItems, itemsContainer } from '../upgrades/itemsContainer';
 
 export class itemsDisplayUi extends Phaser.GameObjects.Container {
+  textStyle = { fontFamily: 'Cordelina', color: '#ffffff', stroke: '#000000', strokeThickness: 4 };
+
   #damageItems: itemsContainer[] = damageItems;
   #lifeItems: itemsContainer[] = lifeItems;
   #moveSpeedItems: itemsContainer[] = moveSpeedItems;
   #luckyItems: itemsContainer[] = luckyItems;
-  #upgradeOptions: itemsContainer[] = [
-    ...this.#damageItems,
-    ...this.#lifeItems,
-    ...this.#moveSpeedItems,
-    ...this.#luckyItems,
-  ];
+
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y);
   }
 
   create() {
     console.log('itemsDisplay Carregada');
+    this.scene.input.setDefaultCursor('default');
 
-    const textStyle = { fontFamily: 'Cordelina', color: '#ffffff', stroke: '#000000', strokeThickness: 4 };
     const titleText = ['Eai, Caba. O que vai ser?'];
     const statsTitleText = ['Atributos'];
-    this.scene.add.text(960, 200, titleText, textStyle).setFontSize(48).setAlign('center').setOrigin(0.5);
-    this.scene.add.text(1800, 300, statsTitleText, textStyle).setFontSize(40).setAlign('center').setOrigin(0.5);
+    this.scene.add.text(960, 200, titleText, this.textStyle).setFontSize(48).setAlign('center').setOrigin(0.5);
+    this.scene.add.text(1800, 300, statsTitleText, this.textStyle).setFontSize(40).setAlign('center').setOrigin(0.5);
     this.scene.scene.launch('gameHud', { elementsToShow: ['coins', 'wave'] });
 
     this.playerStatsContainer(1800, 600);
     this.containerItems();
+    this.buttonNextPhase();
   }
 
   // função pra achar a imagem pelo imageKey
@@ -51,15 +48,19 @@ export class itemsDisplayUi extends Phaser.GameObjects.Container {
     items: itemsContainer[],
     type: string
   ): Phaser.GameObjects.Container {
-    const itemBg = this.scene.add.rectangle(0, 0, 350, 580, color).setStrokeStyle(2, 0xffffff);
-    const container = this.scene.add.container(x, y, [itemBg]);
-    container.setSize(350, 580);
-    container.setInteractive(new Phaser.Geom.Rectangle(-175, -290, 350, 580), Phaser.Geom.Rectangle.Contains);
+    const itemBg = this.scene.add
+      .rectangle(0, 0, 350, 580, color)
+      .setStrokeStyle(2, 0xffffff)
+      .setInteractive({ useHandCursor: true });
+    const containerItem = this.scene.add.container(x, y, [itemBg]);
 
-    container.on('pointerover', () => {
+    containerItem.setSize(350, 580);
+    containerItem.setInteractive(new Phaser.Geom.Rectangle(-175, -290, 350, 580), Phaser.Geom.Rectangle.Contains);
+
+    containerItem.on('pointerover', () => {
       itemBg.setFillStyle(0x555555);
     });
-    container.on('pointerout', () => {
+    containerItem.on('pointerout', () => {
       itemBg.setFillStyle(color);
     });
 
@@ -88,23 +89,20 @@ export class itemsDisplayUi extends Phaser.GameObjects.Container {
         .setOrigin(0.5)
         .setFontSize(32);
 
-      container.add([image, nameText, typeText, descriptionText, sentenceText, costText]);
+      containerItem.add([image, nameText, typeText, descriptionText, sentenceText, costText]);
 
-      container.on('pointerdown', () => {
-        const textStyle = { fontFamily: 'Cordelina', color: '#ffffff', stroke: '#000000', strokeThickness: 4 };
-
+      containerItem.on('pointerdown', () => {
         if (gameOptions.playerCoinGame >= item.cost) {
           item.effect();
           gameOptions.playerCoinGame -= item.cost;
           const buyText = this.scene.add
-            .text(x, y + 320, `Item ${item.name} comprado!`, { ...textStyle, color: '#ff0000' })
+            .text(x, y + 320, `Item ${item.name} comprado!`, { ...textStyle, color: '#008000' })
             .setOrigin(0.5)
             .setFontSize(28);
-          console.log(`Item ${item.name} comprado!
-            Iniciando a proxima onda...`);
-          this.scene.time.delayedCall(3500, () => this.scene.scene.start('gameScene'));
+          console.log(`Item ${item.name} comprado`);
+          this.scene.time.delayedCall(3500, () => buyText.destroy());
         } else {
-          console.log('Ta liso, Caba! Num tem moeda suficiente.');
+          console.log('Not enough money to buy item');
           const noMoneyText = this.scene.add
             .text(x, y + 320, 'Ta liso, caba! Num tem moeda suficiente.', { ...textStyle, color: '#ff0000' })
             .setOrigin(0.5)
@@ -115,8 +113,32 @@ export class itemsDisplayUi extends Phaser.GameObjects.Container {
     } else {
       console.warn('Nenhum item encontrado para o tipo:', type);
     }
+    return containerItem;
+  }
 
-    return container;
+  private buttonNextPhase() {
+    const button = this.scene.add
+      .rectangle(1700, 975, 400, 100, 0x333333)
+      .setStrokeStyle(2, 0xffffff)
+      .setInteractive({ useHandCursor: true });
+    const buttonText = this.scene.add
+      .text(1700, 975, 'Próxima Onda', this.textStyle)
+      .setFontSize(48)
+      .setAlign('center')
+      .setOrigin(0.5);
+
+    button.on('pointerdown', () => {
+      buttonText.setColor('green');
+      this.scene.time.delayedCall(1000, () => {
+        buttonText.setColor('#ffffff');
+      });
+      this.scene.scene.start('gameScene');
+      gameOptions.currentWave++;
+      gameOptions.enemyRate -= 100;
+      gameOptions.enemySpeed += 10;
+      console.log('enemySpeedUpdated: ' + gameOptions.enemySpeed);
+      console.log('enemyRateUpdated: ' + gameOptions.enemyRate);
+    });
   }
 
   private playerStatsContainer(x: number, y: number) {
@@ -125,24 +147,26 @@ export class itemsDisplayUi extends Phaser.GameObjects.Container {
     const moveSpeed = gameOptions.playerMoveSpeed;
     const lucky = gameOptions.playerLucky;
 
-    const statsBg = this.scene.add.rectangle(0, 0, 200, 400).setStrokeStyle(2, 0xffffff);
+    const statsBg = this.scene.add.rectangle(-25, 0, -250, 400).setStrokeStyle(2, 0xffffff);
     const container = this.scene.add.container(x, y, [statsBg]);
     container.setSize(200, 400);
     container.setInteractive(new Phaser.Geom.Rectangle(-175, -290, 200, 400), Phaser.Geom.Rectangle.Contains);
 
-    const textStyle = { fontFamily: 'Cordelina', color: '#ffffff', stroke: '#000000', strokeThickness: 4 };
-    const healthText = this.scene.add.text(0, -150, `Vida: ${health}`, textStyle).setOrigin(0.5).setFontSize(36);
-    const damageText = this.scene.add.text(0, -75, `Dano: ${damage}`, textStyle).setOrigin(0.5).setFontSize(36);
+    const healthText = this.scene.add.text(-30, -150, `Vida: ${health}`, this.textStyle).setOrigin(0.5).setFontSize(36);
+    const damageText = this.scene.add.text(-30, -75, `Dano: ${damage}`, this.textStyle).setOrigin(0.5).setFontSize(36);
     const moveSpeedText = this.scene.add
-      .text(0, 0, `Velocidade: ${moveSpeed}`, textStyle)
+      .text(-30, 0, `Velocidade: ${moveSpeed}`, this.textStyle)
       .setOrigin(0.5)
       .setFontSize(28);
-    const luckyText = this.scene.add.text(0, 75, `Sorte: ${lucky}`, textStyle).setOrigin(0.5).setFontSize(36);
+    const luckyText = this.scene.add.text(-30, 75, `Sorte: ${lucky}`, this.textStyle).setOrigin(0.5).setFontSize(36);
     container.on('pointerover', () => {
+      this.scene.input.setDefaultCursor('pointer'); // Restaura o cursor padrão
+
       statsBg.setFillStyle(0x555555);
     });
     container.on('pointerout', () => {
       statsBg.setFillStyle(0x333333);
+      this.scene.input.setDefaultCursor('default'); // Restaura o cursor padrão
     });
     container.add([healthText, damageText, moveSpeedText, luckyText]);
   }
