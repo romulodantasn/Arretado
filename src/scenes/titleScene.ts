@@ -1,8 +1,11 @@
 import { gameOptions } from '../config/gameOptionsConfig';
+import { gameScene } from './gameScene';
+// import { BaseScene } from './BaseScene';
 
 export class titleScene extends Phaser.Scene {
   static controlKeys: any;
   static titleSceneAudio: Phaser.Sound.BaseSound;
+  titleFont = { fontFamily: 'Cordelina', color: '#ffffff', stroke: '#000000', strokeThickness: 6 };
 
   constructor() {
     super('titleScene');
@@ -13,8 +16,9 @@ export class titleScene extends Phaser.Scene {
   }
 
   create() {
+    // super.create();
     console.log('titleScene carregada');
-    const textStyle = { fontFamily: 'Cordelina', color: '#ffffff', stroke: '#000000', strokeThickness: 6 };
+
     this.add
       .image(0, 0, 'titleSceneBackground')
       .setOrigin(0, 0)
@@ -29,8 +33,8 @@ export class titleScene extends Phaser.Scene {
     const gameName = ['ARRETADO'];
     const instructions = ['Pressione ENTER para começar'];
 
-    this.add.text(960, 550, gameName, textStyle).setFontSize(64).setAlign('center').setOrigin(0.5);
-    this.add.text(980, 850, instructions, textStyle).setFontSize(48).setAlign('center').setOrigin(0.5);
+    this.add.text(960, 550, gameName, this.titleFont).setFontSize(64).setAlign('center').setOrigin(0.5);
+    this.add.text(980, 850, instructions, this.titleFont).setFontSize(48).setAlign('center').setOrigin(0.5);
 
     const keyboard = this.input.keyboard as Phaser.Input.Keyboard.KeyboardPlugin;
     const enterKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
