@@ -13,9 +13,9 @@ export class gameScene extends Phaser.Scene {
   #player: player;
   #enemy: enemyGroup;
   #bullet: bulletComponent;
+  #reticle: Phaser.GameObjects.Sprite;
   #collisionHandler: collider;
   #health: healthComponent;
-  #reticle: Phaser.GameObjects.Sprite;
 
   constructor() {
     super({ key: 'gameScene' });
@@ -44,9 +44,8 @@ export class gameScene extends Phaser.Scene {
 
     this.#enemy = new enemyGroup(this, this.#player);
 
-    this.#bullet = new bulletComponent(this, this.#player, this.#enemy, this.#reticle, this.input.activePointer);
-    this.#bullet.reticleMovement();
-    this.#bullet.setupShooting();
+    this.#bullet = new bulletComponent(this, this.#player, this.#enemy, this.#reticle);
+    this.#bullet.create();
 
     this.#collisionHandler = new collider(this, this.#player, this.#enemy, this.#health);
     this.#collisionHandler.create();
@@ -57,8 +56,6 @@ export class gameScene extends Phaser.Scene {
       }
     });
     console.log('healthUi carregada');
-
-    this.events.on('nextPhase', this.triggerNextPhase, this);
   }
 
   update() {
@@ -68,11 +65,11 @@ export class gameScene extends Phaser.Scene {
     this.#enemy.updateEnemyMovement(this);
   }
 
-  private handlePause() {
+  public handlePause() {
     if (!Phaser.Input.Keyboard.JustDown(this.#keys.pause)) return;
     const gameScene = 'gameScene';
     const gameHud = 'gameHud';
-    const pauseScene = 'pauseScene';
+    const PauseScene = 'PauseScene';
 
     const isGamePaused = this.scene.isPaused(gameScene);
     const isHudPaused = this.scene.isPaused(gameHud);
@@ -81,18 +78,15 @@ export class gameScene extends Phaser.Scene {
     if (isGamePaused) {
       console.log('Jogo retomado');
       this.scene.resume(gameScene);
+
       if (isHudPaused) this.scene.resume(gameHud);
-      this.scene.stop(pauseScene);
+      this.scene.stop(PauseScene);
     } else {
       console.log('Jogo Pausado');
       this.scene.pause(gameScene);
+      this.scene.scene.input.setDefaultCursor('default');
       if (isHudActive) this.scene.pause(gameHud);
-      this.scene.launch(pauseScene);
+      this.scene.launch(PauseScene);
     }
-  }
-
-  private triggerNextPhase() {
-    console.log('Avançando para a próxima fase');
-    this.scene.start('nextPhaseScene');
   }
 }
