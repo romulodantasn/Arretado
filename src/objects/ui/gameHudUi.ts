@@ -71,14 +71,12 @@ export class gameHud extends Phaser.Scene {
       this.#timerInstance.create();
     }
 
-    // Atualiza textos que foram criados
     this.updateHud();
   }
 
   public phaseCount() {
     if (!this.shouldIncrementWave || !this.#elementsToShow.includes('wave')) return;
     console.log(`Chamando phaseCount(). waveNumber: ${gameOptions.currentWave}, actNumber: ${gameOptions.currentAct}`);
-    gameOptions.currentWave++;
     if (gameOptions.currentWave > 9) {
       gameOptions.currentWave = 1;
       gameOptions.currentAct++;
