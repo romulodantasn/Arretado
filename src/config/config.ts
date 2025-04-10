@@ -1,9 +1,9 @@
 import { gameOptions } from './gameOptionsConfig';
-import { bootScene } from '../scenes/bootScene';
+import { BootScene } from '../scenes/BootScene';
 import { preloadAssets } from '../scenes/preloadAssets';
 import { titleScene } from '../scenes/titleScene';
 import { gameScene } from '../scenes/gameScene';
-import { pauseScene } from '../scenes/pauseScene';
+import { PauseScene } from '../scenes/PauseScene';
 import { nextPhaseScene } from '../scenes/nextPhaseScene';
 import { GameOverScene } from '../scenes/GameOverScene';
 import { healthUi } from '../objects/ui/healthUi';
@@ -21,13 +21,13 @@ export const configObject: Phaser.Types.Core.GameConfig = {
   type: Phaser.WEBGL,
   scale: scaleObject,
   scene: [
-    bootScene,
+    BootScene,
     preloadAssets,
     gameScene,
     healthUi,
     GameOverScene,
     nextPhaseScene,
-    pauseScene,
+    PauseScene,
     itemScene,
     titleScene,
   ],

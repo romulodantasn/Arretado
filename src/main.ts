@@ -1,10 +1,10 @@
 import Phaser from 'phaser';
 import { configObject } from './config/config';
-import { bootScene } from './scenes/bootScene';
+import { BootScene } from './scenes/BootScene';
 import { preloadAssets } from './scenes/preloadAssets';
 import { titleScene } from './scenes/titleScene';
 import { gameScene } from './scenes/gameScene';
-import { pauseScene } from './scenes/pauseScene';
+import { PauseScene } from './scenes/PauseScene';
 import { gameHud } from './objects/ui/gameHudUi';
 import { nextPhaseScene } from './scenes/nextPhaseScene';
 import { GameOverScene } from './scenes/GameOverScene';
@@ -12,13 +12,13 @@ import { healthUi } from './objects/ui/healthUi';
 import { itemScene } from './scenes/itemScene';
 
 configObject.scene = [
-  bootScene,
+  BootScene,
   preloadAssets,
   titleScene,
   gameScene,
   gameHud,
   healthUi,
-  pauseScene,
+  PauseScene,
   GameOverScene,
   nextPhaseScene,
   itemScene,
