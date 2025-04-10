@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Phaser from 'phaser';
 
-export class bootScene extends Phaser.Scene {
+export class BootScene extends Phaser.Scene {
   constructor() {
-    super({ key: 'bootScene' });
+    super({ key: 'BootScene' });
   }
 
   preload() {
@@ -11,7 +11,7 @@ export class bootScene extends Phaser.Scene {
   }
 
   create() {
-    console.log('bootScene carregado');
+    console.log('BootScene carregado');
     this.scene.start('preloadAssets');
   }
 }
