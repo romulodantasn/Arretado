@@ -8,7 +8,7 @@ export class gameHud extends Phaser.Scene {
   #waveText: Phaser.GameObjects.Text | null = null;
   #actText: Phaser.GameObjects.Text | null = null;
   #coinGame: number;
-  #coinText: Phaser.GameObjects.Text | null = null;
+  #coinText: Phaser.GameObjects.Text;
   #coinImage: Phaser.GameObjects.Image | null = null;
   #gunImage: Phaser.GameObjects.Image | null = null;
   shouldIncrementWave: boolean = true;
@@ -29,20 +29,21 @@ export class gameHud extends Phaser.Scene {
   }
 
   create() {
+    this.game.events.on('coinsUpdated', this.coinCount, this);
+
     this.#coinGame = gameOptions.playerCoinGame;
-    this.coinCount();
+    console.log('GameHud: listener para coinsUpdated adicionado');
+
     const textStyle = { fontFamily: 'Cordelina', color: '#ffffff', stroke: '#000000', strokeThickness: 6 };
 
     if (this.#elementsToShow.includes('coins')) {
       this.#coinImage = this.add.image(1770, 130, 'coin').setDisplaySize(60, 60);
       this.#coinText = this.add.text(1840, 130, `${this.#coinGame}`, textStyle).setFontSize(36).setOrigin(0.5);
-      this.events.off('updateCoins');
       this.events.on('updateCoins', this.coinCount, this);
       this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
         this.events.off('updateCoins', this.coinCount, this);
       });
     }
-
     if (this.#elementsToShow.includes('wave')) {
       this.#waveText = this.add
         .text(1785, 80, `Onda: ${gameOptions.currentWave}`, textStyle)
@@ -71,7 +72,12 @@ export class gameHud extends Phaser.Scene {
       this.#timerInstance.create();
     }
 
+    this.coinCount();
     this.updateHud();
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      console.log('GameHud: listener para coinsUpdated removido');
+      this.game.events.off('coinsUpdated', this.coinCount, this);
+    });
   }
 
   public phaseCount() {
