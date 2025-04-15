@@ -1,3 +1,6 @@
 export const healthEvents = {
-  loseHealth: 'loseHealth',
+  healthChanged: 'healthChanged',
+  maxHealthChanged: 'maxHealthChanged',
+  healthInitialized: 'healthInitialized',
+  loseHealth: 'loseHealth'
 } as const;
