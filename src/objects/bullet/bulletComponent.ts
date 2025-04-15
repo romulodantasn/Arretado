@@ -2,6 +2,7 @@ import { inputManager } from '../../components/input/inputManagerComponent';
 import { gameOptions } from '../../config/gameOptionsConfig';
 import { player } from '../player/playerObject';
 import { enemyGroup } from '../enemies/enemyObject';
+import { coinOnKillEvent } from '../../components/events/coinOnKillEvent';
 
 export class bulletComponent {
   #scene: Phaser.Scene;
@@ -72,12 +73,8 @@ export class bulletComponent {
     bullet.body.checkCollision.none = true;
     this.#enemy.killAndHide(target);
     target.body.checkCollision.none = true;
-    this.coinOnKill();
+    coinOnKillEvent(this.#scene)
   }
 
-  private coinOnKill() {
-    gameOptions.playerCoinGame += 1000;
-    this.#scene.game.events.emit("enemyKilled", gameOptions.playerCoinGame);
-    console.log(`Inimigo morto, ganhou +10 moedas. Total: ${gameOptions.playerCoinGame}`);
-  }
+ 
 }
