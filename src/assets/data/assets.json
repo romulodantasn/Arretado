@@ -145,10 +145,14 @@
       "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
     },
     {
-      "type": "spritesheet",
+      "type": "image",
       "key": "health-bar",
-      "url": "health-bar.png",
-      "frameConfig": { "frameWidth": 35, "frameHeight": 7 }
+      "url": "health-bar.png"
+    },
+    {
+      "type": "image",
+      "key": "health-frame",
+      "url": "health-frame.png"
     }
   ]
 }
