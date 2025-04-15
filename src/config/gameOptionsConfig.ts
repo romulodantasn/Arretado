@@ -11,7 +11,7 @@ export const gameOptions = {
   playerLucky: 0, // chance de crítico do player
   playerFireRate: 1000, // rate do player, tiros por milisegundos
   playerCoinGame: 0, // moedas do player
-  playerHealthPoints: 10,
+  
   enemySpeed: 50, // velocidade do inimigo, em pixels por segundo
   enemyRate: 800, // rate do inimigo, inimigos por milisegundos
   enemyDamage: 2, // dano do inimigo
