@@ -1,9 +1,7 @@
 import { inputManager } from '../../components/input/inputManagerComponent';
-import { gameScene } from '../../scenes/gameScene';
 import { gameOptions } from '../../config/gameOptionsConfig';
 import { player } from '../player/playerObject';
 import { enemyGroup } from '../enemies/enemyObject';
-import { PauseScene } from '../../scenes/PauseScene';
 
 export class bulletComponent {
   #scene: Phaser.Scene;
@@ -66,13 +64,20 @@ export class bulletComponent {
     this.#bulletGroup.add(bullet);
     bullet.setVelocity(Math.cos(angle) * speed, Math.sin(angle) * speed);
     bullet.setActive(true).setVisible(true);
-    this.#scene.physics.add.collider(this.#bulletGroup, this.#enemy, this.handleBulletCollision, undefined, this);
+    this.#scene.physics.add.collider(this.#bulletGroup, this.#enemy, this.bulletCollision, undefined, this);
   }
 
-  private handleBulletCollision(bullet: any, target: any) {
+  private bulletCollision(bullet: any, target: any) {
     this.#bulletGroup.killAndHide(bullet);
     bullet.body.checkCollision.none = true;
     this.#enemy.killAndHide(target);
     target.body.checkCollision.none = true;
+    this.coinOnKill();
+  }
+
+  private coinOnKill() {
+    gameOptions.playerCoinGame += 1000;
+    this.#scene.game.events.emit("enemyKilled", gameOptions.playerCoinGame);
+    console.log(`Inimigo morto, ganhou +10 moedas. Total: ${gameOptions.playerCoinGame}`);
   }
 }
