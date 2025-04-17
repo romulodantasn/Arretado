@@ -1,13 +1,16 @@
 import { inputManager } from '../../components/input/inputManagerComponent';
-import { gameOptions } from '../../config/gameOptionsConfig';
+import { gameOptions, enemyStats, gun } from '../../config/gameOptionsConfig';
 import { player } from '../player/playerObject';
 import { enemyGroup } from '../enemies/enemyObject';
 import { coinOnKillEvent } from '../../components/events/coinOnKillEvent';
+import { healthEvents } from '../../components/events/healthEvent';
+import { HealthComponent } from '../../components/playerHealth/HealthComponent';
 
-export class bulletComponent {
+export class shootingController {
   #scene: Phaser.Scene;
   #player: player;
   #enemy: enemyGroup;
+  #health: HealthComponent;
   #bulletGroup: Phaser.Physics.Arcade.Group;
   #reticle: Phaser.GameObjects.Sprite;
   #keys: any;
@@ -60,7 +63,7 @@ export class bulletComponent {
   public createBullet(shooter: player, target: Phaser.GameObjects.Sprite) {
     const bullet = this.#scene.physics.add.sprite(shooter.x, shooter.y, 'bullet');
     const angle = Phaser.Math.Angle.Between(shooter.x, shooter.y, target.x, target.y);
-    const speed = gameOptions.bulletSpeed;
+    const speed = gun.bulletSpeed;
 
     this.#bulletGroup.add(bullet);
     bullet.setVelocity(Math.cos(angle) * speed, Math.sin(angle) * speed);
@@ -69,6 +72,13 @@ export class bulletComponent {
   }
 
   private bulletCollision(bullet: any, target: any) {
+
+    // this.#health.loseHealth(enemyStats.enemyDamage);
+    // this.#scene.events.emit(
+    //   healthEvents.loseHealth,
+    //   this.#health.currentHealth,
+    //   this.#health.currentHealth + enemyStats.enemyDamage
+    // );
     this.#bulletGroup.killAndHide(bullet);
     bullet.body.checkCollision.none = true;
     this.#enemy.killAndHide(target);

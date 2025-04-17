@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { gameOptions } from '../../config/gameOptionsConfig';
+import { gameOptions, playerStats } from '../../config/gameOptionsConfig';
 import { timer } from '../../components/timer/timerComponent';
 
 type hudElement = 'coins' | 'wave' | 'act' | 'timer' | 'gun';
@@ -31,7 +31,7 @@ export class gameHud extends Phaser.Scene {
   create() {
     this.game.events.on('buyUpdatedCoin', this.coinCount, this);
     this.game.events.on('enemyKilled', this.coinCount, this)
-    this.#coinGame = gameOptions.playerCoinGame;
+    this.#coinGame = playerStats.playerCoinGame;
 
     const textStyle = { fontFamily: 'Cordelina', color: '#ffffff', stroke: '#000000', strokeThickness: 6 };
 
@@ -81,10 +81,18 @@ export class gameHud extends Phaser.Scene {
   public phaseCount() {
     if (!this.shouldIncrementWave || !this.#elementsToShow.includes('wave')) return;
     console.log(`Chamando phaseCount(). waveNumber: ${gameOptions.currentWave}, actNumber: ${gameOptions.currentAct}`);
-    if (gameOptions.currentWave > 9) {
+   
+    if (gameOptions.currentWave >= 9) {
       gameOptions.currentWave = 1;
       gameOptions.currentAct++;
     }
+
+    if (gameOptions.currentAct == 2 && gameOptions.currentWave == 3) {
+        gameOptions.currentAct = 3;
+        gameOptions.currentWave = 1;
+    };
+    
+
     console.log(`Depois do incremento. waveNumber: ${gameOptions.currentWave}, actNumber: ${gameOptions.currentAct}`);
     this.updateHud();
   }
@@ -99,7 +107,7 @@ export class gameHud extends Phaser.Scene {
   }
 
   public coinCount() {
-    this.#coinGame = gameOptions.playerCoinGame;
+    this.#coinGame = playerStats.playerCoinGame;
     if (this.#coinText) {
       this.#coinText.setText(`${this.#coinGame}`);
     }

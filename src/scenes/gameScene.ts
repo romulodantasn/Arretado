@@ -4,18 +4,18 @@ import { inputManager } from '../components/input/inputManagerComponent';
 import { player } from '../objects/player/playerObject';
 import { enemyGroup } from '../objects/enemies/enemyObject';
 import { collider } from '../components/collider/colliderComponent';
-import { bulletComponent } from '../objects/bullet/bulletComponent';
-import { healthComponent } from '../components/health/healthComponent';
+import { shootingController } from '../objects/bullet/bulletComponent';
+import { HealthComponent } from '../components/playerHealth/HealthComponent';
 import { globalEventEmitter } from '../components/events/globalEventEmitter';
 
 export class gameScene extends Phaser.Scene {
   #keys: any;
   #player: player;
   #enemy: enemyGroup;
-  #bullet: bulletComponent;
+  #bullet: shootingController;
   #reticle: Phaser.GameObjects.Sprite;
   #collisionHandler: collider;
-  #health: healthComponent;
+  #health: HealthComponent;
 
   constructor() {
     super({ key: 'gameScene' });
@@ -28,7 +28,7 @@ export class gameScene extends Phaser.Scene {
   create() {
     console.log('gameScene carregado');
 
-    this.#health = new healthComponent();
+    this.#health = new HealthComponent();
 
     this.scene.launch('gameHud');
 
@@ -44,7 +44,7 @@ export class gameScene extends Phaser.Scene {
 
     this.#enemy = new enemyGroup(this, this.#player);
 
-    this.#bullet = new bulletComponent(this, this.#player, this.#enemy, this.#reticle);
+    this.#bullet = new shootingController(this, this.#player, this.#enemy, this.#reticle);
     this.#bullet.create();
 
     this.#collisionHandler = new collider(this, this.#player, this.#enemy, this.#health);

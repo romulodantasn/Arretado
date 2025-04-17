@@ -1,9 +1,10 @@
 import Phaser from 'phaser';
+import { gameOptions } from '../../config/gameOptionsConfig';
 
 export class timer {
   #scene: Phaser.Scene;
   #timerEvent: Phaser.Time.TimerEvent;
-  #timeLeft: number;
+  #timeLeft =  gameOptions.timerLeft;
   #timerText: Phaser.GameObjects.Text;
 
   constructor(scene: Phaser.Scene) {
@@ -15,7 +16,6 @@ export class timer {
   }
 
   public initializeTimer() {
-    this.#timeLeft = 10;
     this.#timerText = this.#scene.add
       .text(920, 16, `00:${this.#timeLeft}`, {
         fontSize: '24px',
@@ -28,7 +28,7 @@ export class timer {
       delay: 1000,
       callback: this.updateTimer,
       callbackScope: this,
-      loop: true,
+      loop: true, 
     });
   }
 

@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { gameOptions } from "../../config/gameOptionsConfig";
+import { gameOptions, enemyStats, onWaveComplete, playerStats } from "../../config/gameOptionsConfig";
 import {
   damageItems,
   lifeItems,
@@ -50,7 +50,7 @@ export class itemsDisplayUi extends Phaser.GameObjects.Container {
       .setAlign("center")
       .setOrigin(0.5);
     this.scene.scene.stop("gameHud");
-    this.scene.scene.launch("gameHud", { elementsToShow: ["coins", "wave"] });
+    this.scene.scene.launch("gameHud", { elementsToShow: ["coins", "wave", "act"] });
 
     this.playerStatsContainer(1800, 600);
     this.containerItems();
@@ -178,13 +178,13 @@ export class itemsDisplayUi extends Phaser.GameObjects.Container {
     ]);
 
     itemBg.on("pointerdown", () => {
-      if (gameOptions.playerCoinGame >= item.cost) {
+      if (playerStats.playerCoinGame >= item.cost) {
         item.effect();
-        gameOptions.playerCoinGame -= item.cost;
-        this.scene.game.events.emit("buyUpdatedCoin", gameOptions.playerCoinGame);
+        playerStats.playerCoinGame -= item.cost;
+        this.scene.game.events.emit("buyUpdatedCoin", playerStats.playerCoinGame);
         
         console.log(
-          `Evento de compra emitido ${gameOptions.playerCoinGame} moedas`
+          `Evento de compra emitido ${playerStats.playerCoinGame} moedas`
         );
         const buyText = this.scene.add
           .text(x, y + 320, `Item ${item.name} comprado!`, {
@@ -239,19 +239,17 @@ export class itemsDisplayUi extends Phaser.GameObjects.Container {
       this.scene.scene.start("gameHud", {
         elementsToShow: ["coins", "wave", "act", "timer", "gun"],
       });
-      gameOptions.currentWave++;
-      gameOptions.enemyRate -= 100;
-      gameOptions.enemySpeed += 10;
-      console.log("enemySpeedUpdated: " + gameOptions.enemySpeed);
-      console.log("enemyRateUpdated: " + gameOptions.enemyRate);
+     onWaveComplete();
+      console.log("enemySpeedUpdated: " + enemyStats.enemySpeed);
+      console.log("enemyRateUpdated: " + enemyStats.enemyRate);
     });
   }
 
   private playerStatsContainer(x: number, y: number) {
-    const health = gameOptions.playerHealth;
-    const damage = gameOptions.playerDamage;
-    const moveSpeed = gameOptions.playerMoveSpeed;
-    const lucky = gameOptions.playerLucky;
+    const health = playerStats.playerHealth;
+    const damage = playerStats.playerDamage;
+    const moveSpeed = playerStats.playerMoveSpeed;
+    const lucky = playerStats.playerLucky;
 
     const statsBg = this.scene.add
       .rectangle(-25, 0, -250, 400)
@@ -283,33 +281,4 @@ export class itemsDisplayUi extends Phaser.GameObjects.Container {
 
     container.add([healthText, damageText, moveSpeedText, luckyText]);
   }
-
-  /*private highlightSelectedUpgrade() {
-    this.#upgradeTexts.forEach((text, index) => {
-      if (index === this.#selectedUpgradeIndex) {
-        text.setColor('#ffff00'); // Highlight color
-      } else {
-        text.setColor('#ffffff'); // Default color
-      }
-    });
-  }
-
-  private selectUpgrade(index: number) {
-    this.#selectedUpgradeIndex = index;
-    this.highlightSelectedUpgrade();
-  }
-
-  private applyUpgrade() {
-    const selectedUpgrade = this.#upgradeOptions[this.#selectedUpgradeIndex];
-    // Check if the player has enough resources to buy the upgrade
-    if (gameOptions.playerCoinGame >= selectedUpgrade.cost) {
-      selectedUpgrade.effect();
-      gameOptions.playerCoinGame -= selectedUpgrade.cost;
-      console.log(`Upgrade ${selectedUpgrade.name} applied!`);
-      this.scene.start('gameScene');
-    } else {
-      console.log('Not enough resources!');
-      // Optionally, display a message to the player
-    }
-  }*/
 }

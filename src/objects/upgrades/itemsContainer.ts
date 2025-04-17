@@ -1,4 +1,4 @@
-import { gameOptions } from '../../config/gameOptionsConfig';
+import { playerStats } from '../../config/gameOptionsConfig';
 
 export interface itemsContainer {
   imageKey: string;
@@ -21,7 +21,7 @@ export const damageItems: itemsContainer[] = [
     effect: () => {
       // Implement the effect of this upgrade
       console.log('Dano aumentado');
-      gameOptions.playerDamage += 10;
+      playerStats.playerDamage += 10;
     },
   },
   {
@@ -34,7 +34,7 @@ export const damageItems: itemsContainer[] = [
     effect: () => {
       // Implement the effect of this upgrade
       console.log('Dano aumentado');
-      gameOptions.playerDamage += 20;
+      playerStats.playerDamage += 20;
     },
   },
   {
@@ -47,7 +47,7 @@ export const damageItems: itemsContainer[] = [
     effect: () => {
       // Implement the effect of this upgrade
       console.log('Dano aumentado');
-      gameOptions.playerDamage += 20;
+      playerStats.playerDamage += 20;
     },
   },
   {
@@ -60,7 +60,7 @@ export const damageItems: itemsContainer[] = [
     effect: () => {
       // Implement the effect of this upgrade
       console.log('Dano aumentado');
-      gameOptions.playerDamage += 10;
+      playerStats.playerDamage += 10;
     },
   },
   {
@@ -73,7 +73,7 @@ export const damageItems: itemsContainer[] = [
     effect: () => {
       // Implement the effect of this upgrade
       console.log('Dano aumentado');
-      gameOptions.playerDamage += 10;
+      playerStats.playerDamage += 10;
     },
   },
 ];
@@ -89,7 +89,7 @@ export const lifeItems: itemsContainer[] = [
     effect: () => {
       // Implement the effect of this upgrade
       console.log('Health restored!');
-      gameOptions.playerHealth += 50;
+      playerStats.playerHealth += 50;
     },
   },
   {
@@ -102,7 +102,7 @@ export const lifeItems: itemsContainer[] = [
     effect: () => {
       // Implement the effect of this upgrade
       console.log('Movement speed increased!');
-      gameOptions.playerHealth += 30;
+      playerStats.playerHealth += 30;
     },
   },
   {
@@ -115,7 +115,7 @@ export const lifeItems: itemsContainer[] = [
     effect: () => {
       // Implement the effect of this upgrade
       console.log('Manginga escolhida! ');
-      gameOptions.playerHealth += 20;
+      playerStats.playerHealth += 20;
     },
   },
   {
@@ -128,7 +128,7 @@ export const lifeItems: itemsContainer[] = [
     effect: () => {
       // Implement the effect of this upgrade
       console.log('Damage increased!');
-      gameOptions.playerHealth += 20;
+      playerStats.playerHealth += 20;
     },
   },
   {
@@ -141,7 +141,7 @@ export const lifeItems: itemsContainer[] = [
     effect: () => {
       // Implement the effect of this upgrade
       console.log('Damage increased!');
-      gameOptions.playerHealth += 35;
+      playerStats.playerHealth += 35;
     },
   },
 ];
@@ -157,7 +157,7 @@ export const moveSpeedItems: itemsContainer[] = [
     effect: () => {
       // Implement the effect of this upgrade
       console.log('Movespeed item choosed!');
-      gameOptions.playerMoveSpeed += 30;
+      playerStats.playerMoveSpeed += 30;
     },
   },
   {
@@ -170,7 +170,7 @@ export const moveSpeedItems: itemsContainer[] = [
     effect: () => {
       // Implement the effect of this upgrade
       console.log('Movement speed increased!');
-      gameOptions.playerMoveSpeed += 300;
+      playerStats.playerMoveSpeed += 300;
     },
   },
   {
@@ -183,7 +183,7 @@ export const moveSpeedItems: itemsContainer[] = [
     effect: () => {
       // Implement the effect of this upgrade
       console.log('Item escolhido! ');
-      gameOptions.playerMoveSpeed += 20;
+      playerStats.playerMoveSpeed += 20;
     },
   },
   {
@@ -196,7 +196,7 @@ export const moveSpeedItems: itemsContainer[] = [
     effect: () => {
       // Implement the effect of this upgrade
       console.log('Damage increased!');
-      gameOptions.playerMoveSpeed += 20;
+      playerStats.playerMoveSpeed += 20;
     },
   },
   {
@@ -209,7 +209,7 @@ export const moveSpeedItems: itemsContainer[] = [
     effect: () => {
       // Implement the effect of this upgrade
       console.log('Damage increased!');
-      gameOptions.playerMoveSpeed += 35;
+      playerStats.playerMoveSpeed += 35;
     },
   },
 ];
@@ -225,7 +225,7 @@ export const luckyItems: itemsContainer[] = [
     effect: () => {
       // Implement the effect of this upgrade
       console.log('Lucky item choosed!');
-      gameOptions.playerLucky += 30;
+      playerStats.playerLucky += 30;
     },
   },
   {
@@ -238,7 +238,7 @@ export const luckyItems: itemsContainer[] = [
     effect: () => {
       // Implement the effect of this upgrade
       console.log('Movement speed increased!');
-      gameOptions.playerLucky += 300;
+      playerStats.playerLucky += 300;
     },
   },
   {
@@ -251,7 +251,7 @@ export const luckyItems: itemsContainer[] = [
     effect: () => {
       // Implement the effect of this upgrade
       console.log('Item escolhido! ');
-      gameOptions.playerLucky += 50;
+      playerStats.playerLucky += 50;
     },
   },
   {
@@ -264,7 +264,7 @@ export const luckyItems: itemsContainer[] = [
     effect: () => {
       // Implement the effect of this upgrade
       console.log('Lucky increased!');
-      gameOptions.playerLucky += 20;
+      playerStats.playerLucky += 20;
     },
   },
   {
@@ -277,7 +277,7 @@ export const luckyItems: itemsContainer[] = [
     effect: () => {
       // Implement the effect of this upgrade
       console.log('Lucky increased!');
-      gameOptions.playerLucky += 15;
+      playerStats.playerLucky += 15;
     },
   },
 ];

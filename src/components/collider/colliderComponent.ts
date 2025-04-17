@@ -1,20 +1,20 @@
 import { gameScene } from '../../scenes/gameScene';
 import { player } from '../../objects/player/playerObject';
 import { enemyGroup } from '../../objects/enemies/enemyObject';
-import { gameOptions } from '../../config/gameOptionsConfig';
+import { enemyStats, gameOptions } from '../../config/gameOptionsConfig';
 import { gameHud } from '../../objects/ui/gameHudUi';
-import { healthComponent } from '../health/healthComponent';
+import { playerHealthComponent } from '../playerHealth/HealthComponent';
 import { healthEvents } from '../events/healthEvent';
 
 export class collider {
   #scene: gameScene;
   #player: player;
   #enemy: enemyGroup;
-  #health: healthComponent;
+  #health: playerHealthComponent;
   #isInvulnerable: boolean = false;
   #collider: Phaser.Physics.Arcade.Collider;
 
-  constructor(scene: gameScene, player: player, enemy: enemyGroup, health: healthComponent) {
+  constructor(scene: gameScene, player: player, enemy: enemyGroup, health: playerHealthComponent) {
     this.#scene = scene;
     this.#player = player;
     this.#enemy = enemy;
@@ -30,11 +30,11 @@ export class collider {
       if (!this.#isInvulnerable) {
         console.log('Colisão detectada! Jogador perde vida.');
 
-        this.#health.loseHealth(gameOptions.enemyDamage);
+        this.#health.loseHealth(enemyStats.enemyDamage);
         this.#scene.events.emit(
           healthEvents.loseHealth,
           this.#health.currentHealth,
-          this.#health.currentHealth + gameOptions.enemyDamage
+          this.#health.currentHealth + enemyStats.enemyDamage
         );
 
         if (this.#health.currentHealth <= 0) {
@@ -46,8 +46,8 @@ export class collider {
           if (gameHud) {
             gameOptions.currentWave = 1;
             gameOptions.currentAct = 1;
-            gameOptions.enemyRate = 800;
-            console.log('enemyRate Reset: ' + gameOptions.enemyRate);
+            enemyStats.enemyRate = 800;
+            console.log('enemyRate Reset: ' + enemyStats.enemyRate);
             gameHud.shouldIncrementWave = true;
             gameHud.updateHud();
           }
