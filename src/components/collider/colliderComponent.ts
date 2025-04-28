@@ -28,6 +28,11 @@ export class collider {
   public setupCollision() {
     this.#collider = this.#scene.physics.add.collider(this.#player, this.#enemy, () => {
       if (!this.#isInvulnerable) {
+        this.#scene.cameras.main.shake(200, 0.0050);
+        this.#player.setTint(0xff0000)
+        this.#scene.time.delayedCall(200, () => {
+          this.#player.clearTint();
+      });
         console.log('Colisão detectada! Jogador perde vida.');
 
         this.#health.loseHealth(enemyStats.enemyDamage);
