@@ -12,6 +12,14 @@ export class shootingController {
   #bulletGroup: Phaser.Physics.Arcade.Group;
   #reticle: Phaser.GameObjects.Sprite;
   #keys: any;
+ 
+  readonly textStyle = {
+    fontFamily: "Cordelina",
+    fontSize: "28px",
+    color: "#ffffff",
+    stroke: "#000000",
+    strokeThickness: 4,
+  };
 
   constructor(scene: Phaser.Scene, player: Player, enemyGroup: enemyGroup, reticle: Phaser.GameObjects.Sprite) {
     this.#scene = scene;
@@ -85,12 +93,30 @@ export class shootingController {
 
     if (healthComp) {
         const bulletDamage = gun.gunDamage;
+        const bulletDamageText = this.#scene.add.text(enemy.x, enemy.y - 50,`${gun.gunDamage}`, this.textStyle)
+        this.#scene.tweens.add({
+          targets: bulletDamageText,
+          alpha: 1,
+          scale: { from: 0.5, to: 1 },
+          ease: 'Power2', 
+          duration: 150,
+          onComplete: () => {
+              this.#scene.time.delayedCall(150, () => { 
+                  this.#scene.tweens.add({
+                      targets: bulletDamageText,
+                      alpha: 0, 
+                      scale: 0.5,
+                      ease: 'Power2',
+                      duration: 1000,
+                      onComplete: () => {
+                        bulletDamageText.destroy(); 
+                      }
+                  });
+              });
+          }
+      });
         healthComp.loseHealth(bulletDamage);
-         console.log(`Enemy hit. Health: ${healthComp.currentHealth}/${healthComp.maxHealth}`); // Debug log
-
         if (healthComp.isDead()) {
-            console.log('Enemy destroyed by bullet');
-            
             coinOnKillEvent(this.#scene);
             enemySprite.destroy(); 
         }

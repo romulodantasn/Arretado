@@ -8,7 +8,7 @@ import { PauseScene } from './scenes/PauseScene';
 import { gameHud } from './objects/ui/gameHudUi';
 import { nextPhaseScene } from './scenes/nextPhaseScene';
 import { GameOverScene } from './scenes/GameOverScene';
-import { PlayerHealthBar } from './objects/player/playerHealthUi';
+import { PlayerHealthBar } from './objects/player/PlayerHealthBar';
 import { itemScene } from './scenes/itemScene';
 
 configObject.scene = [

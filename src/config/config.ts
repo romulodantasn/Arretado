@@ -6,7 +6,7 @@ import { gameScene } from '../scenes/gameScene';
 import { PauseScene } from '../scenes/PauseScene';
 import { nextPhaseScene } from '../scenes/nextPhaseScene';
 import { GameOverScene } from '../scenes/GameOverScene';
-import { PlayerHealthBar } from '../objects/player/playerHealthUi';
+import { PlayerHealthBar } from '../objects/player/PlayerHealthBar';
 import { itemScene } from '../scenes/itemScene';
 
 export const scaleObject: Phaser.Types.Core.ScaleConfig = {
