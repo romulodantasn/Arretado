@@ -1,20 +1,20 @@
 import Phaser from 'phaser';
-import { gameOptions } from '../config/gameOptionsConfig';
+import { gameOptions, playerStats } from '../config/gameOptionsConfig';
 import { inputManager } from '../components/input/inputManagerComponent';
-import { player } from '../objects/player/playerObject';
+import { Player } from '../objects/player/playerObject';
 import { enemyGroup } from '../objects/enemies/enemyObject';
 import { collider } from '../components/collider/colliderComponent';
-import { shootingController } from '../objects/bullet/bulletComponent';
+import { shootingController } from '../objects/bullet/ShootingController';
 import { HealthComponent } from '../components/playerHealth/HealthComponent';
 import { globalEventEmitter } from '../components/events/globalEventEmitter';
 
 export class gameScene extends Phaser.Scene {
   #keys: any;
-  #player: player;
+  #player: Player;
   #enemy: enemyGroup;
-  #bullet: shootingController;
+  #shootingController: shootingController;
   #reticle: Phaser.GameObjects.Sprite;
-  #collisionHandler: collider;
+  #collider: collider;
   #health: HealthComponent;
 
   constructor() {
@@ -28,7 +28,7 @@ export class gameScene extends Phaser.Scene {
   create() {
     console.log('gameScene carregado');
 
-    this.#health = new HealthComponent();
+    this.#health = new HealthComponent(playerStats.playerHealth, playerStats.playerHealth, 'player');
 
     this.scene.launch('gameHud');
 
@@ -40,26 +40,27 @@ export class gameScene extends Phaser.Scene {
     inputManager.setupControls(this);
     this.#keys = inputManager.getKeys();
 
-    this.#player = new player(this, gameOptions.gameSize.width / 2, gameOptions.gameSize.height / 2);
+    this.#player = new Player(this, gameOptions.gameSize.width / 2, gameOptions.gameSize.height / 2);
 
     this.#enemy = new enemyGroup(this, this.#player);
 
-    this.#bullet = new shootingController(this, this.#player, this.#enemy, this.#reticle);
-    this.#bullet.create();
+    this.#shootingController = new shootingController(this, this.#player, this.#enemy, this.#reticle);
+    this.#shootingController.create();
 
-    this.#collisionHandler = new collider(this, this.#player, this.#enemy, this.#health);
-    this.#collisionHandler.create();
+    this.#collider = new collider(this, this.#player, this.#enemy, this.#health);
+    this.#collider.create();
 
     this.time.delayedCall(100, () => {
-      if (!this.scene.isActive('healthUi')) {
-        this.scene.launch('healthUi', { emitter: globalEventEmitter, health: this.#health });
+      if (!this.scene.isActive('PlayerHealthBar')) {
+        this.scene.launch('PlayerHealthBar', { emitter: globalEventEmitter, health: this.#health });
+        this.scene.bringToTop('PlayerHealthBar');
       }
     });
-    console.log('healthUi carregada');
+    console.log('PlayerHealthBar carregada');
   }
 
   update() {
-    this.#bullet.containReticle();
+    this.#shootingController.containReticle();
     this.handlePause();
     this.#player.update();
     this.#enemy.updateEnemyMovement(this);

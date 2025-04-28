@@ -16,8 +16,8 @@ export class nextPhaseScene extends Phaser.Scene {
     if (this.scene.isActive('gameHud')) {
       this.scene.stop('gameHud');
     }
-    if (this.scene.isActive('healthUi')) {
-       this.scene.stop('healthUi');
+    if (this.scene.isActive('PlayerHealthBar')) {
+       this.scene.stop('PlayerHealthBar');
     }
     if (this.scene.isActive('PauseScene')) {
       this.scene.stop('PauseScene');

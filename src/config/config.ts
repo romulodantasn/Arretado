@@ -6,7 +6,7 @@ import { gameScene } from '../scenes/gameScene';
 import { PauseScene } from '../scenes/PauseScene';
 import { nextPhaseScene } from '../scenes/nextPhaseScene';
 import { GameOverScene } from '../scenes/GameOverScene';
-import { healthUi } from '../objects/ui/healthUi';
+import { PlayerHealthBar } from '../objects/player/playerHealthUi';
 import { itemScene } from '../scenes/itemScene';
 
 export const scaleObject: Phaser.Types.Core.ScaleConfig = {
@@ -24,7 +24,7 @@ export const configObject: Phaser.Types.Core.GameConfig = {
     BootScene,
     preloadAssets,
     gameScene,
-    healthUi,
+    PlayerHealthBar,
     GameOverScene,
     nextPhaseScene,
     PauseScene,
@@ -34,7 +34,7 @@ export const configObject: Phaser.Types.Core.GameConfig = {
   physics: {
     default: 'arcade',
     arcade: {
-      debug: true,
+      debug: false,
       gravity: { y: 0, x: 0 },
     },
   },
