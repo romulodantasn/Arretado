@@ -25,8 +25,6 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       playerStats.playerHealth,
       'player'
     );
-
-    console.log("Player object criado com HealthComponent.")
   }
 
   get healthComponent(): HealthComponent {

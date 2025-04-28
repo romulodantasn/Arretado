@@ -57,9 +57,6 @@ import { playerStats } from "../../config/gameOptionsConfig";
           globalEventEmitter.off(healthEvents.healthChanged, this.handleHealthUpdate, this);
           globalEventEmitter.off(healthEvents.maxHealthChanged, this.handleHealthUpdate, this);
       });
-
-      console.log("playerHealthUi criada e ouvindo eventos.");
-
     }
 
     private handleHealthUpdate(currentHealth: number, maxHealth: number, ownerId: string) {
