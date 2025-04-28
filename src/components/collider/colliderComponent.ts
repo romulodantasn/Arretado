@@ -1,20 +1,20 @@
 import { gameScene } from '../../scenes/gameScene';
-import { player } from '../../objects/player/playerObject';
+import { Player } from '../../objects/player/playerObject';
 import { enemyGroup } from '../../objects/enemies/enemyObject';
 import { enemyStats, gameOptions } from '../../config/gameOptionsConfig';
 import { gameHud } from '../../objects/ui/gameHudUi';
-import { playerHealthComponent } from '../playerHealth/HealthComponent';
+import { HealthComponent } from '../playerHealth/HealthComponent';
 import { healthEvents } from '../events/healthEvent';
 
 export class collider {
   #scene: gameScene;
-  #player: player;
+  #player: Player;
   #enemy: enemyGroup;
-  #health: playerHealthComponent;
+  #health: HealthComponent;
   #isInvulnerable: boolean = false;
   #collider: Phaser.Physics.Arcade.Collider;
 
-  constructor(scene: gameScene, player: player, enemy: enemyGroup, health: playerHealthComponent) {
+  constructor(scene: gameScene, player: Player, enemy: enemyGroup, health: HealthComponent) {
     this.#scene = scene;
     this.#player = player;
     this.#enemy = enemy;

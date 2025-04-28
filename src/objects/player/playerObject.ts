@@ -1,10 +1,12 @@
 import Phaser from 'phaser';
 import { inputManager } from '../../components/input/inputManagerComponent';
 import { playerStats } from '../../config/gameOptionsConfig';
+import { HealthComponent } from '../../components/playerHealth/HealthComponent';
 
-export class player extends Phaser.Physics.Arcade.Sprite {
+export class Player extends Phaser.Physics.Arcade.Sprite {
   direction: number = 0;
   controlKeys: any;
+  #healthComponent: HealthComponent;
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, 'player');
@@ -17,6 +19,18 @@ export class player extends Phaser.Physics.Arcade.Sprite {
     this.setOffset(4, 4);
 
     this.controlKeys = inputManager.getKeys();
+
+    this.#healthComponent = new HealthComponent(
+      playerStats.playerHealth,
+      playerStats.playerHealth,
+      'player'
+    );
+
+    console.log("Player object criado com HealthComponent.")
+  }
+
+  get healthComponent(): HealthComponent {
+    return this.#healthComponent;
   }
 
   update() {
@@ -71,5 +85,15 @@ export class player extends Phaser.Physics.Arcade.Sprite {
         this.play('playerWalk', true);
       }
     }
+  }
+
+  public takeDamage(amount: number) {
+    this.#healthComponent.loseHealth(amount);
+    console.log(`Player tomou ${amount} de dano.`);
+
+    if(this.#healthComponent.isDead()) {
+      console.log('Player morreu.');
+    }
+
   }
 }

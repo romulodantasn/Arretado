@@ -1,17 +1,16 @@
 import Phaser from "phaser";
-  import { globalEventEmitter } from "../../components/events/globalEventEmitter";
-  import { healthEvents } from "../../components/events/healthEvent";
-  import { gameOptions } from "../../config/gameOptionsConfig";
+import { globalEventEmitter } from "../../components/events/globalEventEmitter";
+import { healthEvents } from "../../components/events/healthEvent";
+import { playerStats } from "../../config/gameOptionsConfig";
   
-  export class healthUi extends Phaser.Scene {
+  export class PlayerHealthBar extends Phaser.Scene {
     #healthBar!: Phaser.GameObjects.Image;
-    #maxHealth: number;
     #healthBarWidth: number = 250; 
     #healthBarHeight: number = 45;
     #currentMaxHealth: number = 0;
     #healthText!: Phaser.GameObjects.Text;
-    #hasTakenDamage: boolean = false;
-    textStyle = {
+    
+    readonly textStyle = {
       fontFamily: "Cordelina",
       fontSize: "28px",
       color: "#ffffff",
@@ -22,7 +21,7 @@ import Phaser from "phaser";
 
     constructor() {
       super({
-        key: 'healthUi',
+        key: 'PlayerHealthBar',
       });
     
     }
@@ -30,40 +29,44 @@ import Phaser from "phaser";
     create() {
       const barX = 25;
       const barY = 45;  
-      const initialPlaceholderMax = gameOptions.playerHealth;
-
    
       this.add.image(barX, barY, 'health-frame')
         .setOrigin(0, 0.5)
-        .setDisplaySize(this.#healthBarWidth, this.#healthBarHeight);
+        .setDisplaySize(this.#healthBarWidth, this.#healthBarHeight)
+        .setScrollFactor(0);
+
       this.#healthBar = this.add.image(barX, barY, 'health-bar')
         .setOrigin(0, 0.5) 
-        .setDisplaySize(this.#healthBarWidth, this.#healthBarHeight);
+        .setDisplaySize(this.#healthBarWidth, this.#healthBarHeight)
+        .setScrollFactor(0)
 
+     const initialPlayerHealth = playerStats.playerHealth
+     this.#currentMaxHealth = initialPlayerHealth;
+     const textX = barX + this.#healthBarWidth / 2;
+     this.#healthText = this.add.text(textX, barY, ` ${initialPlayerHealth} / ${initialPlayerHealth}`, this.textStyle)
+     .setOrigin(0.5)
+     .setScrollFactor(0)
      
-      this.#currentMaxHealth = initialPlaceholderMax;
-      this.#healthText = this.add.text(145, 45, `${initialPlaceholderMax} / ${initialPlaceholderMax}`, this.textStyle).setOrigin(0.5);
-      this.#hasTakenDamage = false;
 
       globalEventEmitter.on(healthEvents.healthInitialized, this.handleHealthUpdate, this);
       globalEventEmitter.on(healthEvents.healthChanged, this.handleHealthUpdate, this);
       globalEventEmitter.on(healthEvents.maxHealthChanged, this.handleHealthUpdate, this);
-      console.log('healthUi: elementos e listeners criados')
 
       this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
-          console.log('HealthUi desligando, removendo listeners');
           globalEventEmitter.off(healthEvents.healthInitialized, this.handleHealthUpdate, this);
           globalEventEmitter.off(healthEvents.healthChanged, this.handleHealthUpdate, this);
           globalEventEmitter.off(healthEvents.maxHealthChanged, this.handleHealthUpdate, this);
       });
+
+      console.log("playerHealthUi criada e ouvindo eventos.");
+
     }
 
-    private handleHealthUpdate(currentHealth: number, maxHealth: number) {
-      console.log(`HealthUI: Mudança detectada - Atual=${currentHealth}, Máximo=${maxHealth}`);
-
-      this.#currentMaxHealth = maxHealth;
-      this.#hasTakenDamage = true;
-      this.updateHealthBar(currentHealth);
+    private handleHealthUpdate(currentHealth: number, maxHealth: number, ownerId: string) {
+      if (ownerId === 'player') {
+        this.#currentMaxHealth = maxHealth;
+        this.updateHealthBar(currentHealth);
+      }
     }
 
 
@@ -72,8 +75,6 @@ import Phaser from "phaser";
       const clampedHealth = Phaser.Math.Clamp(currentHealth, 0, maxHealth);
       const healthRatio = clampedHealth / maxHealth;
       const newWidth = this.#healthBarWidth * healthRatio;
-
-      console.log(`Atualizando health bar: Atual=${clampedHealth}, Maximo=${maxHealth}, Ratio=${healthRatio.toFixed(2)}, NewWidth=${newWidth.toFixed(2)}`);
   
       this.#healthBar.setCrop(0, 0, newWidth, this.#healthBarHeight);
       this.#healthText.setText(`${clampedHealth} / ${maxHealth}`);
