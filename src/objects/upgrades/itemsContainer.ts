@@ -1,4 +1,4 @@
-import { playerStats } from '../../config/gameOptionsConfig';
+import { gun, playerStats } from '../../config/gameOptionsConfig';
 
 export interface itemsContainer {
   imageKey: string;
@@ -19,9 +19,8 @@ export const damageItems: itemsContainer[] = [
     sentence: '"Sustança na veia  e força no braço"',
     cost: 10,
     effect: () => {
-      // Implement the effect of this upgrade
-      console.log('Dano aumentado');
-      playerStats.playerDamage += 10;
+      console.log(`${name} Comprado, Dano aumentado`);
+      gun.gunDamage += 10;
     },
   },
   {
@@ -32,9 +31,8 @@ export const damageItems: itemsContainer[] = [
     sentence: '"É chifre, mas é power-up. Força dos corno é descomunal."',
     cost: 15,
     effect: () => {
-      // Implement the effect of this upgrade
-      console.log('Dano aumentado');
-      playerStats.playerDamage += 20;
+      console.log(`${name} Comprado, Dano aumentado`);
+      gun.gunDamage += 20;
     },
   },
   {
@@ -45,9 +43,8 @@ export const damageItems: itemsContainer[] = [
     sentence: '"Depois de uma dose de Pitú, ninguém segura o caba!"',
     cost: 20,
     effect: () => {
-      // Implement the effect of this upgrade
-      console.log('Dano aumentado');
-      playerStats.playerDamage += 20;
+      console.log(`${name} Comprado, Dano aumentado`);
+      gun.gunDamage += 20;
     },
   },
   {
@@ -58,9 +55,8 @@ export const damageItems: itemsContainer[] = [
     sentence: '"Com uma espora dessas, até um djabo corre de medo!"',
     cost: 20,
     effect: () => {
-      // Implement the effect of this upgrade
-      console.log('Dano aumentado');
-      playerStats.playerDamage += 10;
+      console.log(`${name} Comprado, Dano aumentado`);
+      gun.gunDamage += 10;
     },
   },
   {
@@ -71,9 +67,8 @@ export const damageItems: itemsContainer[] = [
     sentence: '"Arde mais que briga de vizinho com som alto no domingo."',
     cost: 20,
     effect: () => {
-      // Implement the effect of this upgrade
-      console.log('Dano aumentado');
-      playerStats.playerDamage += 10;
+      console.log(`${name} Comprado, Dano aumentado`);
+      gun.gunDamage += 10;
     },
   },
 ];
@@ -87,8 +82,7 @@ export const lifeItems: itemsContainer[] = [
     sentence: '"Mais forte que café coado em pano de chão"',
     cost: 200,
     effect: () => {
-      // Implement the effect of this upgrade
-      console.log('Health restored!');
+      console.log(`${name} Comprado, Vida aumentada`);
       playerStats.playerHealth += 50;
     },
   },
@@ -100,8 +94,7 @@ export const lifeItems: itemsContainer[] = [
     sentence: '"Proteção de cabeça e alma, igual chapéu de cangaceiro"',
     cost: 50,
     effect: () => {
-      // Implement the effect of this upgrade
-      console.log('Movement speed increased!');
+      console.log(`${name} Comprado, Vida aumentada`);
       playerStats.playerHealth += 30;
     },
   },
@@ -113,8 +106,7 @@ export const lifeItems: itemsContainer[] = [
     sentence: '"Só morre se quiser, com mandinga dessas até encosto foge"',
     cost: 250,
     effect: () => {
-      // Implement the effect of this upgrade
-      console.log('Manginga escolhida! ');
+      console.log(`${name} Comprado, Vida aumentada`);
       playerStats.playerHealth += 20;
     },
   },
@@ -126,8 +118,7 @@ export const lifeItems: itemsContainer[] = [
     sentence: '"É sweet mas não é soft não."',
     cost: 100,
     effect: () => {
-      // Implement the effect of this upgrade
-      console.log('Damage increased!');
+      console.log(`${name} Comprado, Vida aumentada`);
       playerStats.playerHealth += 20;
     },
   },
@@ -139,8 +130,7 @@ export const lifeItems: itemsContainer[] = [
     sentence: '"Com esse mocotó tu aguenta até missa de ressaca."',
     cost: 20,
     effect: () => {
-      // Implement the effect of this upgrade
-      console.log('Damage increased!');
+      console.log(`${name} Comprado, Vida aumentada`);
       playerStats.playerHealth += 35;
     },
   },
@@ -155,8 +145,7 @@ export const moveSpeedItems: itemsContainer[] = [
     sentence: '"Foi por essa droga que você se apaixonou, Pé de Pano?"',
     cost: 100,
     effect: () => {
-      // Implement the effect of this upgrade
-      console.log('Movespeed item choosed!');
+      console.log(`${name} Comprado, MoveSpeed aumentada`);
       playerStats.playerMoveSpeed += 30;
     },
   },
@@ -168,8 +157,7 @@ export const moveSpeedItems: itemsContainer[] = [
     sentence: '"Corre mais que notícia ruim no grupo do zap"',
     cost: 50,
     effect: () => {
-      // Implement the effect of this upgrade
-      console.log('Movement speed increased!');
+      console.log(`${name} Comprado, MoveSpeed aumentada`);
       playerStats.playerMoveSpeed += 300;
     },
   },
@@ -181,8 +169,7 @@ export const moveSpeedItems: itemsContainer[] = [
     sentence: '"Igual promessa de político, primeiro adoça, depois derruba."',
     cost: 50,
     effect: () => {
-      // Implement the effect of this upgrade
-      console.log('Item escolhido! ');
+      console.log(`${name} Comprado, MoveSpeed aumentada`);
       playerStats.playerMoveSpeed += 20;
     },
   },
@@ -194,8 +181,7 @@ export const moveSpeedItems: itemsContainer[] = [
     sentence: '"Oque que há velhinho?"',
     cost: 100,
     effect: () => {
-      // Implement the effect of this upgrade
-      console.log('Damage increased!');
+      console.log(`${name} Comprado, MoveSpeed aumentada`);
       playerStats.playerMoveSpeed += 20;
     },
   },
@@ -207,8 +193,7 @@ export const moveSpeedItems: itemsContainer[] = [
     sentence: '"Para que meus inimigos tendo pés não me alcancem"',
     cost: 200,
     effect: () => {
-      // Implement the effect of this upgrade
-      console.log('Damage increased!');
+      console.log(`${name} Comprado, MoveSpeed aumentada`);
       playerStats.playerMoveSpeed += 35;
     },
   },
@@ -223,8 +208,7 @@ export const luckyItems: itemsContainer[] = [
     sentence: '"Veneno bom é o da tua cobra"',
     cost: 100,
     effect: () => {
-      // Implement the effect of this upgrade
-      console.log('Lucky item choosed!');
+      console.log(`${name} Comprado, Sorte aumentada`);
       playerStats.playerLucky += 30;
     },
   },
@@ -236,8 +220,7 @@ export const luckyItems: itemsContainer[] = [
     sentence: '"Cordel escrito à mão, destino traçado com emoção!"',
     cost: 50,
     effect: () => {
-      // Implement the effect of this upgrade
-      console.log('Movement speed increased!');
+      console.log(`${name} Comprado, Sorte aumentada`);
       playerStats.playerLucky += 300;
     },
   },
@@ -249,8 +232,7 @@ export const luckyItems: itemsContainer[] = [
     sentence: '"Dado de 6 lados, 1 lado é a morte"',
     cost: 50,
     effect: () => {
-      // Implement the effect of this upgrade
-      console.log('Item escolhido! ');
+      console.log(`${name} Comprado, Sorte aumentada`);
       playerStats.playerLucky += 50;
     },
   },
@@ -262,8 +244,7 @@ export const luckyItems: itemsContainer[] = [
     sentence: '"Dizem que dá sorte ou azar, depende de como cair"',
     cost: 100,
     effect: () => {
-      // Implement the effect of this upgrade
-      console.log('Lucky increased!');
+      console.log(`${name} Comprado, Sorte aumentada`);
       playerStats.playerLucky += 20;
     },
   },
@@ -275,8 +256,7 @@ export const luckyItems: itemsContainer[] = [
     sentence: '"Fica fraco, mas vira bicho"',
     cost: 200,
     effect: () => {
-      // Implement the effect of this upgrade
-      console.log('Lucky increased!');
+      console.log(`${name} Comprado, Sorte aumentada`);
       playerStats.playerLucky += 15;
     },
   },
