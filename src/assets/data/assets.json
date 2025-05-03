@@ -145,6 +145,12 @@
       "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
     },
     {
+      "type": "spritesheet",
+      "key": "boss",
+      "url": "boss.png",
+      "frameConfig": { "frameWidth": 32, "frameHeight": 32 }
+    },
+    {
       "type": "image",
       "key": "health-bar",
       "url": "health-bar.png"

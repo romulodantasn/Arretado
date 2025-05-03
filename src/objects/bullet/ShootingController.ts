@@ -1,14 +1,16 @@
 import { inputManager } from '../../components/input/inputManagerComponent';
-import { gameOptions, enemyStats, gun } from '../../config/gameOptionsConfig';
+import { gameOptions, basicEnemyStats, gun } from '../../config/gameOptionsConfig';
 import { Player } from '../player/playerObject';
 import { enemyGroup } from '../enemies/enemyObject';
 import { coinOnKillEvent } from '../../components/events/coinOnKillEvent';
 import { HealthComponent } from '../../components/playerHealth/HealthComponent';
+import { BossEnemy } from '../enemies/BossEnemy';
 
 export class shootingController {
   #scene: Phaser.Scene;
   #player: Player;
   #enemyGroup: enemyGroup;
+  #boss: BossEnemy
   #bulletGroup: Phaser.Physics.Arcade.Group;
   #reticle: Phaser.GameObjects.Sprite;
   #keys: any;
@@ -21,24 +23,37 @@ export class shootingController {
     strokeThickness: 4,
   };
 
-  constructor(scene: Phaser.Scene, player: Player, enemyGroup: enemyGroup, reticle: Phaser.GameObjects.Sprite) {
+  constructor(scene: Phaser.Scene, player: Player, enemyGroup: enemyGroup, boss: BossEnemy, reticle: Phaser.GameObjects.Sprite) {
     this.#scene = scene;
     this.#player = player;
-    this.#reticle = reticle;
     this.#enemyGroup = enemyGroup;
+    this.#boss = boss;
+    this.#reticle = reticle;
+
+
     this.#bulletGroup = this.#scene.physics.add.group({
       classType: Phaser.Physics.Arcade.Sprite,
       runChildUpdate: true
     });
-    this.#keys = inputManager.getKeys();
-    this.#scene.physics.add.collider(this.#bulletGroup, this.#enemyGroup, this.bulletCollision, undefined, this);
+    this.#keys = inputManager.getKeys()
+  
+    this.#setupColliders();
+  }
 
+  #setupColliders() {
+    this.#scene.physics.add.collider(this.#bulletGroup, this.#enemyGroup, this.bulletEnemyCollision, undefined, this);
+
+    if(this.#boss && this.#boss.active) {
+      this.#scene.physics.add.collider(this.#bulletGroup, this.#boss, this.bulletBossCollision, undefined, this); 
+    } else {
+      console.warn("Boss nao foi inicializado, pulando bullet-boss colisao.");
+    }
   }
 
   create() {
     this.setupReticle();
     this.setupShooting();
-    console.log('BulletComponent criado');
+    console.log('ShootingController criado');
   }
 
   public setupReticle() {
@@ -79,19 +94,16 @@ export class shootingController {
     bullet.setActive(true).setVisible(true);
   }
 
-  private bulletCollision(
-    bullet: any,
-    enemy: any
-  ) {
+  private bulletEnemyCollision( bullet: any, enemy: any,  ) {
     
     if (!bullet.active || !enemy.active || !(enemy instanceof Phaser.Physics.Arcade.Sprite)) {
         return; 
     }
 
     const enemySprite = enemy as Phaser.Physics.Arcade.Sprite;
-    const healthComp = enemyGroup.getHealthComponent(enemySprite);
+    const enemyHealthComp = enemyGroup.getHealthComponent(enemySprite);
 
-    if (healthComp) {
+    if (enemyHealthComp) {
         const bulletDamage = gun.gunDamage;
         const bulletDamageText = this.#scene.add.text(enemy.x, enemy.y - 50,`${gun.gunDamage}`, this.textStyle)
         this.#scene.tweens.add({
@@ -115,8 +127,8 @@ export class shootingController {
               });
           }
       });
-        healthComp.loseHealth(bulletDamage);
-        if (healthComp.isDead()) {
+      enemyHealthComp.loseHealth(bulletDamage);
+        if (enemyHealthComp.isDead()) {
             coinOnKillEvent(this.#scene);
             enemySprite.destroy(); 
         }
@@ -125,4 +137,47 @@ export class shootingController {
     }
         bullet.destroy(); 
   }
+
+  private bulletBossCollision (bullet : any, boss: any) {
+    if (!bullet.active || !boss.active || !(boss instanceof Phaser.Physics.Arcade.Sprite)) {
+      return; 
+  }
+
+  const bossHealthComp = BossEnemy.getHealthComponent();
+
+  if (bossHealthComp) {
+      const bulletDamage = gun.gunDamage;
+      const bulletDamageText = this.#scene.add.text(boss.x, boss.y - 50,`${gun.gunDamage}`, this.textStyle)
+      this.#scene.tweens.add({
+        targets: bulletDamageText,
+        alpha: 1,
+        scale: { from: 0.5, to: 1 },
+        ease: 'Power2', 
+        duration: 150,
+        onComplete: () => {
+            this.#scene.time.delayedCall(150, () => { 
+                this.#scene.tweens.add({
+                    targets: bulletDamageText,
+                    alpha: 0, 
+                    scale: 0.5,
+                    ease: 'Power2',
+                    duration: 1000,
+                    onComplete: () => {
+                      bulletDamageText.destroy(); 
+                    }
+                });
+            });
+        }
+    });
+    bossHealthComp.loseHealth(bulletDamage);
+      if (bossHealthComp.isDead()) {
+          coinOnKillEvent(this.#scene);
+          this.#boss.destroy(); 
+      }
+  } else {
+      console.warn('Collided enemy does not have a HealthComponent:', this.#boss)
+  }
+      bullet.destroy(); 
 }
+
+  }

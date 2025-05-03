@@ -19,5 +19,37 @@
     "frames": [0, 1, 2, 3, 4, 5, 6],
     "repeat": -1,
     "assetKey": "enemy"
+  },
+  {
+    "key": "boss_front",
+    "assetKey": "boss",
+    "start": 0,
+    "end": 3,
+    "frameRate": 8,
+    "repeat": -1
+  },
+  {
+    "key": "boss_right",
+    "assetKey": "boss",
+    "start": 4,
+    "end": 7,
+    "frameRate": 8,
+    "repeat": -1
+  },
+  {
+    "key": "boss_left",
+    "assetKey": "boss",
+    "start": 8,
+    "end": 11,
+    "frameRate": 8,
+    "repeat": -1
+  },
+  {
+    "key": "boss_back",
+    "assetKey": "boss",
+    "start": 12,
+    "end": 15,
+    "frameRate": 8,
+    "repeat": -1
   }
 ]

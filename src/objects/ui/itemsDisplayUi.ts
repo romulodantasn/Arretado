@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { gameOptions, enemyStats, onWaveComplete, playerStats } from "../../config/gameOptionsConfig";
+import { gameOptions, basicEnemyStats, onWaveComplete, playerStats } from "../../config/gameOptionsConfig";
 import {
   damageItems,
   lifeItems,
@@ -240,8 +240,8 @@ export class itemsDisplayUi extends Phaser.GameObjects.Container {
         elementsToShow: ["coins", "wave", "act", "timer", "gun"],
       });
      onWaveComplete();
-      console.log("enemySpeedUpdated: " + enemyStats.enemySpeed);
-      console.log("enemyRateUpdated: " + enemyStats.enemyRate);
+      console.log("enemySpeedUpdated: " + basicEnemyStats.enemySpeed);
+      console.log("enemyRateUpdated: " + basicEnemyStats.enemyRate);
     });
   }
 

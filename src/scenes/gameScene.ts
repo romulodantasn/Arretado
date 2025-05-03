@@ -7,11 +7,13 @@ import { collider } from '../components/collider/colliderComponent';
 import { shootingController } from '../objects/bullet/ShootingController';
 import { HealthComponent } from '../components/playerHealth/HealthComponent';
 import { globalEventEmitter } from '../components/events/globalEventEmitter';
+import { BossEnemy } from '../objects/enemies/BossEnemy';
 
 export class gameScene extends Phaser.Scene {
   #keys: any;
   #player: Player;
   #enemy: enemyGroup;
+  #boss: BossEnemy
   #shootingController: shootingController;
   #reticle: Phaser.GameObjects.Sprite;
   #collider: collider;
@@ -22,7 +24,7 @@ export class gameScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.pack('asset_pack', 'assets/data/assets.json');
+    // this.load.pack('asset_pack', 'assets/data/assets.json');
   }
 
   create() {
@@ -38,17 +40,19 @@ export class gameScene extends Phaser.Scene {
       .setDisplaySize(gameOptions.gameSize.width, gameOptions.gameSize.height);
 
     inputManager.setupControls(this);
-    this.#keys = inputManager.getKeys();
 
     this.#player = new Player(this, gameOptions.gameSize.width / 2, gameOptions.gameSize.height / 2);
 
     this.#enemy = new enemyGroup(this, this.#player);
 
-    this.#shootingController = new shootingController(this, this.#player, this.#enemy, this.#reticle);
+    this.#boss = new BossEnemy(this,300, 300, this.#player)
+
+    this.#shootingController = new shootingController(this, this.#player, this.#enemy, this.#boss, this.#reticle);
     this.#shootingController.create();
 
-    this.#collider = new collider(this, this.#player, this.#enemy, this.#health);
+    this.#collider = new collider(this, this.#player, this.#enemy, this.#boss, this.#health);
     this.#collider.create();
+    this.#keys = inputManager.getKeys();
 
     this.time.delayedCall(100, () => {
       if (!this.scene.isActive('PlayerHealthBar')) {

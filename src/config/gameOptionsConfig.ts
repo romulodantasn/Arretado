@@ -19,7 +19,8 @@ export const playerStats = {
   playerFireRate: 1000, // rate do player, tiros por milisegundos
   playerCoinGame: 0, // moedas do player
 }
-export const enemyStats ={
+
+export const basicEnemyStats ={
   enemyHealth: 20,
   enemySpeed: 50, // velocidade do inimigo, em pixels por segundo
   enemyRate: 1000, // rate do inimigo, inimigos por milisegundos, menor numero = maior quantidade de inimigos
@@ -27,10 +28,17 @@ export const enemyStats ={
 
 }
 
+export const bossEnemyStats = {
+  bossHealth: 100,
+  bossSpeed: 25,
+  bossDamage: 15,
+  bossRate: 1000,
+}
+
 export function onWaveComplete() {
   gameOptions.currentWave++;
-  enemyStats.enemyRate -= 50;
-  enemyStats.enemySpeed += 10;
+  basicEnemyStats.enemyRate -= 50;
+  basicEnemyStats.enemySpeed += 10;
   gameOptions.timerLeft += 5;
 }
 

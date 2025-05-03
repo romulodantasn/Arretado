@@ -9,10 +9,6 @@ export class preloadAssets extends Phaser.Scene {
   preload() {
     this.load.pack('asset_pack', 'assets/data/assets.json');
     this.load.font('Cordelina', 'assets/font/cordelina.otf');
-    // this.load.spritesheet('health-bar', 'assets/images/health-bar.png', {
-    //   frameWidth: 7,
-    //   frameHeight: 7,
-    // });
   }
 
   create() {
@@ -26,7 +22,9 @@ export class preloadAssets extends Phaser.Scene {
   //Metodo privado para criar e carregar as animações
   #createAnimations() {
     const data = this.cache.json.get('animations_json');
+    console.log('Criando animações a partir de:', data);
     data.forEach((animation: { frames: any; assetKey: string; key: any; frameRate: any; repeat: any }) => {
+      console.log(`Tentando criar animação: ${animation.key} usando assetKey: ${animation.assetKey}`);
       const frames = animation.frames
         ? this.anims.generateFrameNumbers(animation.assetKey, { frames: animation.frames })
         : this.anims.generateFrameNumbers(animation.assetKey);
@@ -36,6 +34,7 @@ export class preloadAssets extends Phaser.Scene {
         frameRate: animation.frameRate,
         repeat: animation.repeat,
       });
+      console.log(`--- Animação ${animation.key} criada com sucesso.`);
     });
   }
 }
