@@ -5,6 +5,9 @@ import { Player } from "../player/playerObject";
 export class BossEnemy extends Phaser.Physics.Arcade.Sprite {
   #player: Player;
   #currentAnim: string = '';
+  #nextMoveTime: number = 0;
+  #lastStableDirection: string = 'down'; // Guarda a última direção estável para evitar flickering
+  #randomTarget: Phaser.Math.Vector2 | null = null;
 
   constructor(scene: Phaser.Scene, x: number, y: number, player: Player) {
     super(scene, x, y, 'boss');
@@ -13,9 +16,8 @@ export class BossEnemy extends Phaser.Physics.Arcade.Sprite {
     scene.add.existing(this);
     scene.physics.add.existing(this);
 
-    this.setScale(2);
+    this.setScale(4);
     this.setSize(48, 48);
-    // this.setOffset(2, 2);
     this.setDepth(20);
     this.setCollideWorldBounds(true);
 
@@ -23,71 +25,70 @@ export class BossEnemy extends Phaser.Physics.Arcade.Sprite {
     const bossHealth = new HealthComponent(bossEnemyStats.bossHealth, bossEnemyStats.bossHealth, bossId);
     this.setData('healthComponent', bossHealth);
 
-    this.#playDirectionalAnim();
-  }
-
-
-  public takeDamage(amount: number): void {
-    if (!this.active) return;
-
-    const healthComp = this.getData('healthComponent') as HealthComponent;
-    if(!healthComp) return;
-    healthComp.loseHealth(amount);
-
-    this.scene?.tweens.add({
-        targets: this,
-        alpha: 0.5,
-        duration: 100,
-        yoyo: true,
-        repeat: 2
-    });
-
-    if (healthComp.isDead()) {
-        this.die();
-    }
   }
 
   update(time: number, delta: number) {
     if (!this.active) return;
-    console.log("BossEnemy update running!")
   
+    this.scene.physics.moveToObject(this, this.#player, bossEnemyStats.bossSpeed);
+    // this.play('boss_left',true)
+    // this.#playDirectionalAnim();
+  }
+  
+  public takeDamage(amount: number): void {
+    if (!this.active) return;
 
-  console.log("Boss Speed:", bossEnemyStats.bossSpeed);
-  console.log("Player valid?", this.#player && this.#player.active);
+    const healthComp = this.getData('healthComponent') as HealthComponent;
+    if (!healthComp) return;
 
-  this.scene.physics.moveToObject(this, this.#player, bossEnemyStats.bossSpeed);
+    healthComp.loseHealth(amount);
 
-  this.#playDirectionalAnim();
+    this.scene?.tweens.add({
+      targets: this,
+      alpha: 0.5,
+      duration: 100,
+      yoyo: true,
+      repeat: 2
+    });
+
+    if (healthComp.isDead()) {
+      this.#die();
+    }
   }
 
-  private die(): void {
+  #die(): void {
     console.log('Juazeiro Derrotado!');
     this.setActive(false);
     this.setVisible(false);
     this.destroy();
   }
 
-
   #playDirectionalAnim() {
-    const playerDirectionX = this.#player.x - this.x;
-    const playerDirectionY = this.#player.y - this.y;
-
-    const absDx = Math.abs(playerDirectionX);
-    const absDy = Math.abs(playerDirectionY);
-
-    let direction = 'front';
-
-    if (absDx > absDy) {
-      direction = playerDirectionX > 0 ? 'right' : 'left';
+    const dx = this.#player.x - this.x;
+    const dy = this.#player.y - this.y;
+  
+    let direction = this.#lastStableDirection;
+  
+    if (Math.abs(dx) > Math.abs(dy)) {
+      direction = dx > 0 ? 'right' : 'left';
     } else {
-      direction = playerDirectionY > 0 ? 'front' : 'back';
+      direction = dy > 0 ? 'down' : 'up';
     }
-
+  
     const animKey = `boss_${direction}`;
-
-    if (this.anims.animationManager.exists(animKey) && this.#currentAnim !== animKey) {
-      this.play(animKey, true);
-      this.#currentAnim = animKey;
+    const currentAnim = this.anims.currentAnim?.key;
+  
+    if (currentAnim !== animKey && this.scene.anims.exists(animKey)) {
+      console.log(`Tocando animação: ${animKey}`);
+      this.stop(); // Parar a animação anterior
+      this.play(animKey, true); // Reproduzir a nova animação
+      this.#lastStableDirection = direction;
+    } else if (currentAnim === animKey) {
+      console.log(`Já tocando a animação: ${currentAnim}`);
     }
   }
+  
+  
+  
+  
 }

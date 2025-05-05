@@ -24,14 +24,14 @@ export const basicEnemyStats ={
   enemyHealth: 20,
   enemySpeed: 50, // velocidade do inimigo, em pixels por segundo
   enemyRate: 1000, // rate do inimigo, inimigos por milisegundos, menor numero = maior quantidade de inimigos
-  enemyDamage: 2, // dano do inimigo
+  enemyDamage: 1, // dano do inimigo
 
 }
 
 export const bossEnemyStats = {
   bossHealth: 100,
   bossSpeed: 25,
-  bossDamage: 15,
+  bossDamage: 3,
   bossRate: 1000,
 }
 

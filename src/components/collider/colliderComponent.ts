@@ -94,7 +94,6 @@ export class collider {
       gameHud.shouldIncrementWave = true; 
       gameHud.updateHud(); 
     }
-    this.#scene.scene.start('colliderScene')
     this.#scene.scene.restart();
   }
 }

@@ -10,11 +10,11 @@ export class shootingController {
   #scene: Phaser.Scene;
   #player: Player;
   #enemyGroup: enemyGroup;
-  #boss: BossEnemy
+  #boss: BossEnemy;
   #bulletGroup: Phaser.Physics.Arcade.Group;
   #reticle: Phaser.GameObjects.Sprite;
   #keys: any;
- 
+
   readonly textStyle = {
     fontFamily: "Cordelina",
     fontSize: "28px",
@@ -30,23 +30,19 @@ export class shootingController {
     this.#boss = boss;
     this.#reticle = reticle;
 
+    this.#bulletGroup = this.#scene.physics.add.group({ classType: Phaser.Physics.Arcade.Sprite, runChildUpdate: true });
+    this.#keys = inputManager.getKeys();
 
-    this.#bulletGroup = this.#scene.physics.add.group({
-      classType: Phaser.Physics.Arcade.Sprite,
-      runChildUpdate: true
-    });
-    this.#keys = inputManager.getKeys()
-  
     this.#setupColliders();
   }
 
   #setupColliders() {
     this.#scene.physics.add.collider(this.#bulletGroup, this.#enemyGroup, this.bulletEnemyCollision, undefined, this);
 
-    if(this.#boss && this.#boss.active) {
-      this.#scene.physics.add.collider(this.#bulletGroup, this.#boss, this.bulletBossCollision, undefined, this); 
+    if (this.#boss?.active) {
+      this.#scene.physics.add.collider(this.#bulletGroup, this.#boss, this.bulletBossCollision, undefined, this);
     } else {
-      console.warn("Boss nao foi inicializado, pulando bullet-boss colisao.");
+      console.warn("Boss não inicializado, pulando colisão com balas.");
     }
   }
 
@@ -56,26 +52,24 @@ export class shootingController {
     console.log('ShootingController criado');
   }
 
-  public setupReticle() {
+  setupReticle() {
     this.#reticle = this.#scene.add.sprite(this.#player.x, this.#player.y - 50, 'reticle');
-    this.#reticle.setOrigin(0.5, 0.5).setDisplaySize(40, 40);
-    this.#reticle.setActive(true).setVisible(true);
+    this.#reticle.setOrigin(0.5).setDisplaySize(40, 40).setActive(true).setVisible(true);
     this.#scene.input.setDefaultCursor('none');
 
     this.#scene.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
-      this.#reticle.x = pointer.worldX;
-      this.#reticle.y = pointer.worldY;
+      this.#reticle.setPosition(pointer.worldX, pointer.worldY);
     });
   }
 
-  public containReticle() {
+  containReticle() {
     if (this.#reticle) {
       this.#reticle.x = Phaser.Math.Clamp(this.#reticle.x, 0, this.#scene.scale.width);
       this.#reticle.y = Phaser.Math.Clamp(this.#reticle.y, 0, this.#scene.scale.height);
     }
   }
 
-  public setupShooting() {
+  setupShooting() {
     inputManager.setupClicks(this.#scene, {
       onFire: () => {
         console.log('Atirando!');
@@ -84,7 +78,7 @@ export class shootingController {
     });
   }
 
-  public fireBullet(shooter: Player, target: Phaser.GameObjects.Sprite) {
+  fireBullet(shooter: Player, target: Phaser.GameObjects.Sprite) {
     const bullet = this.#bulletGroup.get(shooter.x, shooter.y, 'bullet') as Phaser.Physics.Arcade.Sprite;
     const angle = Phaser.Math.Angle.Between(shooter.x, shooter.y, target.x, target.y);
     const speed = gun.bulletSpeed;
@@ -94,93 +88,69 @@ export class shootingController {
     bullet.setActive(true).setVisible(true);
   }
 
-  private bulletEnemyCollision(
-    bullet: Phaser.Types.Physics.Arcade.GameObjectWithBody | Phaser.Tilemaps.Tile | Phaser.Physics.Arcade.Body,
-    enemy: Phaser.Types.Physics.Arcade.GameObjectWithBody | Phaser.Tilemaps.Tile  | Phaser.Physics.Arcade.Body, ) {
-    if (!(bullet instanceof Phaser.Physics.Arcade.Sprite) || !(enemy instanceof Phaser.Physics.Arcade.Sprite) || !bullet.active || !enemy.active) {
-        return;
-    }
-
-    const enemyHealthComp = enemyGroup.getHealthComponent(enemy);
-
-    if (enemyHealthComp) {
-        const bulletDamage = gun.gunDamage;
-        const bulletDamageText = this.#scene.add.text(enemy.x, enemy.y - 50,`${gun.gunDamage}`, this.textStyle)
-        this.#scene.tweens.add({
-          targets: bulletDamageText,
-          alpha: 1,
-          scale: { from: 0.5, to: 1 },
-          ease: 'Power2', 
-          duration: 150,
-          onComplete: () => {
-              this.#scene.time.delayedCall(150, () => { 
-                  this.#scene.tweens.add({
-                      targets: bulletDamageText,
-                      alpha: 0, 
-                      scale: 0.5,
-                      ease: 'Power2',
-                      duration: 1000,
-                      onComplete: () => {
-                        bulletDamageText.destroy(); 
-                      }
-                  });
-              });
-          }
-      });
-      enemyHealthComp.loseHealth(bulletDamage);
-        if (enemyHealthComp.isDead()) {
-            coinOnKillEvent(this.#scene);
-            enemy.destroy(); 
-        }
-    } else {
-        console.warn('Collided enemy does not have a HealthComponent:', enemy)
-    }
-        bullet.destroy(); 
-  }
-
-  
-  private bulletBossCollision (
-    bullet: any,
-    boss: any
-  ) {    if (!(bullet instanceof Phaser.Physics.Arcade.Sprite) || !(boss instanceof Phaser.Physics.Arcade.Sprite) || !bullet.active || !boss.active) {
-      return;
-      
-  }
-  const bossHealthComp = boss.getData('healthComponent') as HealthComponent | null
-  
-  if (bossHealthComp) {
-      const bulletDamage = gun.gunDamage;
-      const bulletDamageText = this.#scene.add.text(boss.x, boss.y - 50,`${gun.gunDamage}`, this.textStyle)
-      this.#scene.tweens.add({
-        targets: bulletDamageText,
-        alpha: 1,
-        scale: { from: 0.5, to: 1 },
-        ease: 'Power2', 
-        duration: 150,
-        onComplete: () => {
-            this.#scene.time.delayedCall(150, () => { 
-                this.#scene.tweens.add({
-                    targets: bulletDamageText,
-                    alpha: 0, 
-                    scale: 0.5,
-                    ease: 'Power2',
-                    duration: 1000,
-                    onComplete: () => {
-                      bulletDamageText.destroy(); 
-                    }
-                });
-            });
-        }
-    });
-    bossHealthComp.loseHealth(bulletDamage);
-      if (bossHealthComp.isDead()) {
-          coinOnKillEvent(this.#scene);
-          boss.destroy(); 
+  private showDamageText(x: number, y: number, damage: number) {
+    const text = this.#scene.add.text(x, y, `${damage}`, this.textStyle);
+    this.#scene.tweens.add({
+      targets: text,
+      alpha: 1,
+      scale: { from: 0.5, to: 1 },
+      ease: 'Power2',
+      duration: 150,
+      onComplete: () => {
+        this.#scene.time.delayedCall(150, () => {
+          this.#scene.tweens.add({
+            targets: text,
+            alpha: 0,
+            scale: 0.5,
+            ease: 'Power2',
+            duration: 1000,
+            onComplete: () => text.destroy()
+          });
+        });
       }
-  } else {
-      console.warn('Collided enemy does not have a HealthComponent:', boss)
+    });
   }
-      bullet.destroy(); 
-  }
-} 
 
+  private bulletEnemyCollision(bullet: any, enemy: any) {
+    if (!bullet.active || !enemy.active) return;
+
+    const enemyHealth = enemyGroup.getHealthComponent(enemy);
+    if (!enemyHealth) return;
+
+    const damage = gun.gunDamage;
+    this.showDamageText(enemy.x, enemy.y - 50, damage);
+    enemyHealth.loseHealth(damage);
+
+    if (enemyHealth.isDead()) {
+      coinOnKillEvent(this.#scene);
+      enemy.destroy();
+    }
+
+    bullet.destroy();
+  }
+
+  private bulletBossCollision(obj1: any, obj2: any) {
+    const boss = obj1 instanceof BossEnemy ? obj1 : obj2 instanceof BossEnemy ? obj2 : null;
+    const bullet = obj1 instanceof Phaser.Physics.Arcade.Sprite && !(obj1 instanceof BossEnemy)
+      ? obj1 : obj2 instanceof Phaser.Physics.Arcade.Sprite && !(obj2 instanceof BossEnemy)
+      ? obj2 : null;
+
+    if (!boss || !bullet || !boss.active || !bullet.active) return;
+
+    const bossHealth = boss.getData('healthComponent') as HealthComponent | null;
+    if (!bossHealth) {
+      console.warn("Boss sem HealthComponent.");
+      return;
+    }
+
+    const damage = gun.gunDamage;
+    this.showDamageText(boss.x, boss.y - 50, damage);
+    boss.takeDamage(damage);
+
+    if (!boss.active) {
+      coinOnKillEvent(this.#scene);
+    }
+
+    bullet.destroy();
+  }
+}

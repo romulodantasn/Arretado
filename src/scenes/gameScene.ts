@@ -23,10 +23,6 @@ export class gameScene extends Phaser.Scene {
     super({ key: 'gameScene' });
   }
 
-  preload() {
-    // this.load.pack('asset_pack', 'assets/data/assets.json');
-  }
-
   create() {
     console.log('gameScene carregado');
 
@@ -64,10 +60,11 @@ export class gameScene extends Phaser.Scene {
   }
 
   update() {
-    this.#shootingController.containReticle();
-    this.handlePause();
-    this.#player.update();
-    this.#enemy.updateEnemyMovement(this);
+      this.#shootingController.containReticle();
+      this.handlePause();
+      this.#player.update();
+      this.#enemy.updateEnemyMovement(this);
+      this.#boss.update(this.time.now, this.game.loop.delta);
   }
 
   public handlePause() {
