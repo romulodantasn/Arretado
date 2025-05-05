@@ -3,7 +3,6 @@ import { bossEnemyStats } from "../../config/gameOptionsConfig";
 import { Player } from "../player/playerObject";
 
 export class BossEnemy extends Phaser.Physics.Arcade.Sprite {
-  #healthComponent: HealthComponent;
   #player: Player;
   #currentAnim: string = '';
 
@@ -16,7 +15,7 @@ export class BossEnemy extends Phaser.Physics.Arcade.Sprite {
 
     this.setScale(2);
     this.setSize(48, 48);
-    this.setOffset(8, 8);
+    // this.setOffset(2, 2);
     this.setDepth(20);
     this.setCollideWorldBounds(true);
 
@@ -28,14 +27,12 @@ export class BossEnemy extends Phaser.Physics.Arcade.Sprite {
   }
 
 
-  public getHealthComponent() : HealthComponent {
-    return this.#healthComponent;
-  }
-
   public takeDamage(amount: number): void {
     if (!this.active) return;
 
-    this.#healthComponent.loseHealth(amount);
+    const healthComp = this.getData('healthComponent') as HealthComponent;
+    if(!healthComp) return;
+    healthComp.loseHealth(amount);
 
     this.scene?.tweens.add({
         targets: this,
@@ -45,7 +42,7 @@ export class BossEnemy extends Phaser.Physics.Arcade.Sprite {
         repeat: 2
     });
 
-    if (this.#healthComponent.isDead()) {
+    if (healthComp.isDead()) {
         this.die();
     }
   }

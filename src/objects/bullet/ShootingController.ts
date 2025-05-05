@@ -94,14 +94,14 @@ export class shootingController {
     bullet.setActive(true).setVisible(true);
   }
 
-  private bulletEnemyCollision( bullet: any, enemy: any,  ) {
-    
-    if (!bullet.active || !enemy.active || !(enemy instanceof Phaser.Physics.Arcade.Sprite)) {
-        return; 
+  private bulletEnemyCollision(
+    bullet: Phaser.Types.Physics.Arcade.GameObjectWithBody | Phaser.Tilemaps.Tile | Phaser.Physics.Arcade.Body,
+    enemy: Phaser.Types.Physics.Arcade.GameObjectWithBody | Phaser.Tilemaps.Tile  | Phaser.Physics.Arcade.Body, ) {
+    if (!(bullet instanceof Phaser.Physics.Arcade.Sprite) || !(enemy instanceof Phaser.Physics.Arcade.Sprite) || !bullet.active || !enemy.active) {
+        return;
     }
 
-    const enemySprite = enemy as Phaser.Physics.Arcade.Sprite;
-    const enemyHealthComp = enemyGroup.getHealthComponent(enemySprite);
+    const enemyHealthComp = enemyGroup.getHealthComponent(enemy);
 
     if (enemyHealthComp) {
         const bulletDamage = gun.gunDamage;
@@ -130,21 +130,24 @@ export class shootingController {
       enemyHealthComp.loseHealth(bulletDamage);
         if (enemyHealthComp.isDead()) {
             coinOnKillEvent(this.#scene);
-            enemySprite.destroy(); 
+            enemy.destroy(); 
         }
     } else {
-        console.warn('Collided enemy does not have a HealthComponent:', enemySprite)
+        console.warn('Collided enemy does not have a HealthComponent:', enemy)
     }
         bullet.destroy(); 
   }
 
-  private bulletBossCollision (bullet : any, boss: any) {
-    if (!bullet.active || !boss.active || !(boss instanceof Phaser.Physics.Arcade.Sprite)) {
-      return; 
+  
+  private bulletBossCollision (
+    bullet: any,
+    boss: any
+  ) {    if (!(bullet instanceof Phaser.Physics.Arcade.Sprite) || !(boss instanceof Phaser.Physics.Arcade.Sprite) || !bullet.active || !boss.active) {
+      return;
+      
   }
-
-  const bossHealthComp = BossEnemy.getHealthComponent();
-
+  const bossHealthComp = boss.getData('healthComponent') as HealthComponent | null
+  
   if (bossHealthComp) {
       const bulletDamage = gun.gunDamage;
       const bulletDamageText = this.#scene.add.text(boss.x, boss.y - 50,`${gun.gunDamage}`, this.textStyle)
@@ -172,12 +175,12 @@ export class shootingController {
     bossHealthComp.loseHealth(bulletDamage);
       if (bossHealthComp.isDead()) {
           coinOnKillEvent(this.#scene);
-          this.#boss.destroy(); 
+          boss.destroy(); 
       }
   } else {
-      console.warn('Collided enemy does not have a HealthComponent:', this.#boss)
+      console.warn('Collided enemy does not have a HealthComponent:', boss)
   }
       bullet.destroy(); 
-}
-
   }
+} 
+
