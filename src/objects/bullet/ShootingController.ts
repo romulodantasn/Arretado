@@ -1,7 +1,7 @@
 import { inputManager } from '../../components/input/inputManagerComponent';
 import { gameOptions, basicEnemyStats, gun } from '../../config/gameOptionsConfig';
 import { Player } from '../player/playerObject';
-import { enemyGroup } from '../enemies/enemyObject';
+import { enemyGroup } from '../enemies/BasicEnemyGroup';
 import { coinOnKillEvent } from '../../components/events/coinOnKillEvent';
 import { HealthComponent } from '../../components/playerHealth/HealthComponent';
 import { BossEnemy } from '../enemies/BossEnemy';

@@ -1,6 +1,6 @@
 import { gameScene } from '../../scenes/gameScene';
 import { Player } from '../../objects/player/playerObject';
-import { enemyGroup } from '../../objects/enemies/enemyObject';
+import { enemyGroup } from '../../objects/enemies/BasicEnemyGroup';
 import { basicEnemyStats, bossEnemyStats, gameOptions } from '../../config/gameOptionsConfig';
 import { gameHud } from '../../objects/ui/gameHudUi';
 import { HealthComponent } from '../playerHealth/HealthComponent';

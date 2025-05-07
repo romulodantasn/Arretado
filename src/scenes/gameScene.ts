@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { gameOptions, playerStats } from '../config/gameOptionsConfig';
 import { inputManager } from '../components/input/inputManagerComponent';
 import { Player } from '../objects/player/playerObject';
-import { enemyGroup } from '../objects/enemies/enemyObject';
+import { BasicEnemyGroup } from '../objects/enemies/BasicEnemyGroup';
 import { collider } from '../components/collider/colliderComponent';
 import { shootingController } from '../objects/bullet/ShootingController';
 import { HealthComponent } from '../components/playerHealth/HealthComponent';
@@ -12,7 +12,7 @@ import { BossEnemy } from '../objects/enemies/BossEnemy';
 export class gameScene extends Phaser.Scene {
   #keys: any;
   #player: Player;
-  #enemy: enemyGroup;
+  #enemy: BasicEnemyGroup;
   #boss: BossEnemy
   #shootingController: shootingController;
   #reticle: Phaser.GameObjects.Sprite;
@@ -39,7 +39,7 @@ export class gameScene extends Phaser.Scene {
 
     this.#player = new Player(this, gameOptions.gameSize.width / 2, gameOptions.gameSize.height / 2);
 
-    this.#enemy = new enemyGroup(this, this.#player);
+    this.#enemy = new BasicEnemyGroup(this, this.#player);
 
     this.#boss = new BossEnemy(this,300, 300, this.#player)
 
