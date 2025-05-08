@@ -2,13 +2,7 @@ import { scaleEnemyBaseStats } from "./scaleEnemy";
 import { EnemyTemplates, EnemyType } from "./enemiesContainer";
 import { DEFAULT_WAVE_TIMER } from "./GameManager"; 
 import { WaveConfig } from "./wavesContainer";
-
-export interface WaveEnemy{
-    name: EnemyType;
-    stats: ReturnType<typeof scaleEnemyBaseStats >;
-}
-
-
+import { WaveEnemy } from "./enemiesContainer";
 
 
 export function generateWave(waveNumber: number): WaveConfig {
@@ -22,8 +16,8 @@ export function generateWave(waveNumber: number): WaveConfig {
     duration: DEFAULT_WAVE_TIMER, // Use the imported constant
     background: `wave_${waveNumber}_background`, // Imagem de fundo da onda
     music: `wave_${waveNumber}_music`, // Música da onda
-    currentWaveText: waveNumber,
-    currentActText: 1,
+    waveNumber: waveNumber,
+    belongToAct: 1,
   }
 }
 

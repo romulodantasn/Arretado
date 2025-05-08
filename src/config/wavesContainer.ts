@@ -1,8 +1,8 @@
-import { WaveEnemy } from "./waveManager";
+import { EnemyType } from "./enemiesContainer";
 
 export interface WaveConfig {
     waveNumber: number; // número da onda
-    enemies: WaveEnemy[]; // tipos de inimigos que aparecem na onda
+    enemies: EnemyType[]; // tipos de inimigos que aparecem na onda
     duration: number; // duração da onda em segundos
     background: string; // imagem de fundo da onda
     music: string; // música da onda
@@ -11,7 +11,7 @@ export interface WaveConfig {
 
 export type WaveNumbers = 'Wave_1' | 'Wave_2' | 'Wave_3' | 'Wave_4' | 'Wave_5' | 'Wave_6' | 'Wave_7' | 'Wave_8' | 'Wave_9';
 
-export const Waves : Record<WaveNumbers, WaveConfig> = {
+export const Waves : Record <WaveNumbers, WaveConfig> = {
     Wave_1: {
         waveNumber: 1,
         enemies: ['BasicEnemy'],
@@ -22,8 +22,8 @@ export const Waves : Record<WaveNumbers, WaveConfig> = {
     },
     Wave_2: {
         waveNumber: 2,
-        enemies: ['BasicEnemy'],
-        duration: 20,
+        enemies: ['BasicEnemy', 'RangedEnemy'],
+        duration: 25,
         background: 'wave_2_background',
         music: 'wave_2_music',
         belongToAct: 1,
@@ -31,57 +31,57 @@ export const Waves : Record<WaveNumbers, WaveConfig> = {
     Wave_3: {
         waveNumber: 3,
         enemies: ['BasicEnemy', 'RangedEnemy'],
-        duration: 20,
+        duration: 30,
         background: 'wave_3_background',
         music: 'wave_3_music',
         belongToAct: 1,
     },
     Wave_4: {
-        waveNumber: 1,
-        enemies: ['BasicEnemy'],
-        duration: 20,
-        background: 'wave_1_background',
-        music: 'wave_1_music',
+        waveNumber: 4,
+        enemies: ['BasicEnemy', 'RangedEnemy', 'DashEnemy'],
+        duration: 35,
+        background: 'wave_4_background',
+        music: 'wave_4_music',
         belongToAct: 1,
     },
     Wave_5: {
-        waveNumber: 1,
-        enemies: ['BasicEnemy'],
-        duration: 20,
-        background: 'wave_1_background',
-        music: 'wave_1_music',
+        waveNumber: 5,
+        enemies:['BasicEnemy', 'RangedEnemy', 'DashEnemy'],
+        duration: 40,
+        background: 'wave_5_background',
+        music: 'wave_5_music',
         belongToAct: 1,
     },
     Wave_6: {
-        waveNumber: 1,
-        enemies: ['BasicEnemy'],
-        duration: 20,
-        background: 'wave_1_background',
-        music: 'wave_1_music',
+        waveNumber: 6,
+        enemies: ['BasicEnemy', 'RangedEnemy', 'DashEnemy', 'TankEnemy'],
+        duration: 45,
+        background: 'wave_6_background',
+        music: 'wave_6_music',
         belongToAct: 1,
     },
     Wave_7: {
-        waveNumber: 1,
-        enemies: ['BasicEnemy'],
-        duration: 20,
-        background: 'wave_1_background',
-        music: 'wave_1_music',
+        waveNumber: 7,
+        enemies: ['BasicEnemy', 'RangedEnemy', 'DashEnemy', 'TankEnemy'],
+        duration: 50,
+        background: 'wave_7_background',
+        music: 'wave_7_music',
         belongToAct: 1,
     },
     Wave_8: {
-        waveNumber: 1,
-        enemies: ['BasicEnemy'],
-        duration: 20,
-        background: 'wave_1_background',
-        music: 'wave_1_music',
+        waveNumber: 8,
+        enemies: ['BasicEnemy', 'RangedEnemy', 'DashEnemy', 'TankEnemy'],
+        duration: 55,
+        background: 'wave_8_background',
+        music: 'wave_8_music',
         belongToAct: 1,
     },
     Wave_9: {
-        waveNumber: 1,
-        enemies: ['BasicEnemy'],
-        duration: 20,
-        background: 'wave_1_background',
-        music: 'wave_1_music',
+        waveNumber: 9,
+        enemies: ['BasicEnemy', 'RangedEnemy', 'DashEnemy', 'TankEnemy', 'BossEnemy'],
+        duration: 60,
+        background: 'wave_9_background',
+        music: 'wave_9_music',
         belongToAct: 1,
     },
 }

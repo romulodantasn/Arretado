@@ -7,38 +7,33 @@ export const gameOptions = {
   type: Phaser.AUTO,
   timerLeft: 20,
   invulnerabilityDuration: 500,
-  currentWave: 1,
-  currentAct: 1,
+ 
 };
 
-export const playerStats = {
-  playerMoveSpeed: 600, // velocidade do jogador em pixels por segundo
-  playerHealth: 10, // vida do player
-  playerDamage: 10, // dano do player
-  playerLucky: 0, // chance de crítico do player
-  playerFireRate: 1000, // rate do player, tiros por milisegundos
-  playerCoinGame: 0, // moedas do player
+export const waveIndicator ={
+  currentWave: 1,
+  currentAct: 1,
 }
 
-export const basicEnemyStats ={
-  enemyHealth: 20,
-  enemySpeed: 50, // velocidade do inimigo, em pixels por segundo
-  enemyRate: 1000, // rate do inimigo, inimigos por milisegundos, menor numero = maior quantidade de inimigos
-  enemyDamage: 1, // dano do inimigo
+// export const basicEnemyStats ={
+//   Health: 20,
+//   Speed: 50, // velocidade do inimigo, em pixels por segundo
+//   Rate: 1000, // rate do inimigo, inimigos por milisegundos, menor numero = maior quantidade de inimigos
+//   Damage: 1, // dano do inimigo
 
-}
+// }
 
-export const bossEnemyStats = {
-  bossHealth: 100,
-  bossSpeed: 25,
-  bossDamage: 3,
-  bossRate: 1000,
-}
+// export const bossEnemyStats = {
+//   Health: 100,
+//   Speed: 25,
+//   Damage: 3,
+//   Rate: 1000,
+// }
 
 export function onWaveComplete() {
-  gameOptions.currentWave++;
-  basicEnemyStats.enemyRate -= 50;
-  basicEnemyStats.enemySpeed += 10;
+  waveIndicator.currentWave++;
+  basicEnemyStats.Rate -= 50;
+  basicEnemyStats.Speed += 10;
   gameOptions.timerLeft += 5;
 }
 

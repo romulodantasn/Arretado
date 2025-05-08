@@ -1,7 +1,7 @@
 import { inputManager } from '../../components/input/inputManagerComponent';
 import { gameOptions, basicEnemyStats, gun } from '../../config/gameOptionsConfig';
 import { Player } from '../player/playerObject';
-import { enemyGroup } from '../enemies/BasicEnemyGroup';
+import { BasicEnemyGroup } from '../enemies/BasicEnemyGroup';
 import { coinOnKillEvent } from '../../components/events/coinOnKillEvent';
 import { HealthComponent } from '../../components/playerHealth/HealthComponent';
 import { BossEnemy } from '../enemies/BossEnemy';
@@ -9,7 +9,7 @@ import { BossEnemy } from '../enemies/BossEnemy';
 export class shootingController {
   #scene: Phaser.Scene;
   #player: Player;
-  #enemyGroup: enemyGroup;
+  #BasicEnemyGroup: BasicEnemyGroup;
   #boss: BossEnemy;
   #bulletGroup: Phaser.Physics.Arcade.Group;
   #reticle: Phaser.GameObjects.Sprite;
@@ -23,10 +23,10 @@ export class shootingController {
     strokeThickness: 4,
   };
 
-  constructor(scene: Phaser.Scene, player: Player, enemyGroup: enemyGroup, boss: BossEnemy, reticle: Phaser.GameObjects.Sprite) {
+  constructor(scene: Phaser.Scene, player: Player, BasicEnemyGroup: BasicEnemyGroup, boss: BossEnemy, reticle: Phaser.GameObjects.Sprite) {
     this.#scene = scene;
     this.#player = player;
-    this.#enemyGroup = enemyGroup;
+    this.#BasicEnemyGroup = BasicEnemyGroup;
     this.#boss = boss;
     this.#reticle = reticle;
 
@@ -37,7 +37,7 @@ export class shootingController {
   }
 
   #setupColliders() {
-    this.#scene.physics.add.collider(this.#bulletGroup, this.#enemyGroup, this.bulletEnemyCollision, undefined, this);
+    this.#scene.physics.add.collider(this.#bulletGroup, this.#BasicEnemyGroup, this.bulletEnemyCollision, undefined, this);
 
     if (this.#boss?.active) {
       this.#scene.physics.add.collider(this.#bulletGroup, this.#boss, this.bulletBossCollision, undefined, this);
@@ -114,7 +114,7 @@ export class shootingController {
   private bulletEnemyCollision(bullet: any, enemy: any) {
     if (!bullet.active || !enemy.active) return;
 
-    const enemyHealth = enemyGroup.getHealthComponent(enemy);
+    const enemyHealth = BasicEnemyGroup.getHealthComponent(enemy);
     if (!enemyHealth) return;
 
     const damage = gun.gunDamage;

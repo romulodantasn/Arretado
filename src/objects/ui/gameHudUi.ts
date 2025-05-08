@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
-import { gameOptions, playerStats } from '../../config/gameOptionsConfig';
+import { gameOptions, waveIndicator } from '../../config/gameOptionsConfig';
+import { playerStats } from '../../config/playerConfig';
 import { timer } from '../../components/timer/timerComponent';
 
 type hudElement = 'coins' | 'wave' | 'act' | 'timer' | 'gun';
@@ -31,7 +32,7 @@ export class gameHud extends Phaser.Scene {
   create() {
     this.game.events.on('buyUpdatedCoin', this.coinCount, this);
     this.game.events.on('enemyKilled', this.coinCount, this)
-    this.#coinGame = playerStats.playerCoinGame;
+    this.#coinGame = playerStats.CoinGame;
 
     const textStyle = { fontFamily: 'Cordelina', color: '#ffffff', stroke: '#000000', strokeThickness: 6 };
 
@@ -45,14 +46,14 @@ export class gameHud extends Phaser.Scene {
 
     if (this.#elementsToShow.includes('wave')) {
       this.#waveText = this.add
-        .text(1785, 80, `Onda: ${gameOptions.currentWave}`, textStyle)
+        .text(1785, 80, `Onda: ${waveIndicator.currentWave}`, textStyle)
         .setFontSize(36)
         .setOrigin(0.5);
     }
 
     if (this.#elementsToShow.includes('act')) {
       this.#actText = this.add
-        .text(1780, 40, `Ato: ${gameOptions.currentAct}`, textStyle)
+        .text(1780, 40, `Ato: ${waveIndicator.currentAct}`, textStyle)
         .setFontSize(36)
         .setOrigin(0.5);
     }
@@ -80,41 +81,41 @@ export class gameHud extends Phaser.Scene {
 
   public phaseCount() {
     if (!this.shouldIncrementWave || !this.#elementsToShow.includes('wave')) return;
-    console.log(`Chamando phaseCount(). waveNumber: ${gameOptions.currentWave}, actNumber: ${gameOptions.currentAct}`);
+    console.log(`Chamando phaseCount(). waveNumber: ${waveIndicator.currentWave}, actNumber: ${waveIndicator.currentAct}`);
    
-    if (gameOptions.currentWave >= 9) {
-      gameOptions.currentWave = 1;
-      gameOptions.currentAct++;
+    if (waveIndicator.currentWave >= 9) {
+      waveIndicator.currentWave = 1;
+      waveIndicator.currentAct++;
     }
 
-    if (gameOptions.currentAct == 2 && gameOptions.currentWave == 3) {
-        gameOptions.currentAct = 3;
-        gameOptions.currentWave = 1;
+    if (waveIndicator.currentAct == 2 && waveIndicator.currentWave == 3) {
+      waveIndicator.currentAct = 3;
+      waveIndicator.currentWave = 1;
     };
     
 
-    console.log(`Depois do incremento. waveNumber: ${gameOptions.currentWave}, actNumber: ${gameOptions.currentAct}`);
+    console.log(`Depois do incremento. waveNumber: ${waveIndicator.currentWave}, actNumber: ${waveIndicator.currentAct}`);
     this.updateHud();
   }
 
   public updateHud() {
     if (this.#waveText && this.#actText) {
-      this.#waveText.setText(`Onda: ${gameOptions.currentWave}`);
+      this.#waveText.setText(`Onda: ${waveIndicator.currentWave}`);
     }
     if (this.#actText) {
-      this.#actText.setText(`Ato: ${gameOptions.currentAct}`);
+      this.#actText.setText(`Ato: ${waveIndicator.currentAct}`);
     }
   }
 
   public coinCount() {
-    this.#coinGame = playerStats.playerCoinGame;
+    this.#coinGame = playerStats.CoinGame;
     if (this.#coinText) {
       this.#coinText.setText(`${this.#coinGame}`);
     }
   }
 
   public advanceWaveCount() {
-    console.log(gameOptions.currentWave, 'waveCount');
+    console.log(waveIndicator.currentWave, 'waveCount');
   }
 
   public enableWaveIncrement() {

@@ -7,6 +7,9 @@ export interface BaseEnemyStatsStructure {
     FireRate?: number,
     DashCooldown?: number,
 }
+export function getEnemyStats(type: EnemyType) {
+  return EnemyTemplates[type];
+}
 
 export type EnemyType = 'BasicEnemy' | 'RangedEnemy' | 'DashEnemy' | 'TankEnemy' | 'BossEnemy';
 

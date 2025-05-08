@@ -1,5 +1,6 @@
 import Phaser from "phaser";
-import { gameOptions, basicEnemyStats, onWaveComplete, playerStats } from "../../config/gameOptionsConfig";
+import { gameOptions, basicEnemyStats, onWaveComplete } from "../../config/gameOptionsConfig";
+import { playerStats } from "../../config/playerConfig";
 import {
   damageItems,
   lifeItems,
@@ -178,13 +179,13 @@ export class itemsDisplayUi extends Phaser.GameObjects.Container {
     ]);
 
     itemBg.on("pointerdown", () => {
-      if (playerStats.playerCoinGame >= item.cost) {
+      if (playerStats.CoinGame >= item.cost) {
         item.effect();
-        playerStats.playerCoinGame -= item.cost;
-        this.scene.game.events.emit("buyUpdatedCoin", playerStats.playerCoinGame);
+        playerStats.CoinGame -= item.cost;
+        this.scene.game.events.emit("buyUpdatedCoin", playerStats.CoinGame);
         
         console.log(
-          `Evento de compra emitido ${playerStats.playerCoinGame} moedas`
+          `Evento de compra emitido ${playerStats.CoinGame} moedas`
         );
         const buyText = this.scene.add
           .text(x, y + 320, `Item ${item.name} comprado!`, {
@@ -240,16 +241,16 @@ export class itemsDisplayUi extends Phaser.GameObjects.Container {
         elementsToShow: ["coins", "wave", "act", "timer", "gun"],
       });
      onWaveComplete();
-      console.log("enemySpeedUpdated: " + basicEnemyStats.enemySpeed);
-      console.log("enemyRateUpdated: " + basicEnemyStats.enemyRate);
+      console.log("enemySpeedUpdated: " + basicEnemyStats.Speed);
+      console.log("enemyRateUpdated: " + basicEnemyStats.Rate);
     });
   }
 
   private playerStatsContainer(x: number, y: number) {
-    const health = playerStats.playerHealth;
-    const damage = playerStats.playerDamage;
-    const moveSpeed = playerStats.playerMoveSpeed;
-    const lucky = playerStats.playerLucky;
+    const health = playerStats.Health;
+    const damage = playerStats.Damage;
+    const moveSpeed = playerStats.MoveSpeed;
+    const lucky = playerStats.Lucky;
 
     const statsBg = this.scene.add
       .rectangle(-25, 0, -250, 400)
