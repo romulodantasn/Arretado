@@ -53,13 +53,10 @@ export const EnemyTemplates: Record<EnemyType, BaseEnemyStatsStructure> = {
   },
 } as const;
 
+// Cria uma cópia mutável dos atributos dos inimigos
+export const currentEnemyStats: Record<EnemyType, BaseEnemyStatsStructure> = 
+  JSON.parse(JSON.stringify(EnemyTemplates));
+
+
 export type EnemyTypes = keyof typeof EnemyTemplates;
 export type EnemyStats = typeof EnemyTemplates[EnemyTypes];
-
-  
-  // export function onWaveComplete() {
-  //   gameOptions.currentWave++;
-  //   BasicEnemy.Rate -= 50;
-  //   BasicEnemy.Speed += 10;
-  //   GameManager.timerLeft+=5;
-  // }t
