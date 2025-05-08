@@ -1,6 +1,10 @@
 import Phaser from "phaser";
-import { gameOptions, basicEnemyStats, onWaveComplete } from "../../config/gameOptionsConfig";
+import { onWaveComplete } from "../../config/waveManager";
+import { currentEnemyStats } from "../../config/enemiesContainer";
 import { playerStats } from "../../config/playerConfig";
+import { WaveManager } from "../../config/waveManager";
+import { WaveNumbers, Waves } from "../../config/wavesContainer";
+
 import {
   damageItems,
   lifeItems,
@@ -236,13 +240,13 @@ export class itemsDisplayUi extends Phaser.GameObjects.Container {
       this.scene.time.delayedCall(1000, () => {
         buttonText.setColor("#ffffff");
       });
-      this.scene.scene.start("gameScene");
+      this.scene.scene.start("gameScene", {waveKey: `Wave_${WaveManager.getCurrentWave() + 1}` as WaveNumbers});
       this.scene.scene.start("gameHud", {
         elementsToShow: ["coins", "wave", "act", "timer", "gun"],
       });
      onWaveComplete();
-      console.log("enemySpeedUpdated: " + basicEnemyStats.Speed);
-      console.log("enemyRateUpdated: " + basicEnemyStats.Rate);
+      console.log("enemySpeedUpdated: " + currentEnemyStats.BasicEnemy.Speed);
+      console.log("enemyRateUpdated: " +currentEnemyStats.BasicEnemy.Rate);
     });
   }
 

@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
-import { gameOptions, playerStats } from '../config/gameOptionsConfig';
+import { gameOptions } from '../config/gameOptionsConfig';
+import { playerStats } from '../config/playerConfig';
 import { inputManager } from '../components/input/inputManagerComponent';
 import { Player } from '../objects/player/playerObject';
 import { BasicEnemyGroup } from '../objects/enemies/BasicEnemyGroup';
@@ -8,45 +9,57 @@ import { shootingController } from '../objects/bullet/ShootingController';
 import { HealthComponent } from '../components/playerHealth/HealthComponent';
 import { globalEventEmitter } from '../components/events/globalEventEmitter';
 import { BossEnemy } from '../objects/enemies/BossEnemy';
-
+import { currentEnemyStats } from '../config/enemiesContainer';
+import { waveIndicator } from '../config/gameOptionsConfig';
+import { WaveManager } from '../config/waveManager';
+import { WaveNumbers, Waves } from '../config/wavesContainer';
 export class gameScene extends Phaser.Scene {
   #keys: any;
   #player: Player;
-  #enemy: BasicEnemyGroup;
+  #basicEnemy: BasicEnemyGroup;
   #boss: BossEnemy
   #shootingController: shootingController;
   #reticle: Phaser.GameObjects.Sprite;
   #collider: collider;
   #health: HealthComponent;
+  #currentWaveKey: WaveNumbers;
+  #waveData: any;
 
   constructor() {
     super({ key: 'gameScene' });
+  }
+  
+  init(data: { waveKey?: WaveNumbers }) {
+    this.#waveData = WaveManager.getWaveData(data.waveKey);
   }
 
   create() {
     console.log('gameScene carregado');
 
-    this.#health = new HealthComponent(playerStats.playerHealth, playerStats.playerHealth, 'player');
+    this.#health = new HealthComponent(playerStats.Health, playerStats.Health, 'player');
 
     this.scene.launch('gameHud');
-
+    const waveKey = `Wave_${this.#waveData.waveNumber}` as WaveNumbers;
+    const backgroundKey = Waves[waveKey].background;
     this.add
-      .image(0, 0, 'gameBackgroundLimbo')
+      .image(0, 0, backgroundKey)
       .setOrigin(0, 0)
       .setDisplaySize(gameOptions.gameSize.width, gameOptions.gameSize.height);
+      console.log(`Background atual: ${backgroundKey}`)
 
     inputManager.setupControls(this);
 
     this.#player = new Player(this, gameOptions.gameSize.width / 2, gameOptions.gameSize.height / 2);
 
-    this.#enemy = new BasicEnemyGroup(this, this.#player);
+    this.#basicEnemy = new BasicEnemyGroup(this, this.#player);
+    console.log(`[Wave ${waveIndicator.currentWave}] BasicEnemy Stats:`, currentEnemyStats.BasicEnemy);
 
     this.#boss = new BossEnemy(this,300, 300, this.#player)
 
-    this.#shootingController = new shootingController(this, this.#player, this.#enemy, this.#boss, this.#reticle);
+    this.#shootingController = new shootingController(this, this.#player, this.#basicEnemy, this.#boss, this.#reticle);
     this.#shootingController.create();
 
-    this.#collider = new collider(this, this.#player, this.#enemy, this.#boss, this.#health);
+    this.#collider = new collider(this, this.#player, this.#basicEnemy, this.#boss, this.#health);
     this.#collider.create();
     this.#keys = inputManager.getKeys();
 
@@ -63,7 +76,7 @@ export class gameScene extends Phaser.Scene {
       this.#shootingController.containReticle();
       this.handlePause();
       this.#player.update();
-      this.#enemy.updateEnemyMovement(this);
+      this.#basicEnemy.updateEnemyMovement(this);
       this.#boss.update(this.time.now, this.game.loop.delta);
   }
 
