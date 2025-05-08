@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 import { globalEventEmitter } from "../../components/events/globalEventEmitter";
 import { healthEvents } from "../../components/events/healthEvent";
-import { playerStats } from "../../config/gameOptionsConfig";
+import { playerStats } from "../../config/playerConfig";
   
   export class PlayerHealthBar extends Phaser.Scene {
     #healthBar!: Phaser.GameObjects.Image;
@@ -40,7 +40,7 @@ import { playerStats } from "../../config/gameOptionsConfig";
         .setDisplaySize(this.#healthBarWidth, this.#healthBarHeight)
         .setScrollFactor(0)
 
-     const initialPlayerHealth = playerStats.playerHealth
+     const initialPlayerHealth = playerStats.Health
      this.#currentMaxHealth = initialPlayerHealth;
      const textX = barX + this.#healthBarWidth / 2;
      this.#healthText = this.add.text(textX, barY, ` ${initialPlayerHealth} / ${initialPlayerHealth}`, this.textStyle)

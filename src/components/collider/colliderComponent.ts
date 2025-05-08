@@ -1,26 +1,27 @@
 import { gameScene } from '../../scenes/gameScene';
 import { Player } from '../../objects/player/playerObject';
-import { enemyGroup } from '../../objects/enemies/BasicEnemyGroup';
-import { basicEnemyStats, bossEnemyStats, gameOptions } from '../../config/gameOptionsConfig';
+import { BasicEnemyGroup } from '../../objects/enemies/BasicEnemyGroup';
+import {  gameOptions, waveIndicator } from '../../config/gameOptionsConfig';
 import { gameHud } from '../../objects/ui/gameHudUi';
 import { HealthComponent } from '../playerHealth/HealthComponent';
 import { healthEvents } from '../events/healthEvent';
 import { BossEnemy } from '../../objects/enemies/BossEnemy';
+import { currentEnemyStats } from '../../config/enemiesContainer';
 
 export class collider {
   #scene: gameScene;
   #player: Player;
-  #enemyGroup: enemyGroup; 
+  #BasicEnemyGroup: BasicEnemyGroup; 
   #boss: BossEnemy;
   #playerHealth: HealthComponent; 
   #isInvulnerable: boolean = false;
   #playerEnemyCollider: Phaser.Physics.Arcade.Collider; 
   #playerBossCollider: Phaser.Physics.Arcade.Collider; 
 
-  constructor(scene: gameScene, player: Player, enemyGroup: enemyGroup, boss: BossEnemy, playerHealth: HealthComponent) {
+  constructor(scene: gameScene, player: Player, BasicEnemyGroup: BasicEnemyGroup, boss: BossEnemy, playerHealth: HealthComponent) {
     this.#scene = scene;
     this.#player = player;
-    this.#enemyGroup = enemyGroup;
+    this.#BasicEnemyGroup = BasicEnemyGroup;
     this.#boss = boss;
     this.#playerHealth = playerHealth;
   }
@@ -30,9 +31,9 @@ export class collider {
   }
 
   public setupCollision() {
-    this.#playerEnemyCollider = this.#scene.physics.add.collider(this.#player, this.#enemyGroup, () => {
+    this.#playerEnemyCollider = this.#scene.physics.add.collider(this.#player, this.#BasicEnemyGroup, () => {
       if (!this.#isInvulnerable) {
-        this.#handlePlayerHit(basicEnemyStats.enemyDamage, this.#playerEnemyCollider); 
+        this.#handlePlayerHit(currentEnemyStats.BasicEnemy.Damage, this.#playerEnemyCollider); 
       }
     });
 
@@ -40,7 +41,7 @@ export class collider {
     if (this.#boss && this.#boss.active) {
         this.#playerBossCollider = this.#scene.physics.add.collider(this.#player, this.#boss, () => {
             if (!this.#isInvulnerable) {
-                this.#handlePlayerHit(bossEnemyStats.bossDamage, this.#playerBossCollider);
+                this.#handlePlayerHit(currentEnemyStats.BossEnemy.Damage, this.#playerBossCollider);
             }
         });
     } else {
@@ -87,12 +88,12 @@ export class collider {
     const gameHud = this.#scene.scene.get('gameHud') as gameHud;
     if (gameHud) {
       // Resetar stats globais TODO-> trocar futuramente por um GameStateManager
-      gameOptions.currentWave = 1;
-      gameOptions.currentAct = 1;
-      basicEnemyStats.enemyRate = 800;
-      console.log('enemyRate Reset: ' + basicEnemyStats.enemyRate);
-      gameHud.shouldIncrementWave = true; 
-      gameHud.updateHud(); 
+      waveIndicator.currentWave = 1;
+      waveIndicator.currentAct = 1;
+      // currentEnemyStats.basicEnemyStats.enemyRate = 800;
+      // console.log('enemyRate Reset: ' + basicEnemyStats.enemyRate);
+      // gameHud.shouldIncrementWave = true; 
+      // gameHud.updateHud(); 
     }
     this.#scene.scene.restart();
   }

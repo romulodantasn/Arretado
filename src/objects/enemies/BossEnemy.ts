@@ -1,13 +1,10 @@
 import { HealthComponent } from "../../components/playerHealth/HealthComponent";
-import { bossEnemyStats } from "../../config/gameOptionsConfig";
+import { currentEnemyStats } from "../../config/enemiesContainer";
 import { Player } from "../player/playerObject";
 
 export class BossEnemy extends Phaser.Physics.Arcade.Sprite {
   #player: Player;
-  #currentAnim: string = '';
-  #nextMoveTime: number = 0;
   #lastStableDirection: string = 'down'; // Guarda a última direção estável para evitar flickering
-  #randomTarget: Phaser.Math.Vector2 | null = null;
 
   constructor(scene: Phaser.Scene, x: number, y: number, player: Player) {
     super(scene, x, y, 'boss');
@@ -22,7 +19,7 @@ export class BossEnemy extends Phaser.Physics.Arcade.Sprite {
     this.setCollideWorldBounds(true);
 
     const bossId = `boss_${Date.now()}_${Math.random().toString(16).slice(2)}`;
-    const bossHealth = new HealthComponent(bossEnemyStats.bossHealth, bossEnemyStats.bossHealth, bossId);
+    const bossHealth = new HealthComponent(currentEnemyStats.BossEnemy.Health, currentEnemyStats.BossEnemy.Health, bossId);
     this.setData('healthComponent', bossHealth);
 
   }
@@ -30,7 +27,7 @@ export class BossEnemy extends Phaser.Physics.Arcade.Sprite {
   update(time: number, delta: number) {
     if (!this.active) return;
   
-    this.scene.physics.moveToObject(this, this.#player, bossEnemyStats.bossSpeed);
+    this.scene.physics.moveToObject(this, this.#player, currentEnemyStats.BossEnemy.Speed);
     // this.play('boss_left',true)
     // this.#playDirectionalAnim();
   }

@@ -4,7 +4,7 @@ import { gameOptions } from '../../config/gameOptionsConfig';
 export class timer {
   #scene: Phaser.Scene;
   #timerEvent: Phaser.Time.TimerEvent;
-  #timeLeft =  gameOptions.timerLeft;
+  #timeLeft =  gameOptions.waveDuration;
   #timerText: Phaser.GameObjects.Text;
 
   constructor(scene: Phaser.Scene) {

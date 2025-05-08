@@ -1,7 +1,7 @@
-import { playerStats } from "../../config/gameOptionsConfig"
+import { playerStats } from "../../config/playerConfig";
 import Phaser from "phaser"
 
 export function coinOnKillEvent(scene: Phaser.Scene) {
-  playerStats.playerCoinGame += 1000,
-    scene.game.events.emit("enemyKilled", playerStats.playerCoinGame);
+  playerStats.CoinGame += 1000,
+    scene.game.events.emit("enemyKilled", playerStats.CoinGame);
   }

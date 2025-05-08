@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { inputManager } from '../../components/input/inputManagerComponent';
-import { playerStats } from '../../config/gameOptionsConfig';
+import { playerStats } from '../../config/playerConfig';
 import { HealthComponent } from '../../components/playerHealth/HealthComponent';
 
 export class Player extends Phaser.Physics.Arcade.Sprite {
@@ -21,8 +21,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.controlKeys = inputManager.getKeys();
 
     this.#healthComponent = new HealthComponent(
-      playerStats.playerHealth,
-      playerStats.playerHealth,
+      playerStats.Health,
+      playerStats.Health,
       'player'
     );
   }
@@ -61,13 +61,13 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
     if (movementDirection.x === 0 || movementDirection.y === 0) {
       this.setVelocity(
-        movementDirection.x * playerStats.playerMoveSpeed,
-        movementDirection.y * playerStats.playerMoveSpeed
+        movementDirection.x * playerStats.MoveSpeed,
+        movementDirection.y * playerStats.MoveSpeed
       );
     } else {
       this.setVelocity(
-        (movementDirection.x * playerStats.playerMoveSpeed) / Math.sqrt(2),
-        (movementDirection.y * playerStats.playerMoveSpeed) / Math.sqrt(2)
+        (movementDirection.x * playerStats.MoveSpeed) / Math.sqrt(2),
+        (movementDirection.y * playerStats.MoveSpeed) / Math.sqrt(2)
       );
     }
     return isMoving;

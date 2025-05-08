@@ -1,5 +1,5 @@
 import { inputManager } from '../../components/input/inputManagerComponent';
-import { gameOptions, basicEnemyStats, gun } from '../../config/gameOptionsConfig';
+import { gun } from '../../config/gameOptionsConfig';
 import { Player } from '../player/playerObject';
 import { BasicEnemyGroup } from '../enemies/BasicEnemyGroup';
 import { coinOnKillEvent } from '../../components/events/coinOnKillEvent';

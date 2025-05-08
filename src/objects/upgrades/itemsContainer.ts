@@ -1,4 +1,5 @@
-import { gun, playerStats } from '../../config/gameOptionsConfig';
+import { gun } from '../../config/gameOptionsConfig';
+import { playerStats } from '../../config/playerConfig';
 
 export interface itemsContainer {
   imageKey: string;
@@ -83,7 +84,7 @@ export const lifeItems: itemsContainer[] = [
     cost: 200,
     effect: () => {
       console.log(`${name} Comprado, Vida aumentada`);
-      playerStats.playerHealth += 50;
+      playerStats.Health += 50;
     },
   },
   {
@@ -95,7 +96,7 @@ export const lifeItems: itemsContainer[] = [
     cost: 50,
     effect: () => {
       console.log(`${name} Comprado, Vida aumentada`);
-      playerStats.playerHealth += 30;
+      playerStats.Health += 30;
     },
   },
   {
@@ -107,7 +108,7 @@ export const lifeItems: itemsContainer[] = [
     cost: 250,
     effect: () => {
       console.log(`${name} Comprado, Vida aumentada`);
-      playerStats.playerHealth += 20;
+      playerStats.Health += 20;
     },
   },
   {
@@ -119,7 +120,7 @@ export const lifeItems: itemsContainer[] = [
     cost: 100,
     effect: () => {
       console.log(`${name} Comprado, Vida aumentada`);
-      playerStats.playerHealth += 20;
+      playerStats.Health += 20;
     },
   },
   {
@@ -131,7 +132,7 @@ export const lifeItems: itemsContainer[] = [
     cost: 20,
     effect: () => {
       console.log(`${name} Comprado, Vida aumentada`);
-      playerStats.playerHealth += 35;
+      playerStats.Health += 35;
     },
   },
 ];
@@ -146,7 +147,7 @@ export const moveSpeedItems: itemsContainer[] = [
     cost: 100,
     effect: () => {
       console.log(`${name} Comprado, MoveSpeed aumentada`);
-      playerStats.playerMoveSpeed += 30;
+      playerStats.MoveSpeed += 30;
     },
   },
   {
@@ -158,7 +159,7 @@ export const moveSpeedItems: itemsContainer[] = [
     cost: 50,
     effect: () => {
       console.log(`${name} Comprado, MoveSpeed aumentada`);
-      playerStats.playerMoveSpeed += 300;
+      playerStats.MoveSpeed += 300;
     },
   },
   {
@@ -170,7 +171,7 @@ export const moveSpeedItems: itemsContainer[] = [
     cost: 50,
     effect: () => {
       console.log(`${name} Comprado, MoveSpeed aumentada`);
-      playerStats.playerMoveSpeed += 20;
+      playerStats.MoveSpeed += 20;
     },
   },
   {
@@ -182,7 +183,7 @@ export const moveSpeedItems: itemsContainer[] = [
     cost: 100,
     effect: () => {
       console.log(`${name} Comprado, MoveSpeed aumentada`);
-      playerStats.playerMoveSpeed += 20;
+      playerStats.MoveSpeed += 20;
     },
   },
   {
@@ -194,7 +195,7 @@ export const moveSpeedItems: itemsContainer[] = [
     cost: 200,
     effect: () => {
       console.log(`${name} Comprado, MoveSpeed aumentada`);
-      playerStats.playerMoveSpeed += 35;
+      playerStats.MoveSpeed += 35;
     },
   },
 ];
@@ -209,7 +210,7 @@ export const luckyItems: itemsContainer[] = [
     cost: 100,
     effect: () => {
       console.log(`${name} Comprado, Sorte aumentada`);
-      playerStats.playerLucky += 30;
+      playerStats.Lucky += 30;
     },
   },
   {
@@ -221,7 +222,7 @@ export const luckyItems: itemsContainer[] = [
     cost: 50,
     effect: () => {
       console.log(`${name} Comprado, Sorte aumentada`);
-      playerStats.playerLucky += 300;
+      playerStats.Lucky += 300;
     },
   },
   {
@@ -233,7 +234,7 @@ export const luckyItems: itemsContainer[] = [
     cost: 50,
     effect: () => {
       console.log(`${name} Comprado, Sorte aumentada`);
-      playerStats.playerLucky += 50;
+      playerStats.Lucky += 50;
     },
   },
   {
@@ -245,7 +246,7 @@ export const luckyItems: itemsContainer[] = [
     cost: 100,
     effect: () => {
       console.log(`${name} Comprado, Sorte aumentada`);
-      playerStats.playerLucky += 20;
+      playerStats.Lucky += 20;
     },
   },
   {
@@ -257,7 +258,7 @@ export const luckyItems: itemsContainer[] = [
     cost: 200,
     effect: () => {
       console.log(`${name} Comprado, Sorte aumentada`);
-      playerStats.playerLucky += 15;
+      playerStats.Lucky += 15;
     },
   },
 ];

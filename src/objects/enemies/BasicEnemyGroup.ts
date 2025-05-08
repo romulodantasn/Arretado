@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
-import { gameOptions, basicEnemyStats } from '../../config/gameOptionsConfig';
+import { gameOptions } from '../../config/gameOptionsConfig';
+import { BaseEnemyStatsStructure, currentEnemyStats } from '../../config/enemiesContainer';
 import { Player } from '../player/playerObject';
 import { HealthComponent } from '../../components/playerHealth/HealthComponent';
 export class BasicEnemyGroup extends Phaser.Physics.Arcade.Group {
@@ -30,7 +31,7 @@ export class BasicEnemyGroup extends Phaser.Physics.Arcade.Group {
     );
 
     scene.time.addEvent({
-      delay: basicEnemyStats.enemyRate,
+      delay: currentEnemyStats.BasicEnemy.Rate,
       loop: true,
       callback: () => {
         const spawnPoint = Phaser.Geom.Rectangle.RandomOutside(outerRectangle, innerRectangle);
@@ -41,8 +42,8 @@ export class BasicEnemyGroup extends Phaser.Physics.Arcade.Group {
           
           const enemyId = `enemy_${Date.now()}_${Math.random().toString(16).slice(2)}`; 
           const enemyHealthComponent = new HealthComponent(
-            basicEnemyStats.enemyHealth,
-            basicEnemyStats.enemyHealth,
+            currentEnemyStats.BasicEnemy.Health,
+            currentEnemyStats.BasicEnemy.Health,
               enemyId 
           );
           enemy.setData('healthComponent', enemyHealthComponent)
@@ -56,7 +57,7 @@ export class BasicEnemyGroup extends Phaser.Physics.Arcade.Group {
   public updateEnemyMovement(scene: Phaser.Scene) {
     this.getChildren().forEach((enemy: Phaser.GameObjects.GameObject) => {
       if (enemy.active && enemy instanceof Phaser.Physics.Arcade.Sprite) {
-        scene.physics.moveToObject(enemy, this.player, basicEnemyStats.enemySpeed);
+        scene.physics.moveToObject(enemy, this.player, currentEnemyStats.BasicEnemy.Speed);
       }
     });
   }
