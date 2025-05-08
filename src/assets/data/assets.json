@@ -23,8 +23,48 @@
     },
     {
       "type": "image",
-      "key": "gameBackgroundLimbo",
-      "url": "background-limbo.png"
+      "key": "wave_1_background",
+      "url": "wave_1_background.png"
+    },
+    {
+      "type": "image",
+      "key": "wave_2_background",
+      "url": "wave_2_background.jpg"
+    },
+    {
+      "type": "image",
+      "key": "wave_3_background",
+      "url": "wave_3_background.jpg"
+    },
+    {
+      "type": "image",
+      "key": "wave_4_background",
+      "url": "wave_4_background.jpg"
+    },
+    {
+      "type": "image",
+      "key": "wave_5_background",
+      "url": "wave_5_background.jpg"
+    },
+    {
+      "type": "image",
+      "key": "wave_6_background",
+      "url": "wave_6_background.jpg"
+    },
+    {
+      "type": "image",
+      "key": "wave_7_background",
+      "url": "wave_7_background.jpg"
+    },
+    {
+      "type": "image",
+      "key": "wave_8_background",
+      "url": "wave_8_background.jpg"
+    },
+    {
+      "type": "image",
+      "key": "wave_9_background",
+      "url": "wave_9_background.jpg"
     },
     {
       "type": "image",
@@ -85,6 +125,11 @@
       "type": "image",
       "key": "olhoDeCobra",
       "url": "olhoDeCobra.png"
+    },
+    {
+      "type": "image",
+      "key": "chifre",
+      "url": "chifre.png"
     },
     {
       "type": "image",
