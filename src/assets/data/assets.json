@@ -185,10 +185,29 @@
     },
     {
       "type": "spritesheet",
-      "key": "enemy",
-      "url": "enemyBrotato.png",
+      "key": "basicEnemy",
+      "url": "basicEnemy.png",
       "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
     },
+    {
+      "type": "spritesheet",
+      "key": "dashEnemy",
+      "url": "dashEnemy.png",
+      "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
+    },
+    {
+      "type": "spritesheet",
+      "key": "rangedEnemy",
+      "url": "rangedEnemy.png",
+      "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
+    },
+    {
+      "type": "spritesheet",
+      "key": "tankEnemy",
+      "url": "tankEnemy.png",
+      "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
+    },
+
     {
       "type": "spritesheet",
       "key": "boss",
@@ -199,6 +218,11 @@
       "type": "image",
       "key": "health-bar",
       "url": "health-bar.png"
+    },
+    {
+      "type": "image",
+      "key": "bossBullet",
+      "url": "bossBullet.png"
     },
     {
       "type": "image",
