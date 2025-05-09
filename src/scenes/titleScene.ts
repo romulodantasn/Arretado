@@ -1,6 +1,5 @@
 import { gameOptions } from '../config/gameOptionsConfig';
 import { gameScene } from './gameScene';
-// import { BaseScene } from './BaseScene';
 
 export class titleScene extends Phaser.Scene {
   static controlKeys: any;
@@ -12,11 +11,13 @@ export class titleScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.audio('titleSceneAudio', 'assets/audio/titleSceneAudio.mp3', 'assets/audio/titleSceneAudio.wav');
+    this.load.audio('titleSceneAudio', [
+      'assets/audio/titleSceneAudio.ogg',
+      'assets/audio/titleSceneAudio.mp3'
+    ]);
   }
 
   create() {
-    // super.create();
     console.log('titleScene carregada');
 
     this.add
@@ -25,7 +26,15 @@ export class titleScene extends Phaser.Scene {
       .setDisplaySize(gameOptions.gameSize.width, gameOptions.gameSize.height);
 
     titleScene.titleSceneAudio = this.sound.add('titleSceneAudio', { loop: true, volume: 0.15 });
-    titleScene.titleSceneAudio.play();
+
+    if (this.sound.locked) {
+      this.sound.once('unlocked', () => {
+        titleScene.titleSceneAudio.play();
+      });
+    } else {
+      titleScene.titleSceneAudio.play();
+    }
+
     this.events.once('shutdown', () => {
       titleScene.titleSceneAudio.stop();
     });
