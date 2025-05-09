@@ -1,53 +1,104 @@
 import { gameScene } from '../../scenes/gameScene';
 import { Player } from '../../objects/player/playerObject';
 import { BasicEnemyGroup } from '../../objects/enemies/BasicEnemyGroup';
+import { DashEnemyGroup } from '../../objects/enemies/DashEnemyGroup'; 
 import {  gameOptions, waveIndicator } from '../../config/gameOptionsConfig';
 import { gameHud } from '../../objects/ui/gameHudUi';
 import { HealthComponent } from '../playerHealth/HealthComponent';
 import { healthEvents } from '../events/healthEvent';
 import { BossEnemy } from '../../objects/enemies/BossEnemy';
 import { currentEnemyStats } from '../../config/enemiesContainer';
+import { TankEnemyGroup } from '../../objects/enemies/TankEnemyGroup';
+import { RangedEnemyGroup } from '../../objects/enemies/RangedEnemyGroup';
 
 export class collider {
   #scene: gameScene;
   #player: Player;
-  #BasicEnemyGroup: BasicEnemyGroup; 
-  #boss: BossEnemy;
+  #BasicEnemyGroup: BasicEnemyGroup;
+  #RangedEnemyGroup?: RangedEnemyGroup
+  #DashEnemyGroup?: DashEnemyGroup;
+  #TankEnemyGroup?: TankEnemyGroup
+  #boss?: BossEnemy;
   #playerHealth: HealthComponent; 
   #isInvulnerable: boolean = false;
-  #playerEnemyCollider: Phaser.Physics.Arcade.Collider; 
-  #playerBossCollider: Phaser.Physics.Arcade.Collider; 
+  #playerBasicEnemyCollider: Phaser.Physics.Arcade.Collider;
+  #playerRangedBulletCollider?: Phaser.Physics.Arcade.Collider;
+  #playerDashEnemyCollider?: Phaser.Physics.Arcade.Collider; 
+  #playerTankEnemyCollider?: Phaser.Physics.Arcade.Collider; 
+  #playerBossCollider?: Phaser.Physics.Arcade.Collider;
+  #playerBossBulletCollider?: Phaser.Physics.Arcade.Collider;
 
-  constructor(scene: gameScene, player: Player, BasicEnemyGroup: BasicEnemyGroup, boss: BossEnemy, playerHealth: HealthComponent) {
+  constructor(scene: gameScene, player: Player, BasicEnemyGroup: BasicEnemyGroup, RangedEnemyGroup?: RangedEnemyGroup, DashEnemyGroup?: DashEnemyGroup, TankEnemyGroup?: TankEnemyGroup, boss?: BossEnemy, playerHealth?: HealthComponent) {
     this.#scene = scene;
     this.#player = player;
     this.#BasicEnemyGroup = BasicEnemyGroup;
+    this.#RangedEnemyGroup = RangedEnemyGroup;
+    this.#DashEnemyGroup = DashEnemyGroup;
+    this.#TankEnemyGroup = TankEnemyGroup;
     this.#boss = boss;
-    this.#playerHealth = playerHealth;
+    this.#playerHealth = playerHealth!;
   }
-
   create() {
-    this.setupCollision();
+    this.createColliders();
   }
 
-  public setupCollision() {
-    this.#playerEnemyCollider = this.#scene.physics.add.collider(this.#player, this.#BasicEnemyGroup, () => {
+  public createColliders() {
+    this.#playerBasicEnemyCollider = this.#scene.physics.add.collider(this.#player, this.#BasicEnemyGroup, () => {
       if (!this.#isInvulnerable) {
-        this.#handlePlayerHit(currentEnemyStats.BasicEnemy.Damage, this.#playerEnemyCollider); 
+        this.#handlePlayerHit(currentEnemyStats.BasicEnemy.Damage, this.#playerBasicEnemyCollider); 
       }
     });
 
+    if (this.#RangedEnemyGroup && this.#RangedEnemyGroup?.bulletGroup) {
+      this.#playerRangedBulletCollider = this.#scene.physics.add.collider(this.#player, this.#RangedEnemyGroup!['bulletGroup'],
+        (player, bullet) => {          
+          if (bullet instanceof Phaser.Physics.Arcade.Sprite && bullet.active) {
+            if (!this.#isInvulnerable) {
+              bullet.destroy(); // Destruir a bala remove ela da cena e da física
+              this.#handlePlayerHit(currentEnemyStats.RangedEnemy.Damage, this.#playerRangedBulletCollider!);
+            }
+          }
+        }
+      );
+    }
+
+    if (this.#DashEnemyGroup) {
+      this.#playerDashEnemyCollider = this.#scene.physics.add.collider(this.#player, this.#DashEnemyGroup, () => {
+        if (!this.#isInvulnerable) {
+          this.#handlePlayerHit(currentEnemyStats.DashEnemy.Damage, this.#playerDashEnemyCollider!); 
+        }
+      });
+    }
    
+    if (this.#TankEnemyGroup) {
+      this.#playerTankEnemyCollider = this.#scene.physics.add.collider(this.#player, this.#TankEnemyGroup, () => {
+        if (!this.#isInvulnerable) {
+          this.#handlePlayerHit(currentEnemyStats.TankEnemy.Damage, this.#playerTankEnemyCollider!); 
+        }
+      });
+    }
+
     if (this.#boss && this.#boss.active) {
         this.#playerBossCollider = this.#scene.physics.add.collider(this.#player, this.#boss, () => {
             if (!this.#isInvulnerable) {
-                this.#handlePlayerHit(currentEnemyStats.BossEnemy.Damage, this.#playerBossCollider);
+                this.#handlePlayerHit(currentEnemyStats.BossEnemy.Damage, this.#playerBossCollider!);
             }
         });
     } else {
         console.warn("Boss instance not provided or inactive, skipping player-boss collider setup.");
     }
-  }
+
+    if (this.#boss && this.#boss.bulletGroup) {
+      this.#playerBossBulletCollider = this.#scene.physics.add.collider(this.#player, this.#boss.bulletGroup, (player, bullet) => {
+        if (bullet instanceof Phaser.Physics.Arcade.Sprite && bullet.active && !this.#isInvulnerable) {
+          bullet.destroy(); 
+          const damage = currentEnemyStats.BossEnemy.BulletDamage!;
+          this.#handlePlayerHit(damage, this.#playerBossBulletCollider!);
+        }
+      });
+    }
+}
+
 
   #handlePlayerHit(damage: number, colliderToDeactivate: Phaser.Physics.Arcade.Collider) {
     this.#scene.cameras.main.shake(200, 0.0025);
@@ -74,27 +125,22 @@ export class collider {
 
     this.#scene.time.delayedCall(gameOptions.invulnerabilityDuration, () => {
       this.#isInvulnerable = false;
-      if (this.#playerEnemyCollider) this.#playerEnemyCollider.active = true;
+      if (this.#playerBasicEnemyCollider) this.#playerBasicEnemyCollider.active = true;
+      if (this.#playerRangedBulletCollider) this.#playerRangedBulletCollider.active = true;
+      if (this.#playerDashEnemyCollider) this.#playerDashEnemyCollider.active = true;
+      if (this.#playerTankEnemyCollider) this.#playerTankEnemyCollider.active = true;
       if (this.#playerBossCollider) this.#playerBossCollider.active = true;
+      if (this.#playerBossBulletCollider) this.#playerBossBulletCollider.active = true;
     });
   }
 
   // Método auxiliar para lidar com a morte do jogador
   #handlePlayerDeath() {
-    console.log('Jogador morreu. Reiniciando o jogo.');
     this.#scene.scene.stop('healthUi');
-    this.#scene.scene.stop('PlayerHealthBar'); // Parar a barra de vida também
-
-    const gameHud = this.#scene.scene.get('gameHud') as gameHud;
-    if (gameHud) {
-      // Resetar stats globais TODO-> trocar futuramente por um GameStateManager
-      waveIndicator.currentWave = 1;
-      waveIndicator.currentAct = 1;
-      // currentEnemyStats.basicEnemyStats.enemyRate = 800;
-      // console.log('enemyRate Reset: ' + basicEnemyStats.enemyRate);
-      // gameHud.shouldIncrementWave = true; 
-      // gameHud.updateHud(); 
-    }
-    this.#scene.scene.restart();
+    this.#scene.scene.stop('PlayerHealthBar'); 
+    this.#scene.scene.stop('gameHud');
+    this.#scene.scene.stop('gameScene');
+    this.#scene.scene.stop('PauseScene')
+    this.#scene.scene.start('GameOverScene')
   }
 }
