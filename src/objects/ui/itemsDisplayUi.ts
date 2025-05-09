@@ -39,7 +39,6 @@ export class itemsDisplayUi extends Phaser.GameObjects.Container {
   }
 
   create() {
-    console.log("itemsDisplay Carregada");
     this.scene.input.setDefaultCursor("default");
 
     const titleText = ["Eai, Caba. O que vai ser?"];

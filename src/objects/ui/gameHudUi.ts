@@ -81,7 +81,6 @@ export class gameHud extends Phaser.Scene {
 
   public phaseCount() {
     if (!this.shouldIncrementWave || !this.#elementsToShow.includes('wave')) return;
-    console.log(`Chamando phaseCount(). waveNumber: ${waveIndicator.currentWave}, actNumber: ${waveIndicator.currentAct}`);
    
     if (waveIndicator.currentWave >= 9) {
       waveIndicator.currentWave = 1;
@@ -92,9 +91,6 @@ export class gameHud extends Phaser.Scene {
       waveIndicator.currentAct = 3;
       waveIndicator.currentWave = 1;
     };
-    
-
-    console.log(`Depois do incremento. waveNumber: ${waveIndicator.currentWave}, actNumber: ${waveIndicator.currentAct}`);
     this.updateHud();
   }
 

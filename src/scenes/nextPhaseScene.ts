@@ -24,8 +24,6 @@ export class nextPhaseScene extends Phaser.Scene {
     }
     this.input.enabled = false;
     this.input.setDefaultCursor('none');
-    
-    console.log('nextPhaseScene Carregada');
   }
 
   public nextPhase() {

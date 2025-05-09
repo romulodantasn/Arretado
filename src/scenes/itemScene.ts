@@ -11,8 +11,6 @@ export class itemScene extends Phaser.Scene {
   }
 
   create() {
-    console.log('upgradeScene Carregada');
-
     this.#itemsDisplayUi = new itemsDisplayUi(this, 0, 0);
     this.add.existing(this.#itemsDisplayUi);
     this.#itemsDisplayUi.create();
