@@ -203,6 +203,12 @@
     },
     {
       "type": "spritesheet",
+      "key": "enemyBullet",
+      "url": "enemyBullet.png",
+      "frameConfig": { "frameWidth": 54, "frameHeight": 50 }
+    },
+    {
+      "type": "spritesheet",
       "key": "tankEnemy",
       "url": "tankEnemy.png",
       "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
