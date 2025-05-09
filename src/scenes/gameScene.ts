@@ -13,12 +13,20 @@ import { currentEnemyStats } from '../config/enemiesContainer';
 import { waveIndicator } from '../config/gameOptionsConfig';
 import { WaveManager } from '../config/waveManager';
 import { WaveNumbers, Waves } from '../config/wavesContainer';
+import { DashEnemyGroup } from '../objects/enemies/DashEnemyGroup';
+import { TankEnemyGroup } from '../objects/enemies/TankEnemyGroup';
+import { RangedEnemyGroup } from '../objects/enemies/RangedEnemyGroup';
+
+
 export class gameScene extends Phaser.Scene {
   #keys: any;
   #player: Player;
   #basicEnemy: BasicEnemyGroup;
-  #boss: BossEnemy
-  #shootingController: shootingController;
+  #rangedEnemy?: RangedEnemyGroup;
+  #dashEnemy?: DashEnemyGroup;
+  #tankEnemy?: TankEnemyGroup;
+  #boss?: BossEnemy;
+  #shootingController!: shootingController;
   #reticle: Phaser.GameObjects.Sprite;
   #collider: collider;
   #health: HealthComponent;
@@ -31,6 +39,7 @@ export class gameScene extends Phaser.Scene {
   
   init(data: { waveKey?: WaveNumbers }) {
     this.#waveData = WaveManager.getWaveData(data.waveKey);
+    this.#currentWaveKey = `Wave_${this.#waveData.waveNumber}` as WaveNumbers; // Inicializar #currentWaveKey
   }
 
   create() {
@@ -39,27 +48,47 @@ export class gameScene extends Phaser.Scene {
     this.#health = new HealthComponent(playerStats.Health, playerStats.Health, 'player');
 
     this.scene.launch('gameHud');
-    const waveKey = `Wave_${this.#waveData.waveNumber}` as WaveNumbers;
-    const backgroundKey = Waves[waveKey].background;
+    const currentWaveConfig = Waves[this.#currentWaveKey];
+    gameOptions.waveDuration = currentWaveConfig.duration;
+
     this.add
-      .image(0, 0, backgroundKey)
+      .image(0, 0, currentWaveConfig.background)
       .setOrigin(0, 0)
       .setDisplaySize(gameOptions.gameSize.width, gameOptions.gameSize.height);
-      console.log(`Background atual: ${backgroundKey}`)
+      console.log(`Background atual: ${currentWaveConfig.background}`);
+      console.log(`Inimigos para esta onda (${this.#currentWaveKey}): `, currentWaveConfig.enemies);
 
     inputManager.setupControls(this);
 
     this.#player = new Player(this, gameOptions.gameSize.width / 2, gameOptions.gameSize.height / 2);
+    
+    if(Waves[this.#currentWaveKey].enemies.includes('BasicEnemy')) {
+      this.#basicEnemy = new BasicEnemyGroup(this, this.#player);
+      // console.log(`[Wave ${waveIndicator.currentWave}] BasicEnemy Stats:`, currentEnemyStats.BasicEnemy);
+    }
 
-    this.#basicEnemy = new BasicEnemyGroup(this, this.#player);
-    console.log(`[Wave ${waveIndicator.currentWave}] BasicEnemy Stats:`, currentEnemyStats.BasicEnemy);
+    if(Waves[this.#currentWaveKey].enemies.includes('RangedEnemy')) {
+      this.#rangedEnemy = new RangedEnemyGroup(this, this.#player);
+    }
+ 
+    if(Waves[this.#currentWaveKey].enemies.includes('DashEnemy')) {
+      this.#dashEnemy = new DashEnemyGroup(this, this.#player);
+    }
+   
 
-    this.#boss = new BossEnemy(this,300, 300, this.#player)
+    if(Waves[this.#currentWaveKey].enemies.includes('TankEnemy')) {
+      this.#tankEnemy = new TankEnemyGroup(this, this.#player);
+    }
+    
+    if(Waves[this.#currentWaveKey].enemies.includes('BossEnemy')) {
+      this.#boss = new BossEnemy(this,300, 300, this.#player) 
+    }
+    
 
-    this.#shootingController = new shootingController(this, this.#player, this.#basicEnemy, this.#boss, this.#reticle);
+    this.#shootingController = new shootingController(this, this.#player, this.#basicEnemy,this.#rangedEnemy, this.#dashEnemy, this.#tankEnemy, this.#boss, this.#reticle);
     this.#shootingController.create();
 
-    this.#collider = new collider(this, this.#player, this.#basicEnemy, this.#boss, this.#health);
+    this.#collider = new collider(this, this.#player, this.#basicEnemy,this.#rangedEnemy, this.#dashEnemy, this.#tankEnemy, this.#boss, this.#health);
     this.#collider.create();
     this.#keys = inputManager.getKeys();
 
@@ -69,7 +98,6 @@ export class gameScene extends Phaser.Scene {
         this.scene.bringToTop('PlayerHealthBar');
       }
     });
-    console.log('PlayerHealthBar carregada');
   }
 
   update() {
@@ -77,7 +105,10 @@ export class gameScene extends Phaser.Scene {
       this.handlePause();
       this.#player.update();
       this.#basicEnemy.updateEnemyMovement(this);
-      this.#boss.update(this.time.now, this.game.loop.delta);
+      this.#rangedEnemy?.updateEnemyMovement(this);
+      this.#dashEnemy?.updateEnemyMovement(this);
+      this.#tankEnemy?.updateEnemyMovement(this);
+      this.#boss?.updateEnemyBossMovement(this);
   }
 
   public handlePause() {
@@ -93,7 +124,6 @@ export class gameScene extends Phaser.Scene {
     if (isGamePaused) {
       console.log('Jogo retomado');
       this.scene.resume(gameScene);
-
       if (isHudPaused) this.scene.resume(gameHud);
       this.scene.stop(PauseScene);
     } else {

@@ -5,6 +5,7 @@ import { Player } from '../player/playerObject';
 import { HealthComponent } from '../../components/playerHealth/HealthComponent';
 export class BasicEnemyGroup extends Phaser.Physics.Arcade.Group {
   private player: Player;
+  private spawnedBasicEnemiesCount: number = 0;
 
   constructor(scene: Phaser.Scene, player: Player) {
     super(scene.physics.world, scene);
@@ -35,10 +36,10 @@ export class BasicEnemyGroup extends Phaser.Physics.Arcade.Group {
       loop: true,
       callback: () => {
         const spawnPoint = Phaser.Geom.Rectangle.RandomOutside(outerRectangle, innerRectangle);
-        const enemy = this.create(spawnPoint.x, spawnPoint.y, 'enemy') as Phaser.Physics.Arcade.Sprite;
-        if(enemy) {
-          enemy.setDepth(10)
-          enemy.setActive(true).setVisible(true);
+        const basicEnemy = this.create(spawnPoint.x, spawnPoint.y, 'enemy') as Phaser.Physics.Arcade.Sprite;
+        if(basicEnemy) {
+          basicEnemy.setDepth(10)
+          basicEnemy.setActive(true).setVisible(true);
           
           const enemyId = `enemy_${Date.now()}_${Math.random().toString(16).slice(2)}`; 
           const enemyHealthComponent = new HealthComponent(
@@ -46,9 +47,10 @@ export class BasicEnemyGroup extends Phaser.Physics.Arcade.Group {
             currentEnemyStats.BasicEnemy.Health,
               enemyId 
           );
-          enemy.setData('healthComponent', enemyHealthComponent)
+          basicEnemy.setData('healthComponent', enemyHealthComponent)
+            this.spawnedBasicEnemiesCount++;
         }
-        enemy.play('enemy', true);
+        if (basicEnemy) basicEnemy.play('basicEnemy', true); // Garante que basicEnemy não é nulo
         
       },
     });

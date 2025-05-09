@@ -1,30 +1,24 @@
 import Phaser from 'phaser';
-import { EnemyTemplates, EnemyType } from '../../config/enemiesContainer';
 import { gameOptions } from '../../config/gameOptionsConfig';
+import { currentEnemyStats } from '../../config/enemiesContainer';
 import { Player } from '../player/playerObject';
 import { HealthComponent } from '../../components/playerHealth/HealthComponent';
-import { scaleEnemyBaseStats } from "../../utils/scaleEnemy"; // Supondo que scaleEnemy está em utils
 
 export class RangedEnemyGroup extends Phaser.Physics.Arcade.Group {
   private player: Player;
-  private enemyType: EnemyType = 'RangedEnemy';
-  private currentWave: number = 1; // Adicionar um valor padrão ou receber via construtor
+  public bulletGroup: Phaser.Physics.Arcade.Group;
+  private spawnedRangedEnemiesCount: number = 0;
 
-  constructor(scene: Phaser.Scene, player: Player, wave: number) {
+  constructor(scene: Phaser.Scene, player: Player) {
     super(scene.physics.world, scene);
     this.player = player;
-    this.currentWave = wave;
-    this.initializeEnemyGroup(scene);
+    this.bulletGroup = this.scene.physics.add.group();
+    this.initializeRangedEnemyGroup(scene);
+    this.setupContinuousShooting(scene);
     this.setDepth(10);
   }
 
-  private getStatsForWave() {
-    const baseStats = EnemyTemplates[this.enemyType];
-    return scaleEnemyBaseStats(baseStats, this.currentWave);
-  }
-
-  private initializeEnemyGroup(scene: Phaser.Scene) {
-    const stats = this.getStatsForWave();
+  private initializeRangedEnemyGroup(scene: Phaser.Scene) {
     const outerRectangle = new Phaser.Geom.Rectangle(
       -100,
       -100,
@@ -39,68 +33,58 @@ export class RangedEnemyGroup extends Phaser.Physics.Arcade.Group {
       gameOptions.gameSize.height + 100
     );
 
-    // Este timer controla o spawn de UM inimigo. A GameScene controlará quantos e quando chamar este grupo.
-    // Para múltiplos spawns, a GameScene chamaria um método como `spawnEnemy()` deste grupo.
-    // Por enquanto, manteremos um spawn de exemplo, mas isso será ajustado.
     scene.time.addEvent({
-      delay: stats.Rate, // Usar a taxa do inimigo escalonado
-      loop: true, // Isso provavelmente será falso e controlado pela GameScene
+      delay: currentEnemyStats.RangedEnemy.Rate,
+      loop: true,
       callback: () => {
-        this.spawnEnemy(scene, outerRectangle, innerRectangle);
+        const spawnPoint = Phaser.Geom.Rectangle.RandomOutside(outerRectangle, innerRectangle);
+        const rangedEnemy = this.create(spawnPoint.x, spawnPoint.y, 'enemy') as Phaser.Physics.Arcade.Sprite;
+
+        if (rangedEnemy) {
+          rangedEnemy.setDepth(10).setActive(true).setVisible(true).play('rangedEnemy', true);
+
+          const enemyId = `enemy_${Date.now()}_${Math.random().toString(16).slice(2)}`;
+          const enemyHealthComponent = new HealthComponent(
+            currentEnemyStats.RangedEnemy.Health,
+            currentEnemyStats.RangedEnemy.Health,
+            enemyId
+          );
+          rangedEnemy.setData('healthComponent', enemyHealthComponent);
+
+          this.spawnedRangedEnemiesCount++;
+        }
       },
     });
   }
 
-  public spawnEnemy(scene: Phaser.Scene, outerRect?: Phaser.Geom.Rectangle, innerRect?: Phaser.Geom.Rectangle) {
-    const stats = this.getStatsForWave();
-    const spawnPoint = Phaser.Geom.Rectangle.RandomOutside(
-        outerRect || new Phaser.Geom.Rectangle(-100, -100, gameOptions.gameSize.width + 200, gameOptions.gameSize.height + 200),
-        innerRect || new Phaser.Geom.Rectangle(-50, -50, gameOptions.gameSize.width + 100, gameOptions.gameSize.height + 100)
-    );
-    const enemy = this.create(spawnPoint.x, spawnPoint.y, 'ranged_enemy_texture') as Phaser.Physics.Arcade.Sprite; // Usar textura específica
-    if (enemy) {
-      enemy.setDepth(10);
-      enemy.setActive(true).setVisible(true);
-      
-      const enemyId = `${this.enemyType}_${Date.now()}_${Math.random().toString(16).slice(2)}`;
-      const enemyHealthComponent = new HealthComponent(
-        stats.Health,
-        stats.Health,
-        enemyId
-      );
-
-      enemy.setData('healthComponent', enemyHealthComponent);
-      enemy.setData('damage', stats.Damage);
-      enemy.setData('enemyType', this.enemyType);
-      // Adicionar lógica de animação específica se necessário
-      // enemy.play('ranged_enemy_animation', true);
-    }
-    return enemy;
+  private setupContinuousShooting(scene: Phaser.Scene) {
+    scene.time.addEvent({
+      delay: currentEnemyStats.RangedEnemy.FireRate || 1000, // Define uma taxa de disparo
+      loop: true,
+      callback: () => {
+        this.getChildren().forEach((enemy: Phaser.GameObjects.GameObject) => {
+          if (enemy.active && enemy instanceof Phaser.Physics.Arcade.Sprite) {
+            const bullet = this.scene.physics.add.sprite(enemy.x, enemy.y, 'enemyBullet');
+            this.bulletGroup.add(bullet);
+            bullet.play('enemyBullet');
+            scene.physics.moveToObject(bullet, this.player, currentEnemyStats.RangedEnemy.BulletSpeed);
+          }
+        });
+      },
+    });
   }
 
   public updateEnemyMovement(scene: Phaser.Scene) {
-    const stats = this.getStatsForWave();
     this.getChildren().forEach((enemy: Phaser.GameObjects.GameObject) => {
       if (enemy.active && enemy instanceof Phaser.Physics.Arcade.Sprite) {
-        // Lógica de movimento específica para RangedEnemy (pode ser diferente do BasicEnemy)
-        // Por exemplo, manter distância, atirar, etc.
-        // Por enquanto, movimento simples em direção ao jogador:
-        scene.physics.moveToObject(enemy, this.player, stats.Speed);
+        scene.physics.moveToObject(enemy, this.player, currentEnemyStats.RangedEnemy.Speed);
       }
     });
   }
 
-  public static getHealthComponent(enemy: Phaser.GameObjects.GameObject): HealthComponent | null {
+  public static getHealthComponent(enemy: Phaser.GameObjects.GameObject) {
     if (enemy && enemy.getData) {
       return enemy.getData('healthComponent') as HealthComponent || null;
     }
-    return null;
-  }
-
-  // Método para atualizar a onda, se necessário, para reescalonar estatísticas
-  public setWave(wave: number) {
-    this.currentWave = wave;
-    // Poderia reconfigurar timers de spawn ou outras lógicas baseadas na nova onda aqui
   }
 }
-

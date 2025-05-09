@@ -2,16 +2,22 @@ import { inputManager } from '../../components/input/inputManagerComponent';
 import { gun } from '../../config/gameOptionsConfig';
 import { Player } from '../player/playerObject';
 import { BasicEnemyGroup } from '../enemies/BasicEnemyGroup';
+import { DashEnemyGroup } from '../enemies/DashEnemyGroup'; 
 import { coinOnKillEvent } from '../../components/events/coinOnKillEvent';
 import { HealthComponent } from '../../components/playerHealth/HealthComponent';
 import { BossEnemy } from '../enemies/BossEnemy';
+import { TankEnemyGroup } from '../enemies/TankEnemyGroup';
+import { RangedEnemyGroup } from '../enemies/RangedEnemyGroup';
 
 export class shootingController {
   #scene: Phaser.Scene;
   #player: Player;
   #BasicEnemyGroup: BasicEnemyGroup;
-  #boss: BossEnemy;
-  #bulletGroup: Phaser.Physics.Arcade.Group;
+  #RangedEnemyGroup?: RangedEnemyGroup
+  #DashEnemyGroup?: DashEnemyGroup;
+  #TankEnemyGroup?: TankEnemyGroup;
+  #boss?: BossEnemy;
+  #bulletGroup!: Phaser.Physics.Arcade.Group;
   #reticle: Phaser.GameObjects.Sprite;
   #keys: any;
 
@@ -23,12 +29,15 @@ export class shootingController {
     strokeThickness: 4,
   };
 
-  constructor(scene: Phaser.Scene, player: Player, BasicEnemyGroup: BasicEnemyGroup, boss: BossEnemy, reticle: Phaser.GameObjects.Sprite) {
+  constructor(scene: Phaser.Scene, player: Player, BasicEnemyGroup: BasicEnemyGroup, RangedEnemyGroup?: RangedEnemyGroup, dashEnemyGroup?: DashEnemyGroup, tankEnemyGroup?: TankEnemyGroup, boss?: BossEnemy, reticle?: Phaser.GameObjects.Sprite) {
     this.#scene = scene;
     this.#player = player;
     this.#BasicEnemyGroup = BasicEnemyGroup;
+    this.#RangedEnemyGroup = RangedEnemyGroup;
+    this.#DashEnemyGroup = dashEnemyGroup; 
+    this.#TankEnemyGroup = tankEnemyGroup;
     this.#boss = boss;
-    this.#reticle = reticle;
+    this.#reticle = reticle!;
 
     this.#bulletGroup = this.#scene.physics.add.group({ classType: Phaser.Physics.Arcade.Sprite, runChildUpdate: true });
     this.#keys = inputManager.getKeys();
@@ -37,7 +46,25 @@ export class shootingController {
   }
 
   #setupColliders() {
-    this.#scene.physics.add.collider(this.#bulletGroup, this.#BasicEnemyGroup, this.bulletEnemyCollision, undefined, this);
+    this.#scene.physics.add.collider(this.#bulletGroup, this.#BasicEnemyGroup, this.basicEnemyCollision, undefined, this);
+
+    if (this.#DashEnemyGroup) {
+      this.#scene.physics.add.collider(this.#bulletGroup, this.#DashEnemyGroup, this.bulletDashEnemyCollision, undefined, this);
+    } else {
+      console.warn("DashEnemyGroup não inicializado, pulando colisão com balas.");
+    }
+
+    if (this.#RangedEnemyGroup) {
+      this.#scene.physics.add.collider(this.#bulletGroup, this.#RangedEnemyGroup, this.rangedEnemyCollision, undefined, this);
+    } else {
+      console.warn("RangedEnemyGroup não inicializado, pulando colisão com balas.");
+    }
+
+    if (this.#TankEnemyGroup) {
+      this.#scene.physics.add.collider(this.#bulletGroup, this.#TankEnemyGroup, this.bulletTankEnemyCollision, undefined, this);
+    } else {
+      console.warn("TankEnemyGroup não inicializado, pulando colisão com balas.");
+    }
 
     if (this.#boss?.active) {
       this.#scene.physics.add.collider(this.#bulletGroup, this.#boss, this.bulletBossCollision, undefined, this);
@@ -49,11 +76,10 @@ export class shootingController {
   create() {
     this.setupReticle();
     this.setupShooting();
-    console.log('ShootingController criado');
   }
 
   setupReticle() {
-    this.#reticle = this.#scene.add.sprite(this.#player.x, this.#player.y - 50, 'reticle');
+    this.#reticle = this.#reticle || this.#scene.add.sprite(this.#player.x, this.#player.y - 50, 'reticle');
     this.#reticle.setOrigin(0.5).setDisplaySize(40, 40).setActive(true).setVisible(true);
     this.#scene.input.setDefaultCursor('none');
 
@@ -72,7 +98,6 @@ export class shootingController {
   setupShooting() {
     inputManager.setupClicks(this.#scene, {
       onFire: () => {
-        console.log('Atirando!');
         this.fireBullet(this.#player, this.#reticle);
       },
     });
@@ -111,7 +136,7 @@ export class shootingController {
     });
   }
 
-  private bulletEnemyCollision(bullet: any, enemy: any) {
+  private basicEnemyCollision(bullet: any, enemy: any) {
     if (!bullet.active || !enemy.active) return;
 
     const enemyHealth = BasicEnemyGroup.getHealthComponent(enemy);
@@ -128,6 +153,64 @@ export class shootingController {
 
     bullet.destroy();
   }
+
+  private rangedEnemyCollision(bullet: any, enemy: any) {
+    if (!bullet.active || !enemy.active) return;
+
+    const enemyHealth = RangedEnemyGroup.getHealthComponent(enemy);
+    if (!enemyHealth) return;
+
+    const damage = gun.gunDamage;
+    this.showDamageText(enemy.x, enemy.y - 50, damage);
+    enemyHealth.loseHealth(damage);
+
+    if (enemyHealth.isDead()) {
+      coinOnKillEvent(this.#scene);
+      enemy.destroy();
+    }
+
+    bullet.destroy();
+  }
+
+  private bulletDashEnemyCollision(bullet: any, dashEnemy: any) {
+    if (!bullet.active || !dashEnemy.active) return;
+
+   const enemyHealth = DashEnemyGroup.getHealthComponent(dashEnemy);
+
+    if (!enemyHealth) return;
+
+    const damage = gun.gunDamage;
+    this.showDamageText(dashEnemy.x, dashEnemy.y - 50, damage);
+    enemyHealth.loseHealth(damage);
+
+    if (enemyHealth.isDead()) {
+      coinOnKillEvent(this.#scene);
+      dashEnemy.destroy();
+    }
+
+    bullet.destroy();
+  }
+
+  private bulletTankEnemyCollision(bullet: any, tankEnemy: any) {
+    if (!bullet.active || !tankEnemy.active) return;
+
+   const enemyHealth = TankEnemyGroup.getHealthComponent(tankEnemy);
+
+    if (!enemyHealth) return;
+
+    const damage = gun.gunDamage;
+    this.showDamageText(tankEnemy.x, tankEnemy.y - 50, damage);
+    enemyHealth.loseHealth(damage);
+
+    if (enemyHealth.isDead()) {
+      coinOnKillEvent(this.#scene);
+      tankEnemy.destroy();
+    }
+
+    bullet.destroy();
+  }
+
+
 
   private bulletBossCollision(obj1: any, obj2: any) {
     const boss = obj1 instanceof BossEnemy ? obj1 : obj2 instanceof BossEnemy ? obj2 : null;
