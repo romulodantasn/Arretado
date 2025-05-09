@@ -5,8 +5,8 @@ export const gameOptions = {
   },
   wave_1_background: 'wave_1_background',
   type: Phaser.AUTO,
-  waveDuration: 5,
-  invulnerabilityDuration: 500,
+  waveDuration: 10,
+  invulnerabilityDuration: 300,
  
 };
 
@@ -16,6 +16,6 @@ export const waveIndicator ={
 }
 
 export const gun = {
-  gunDamage: 10,
+  gunDamage: 100,
   bulletSpeed: 600, // velocidade da bala, em pixels por segundo
 }

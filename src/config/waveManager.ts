@@ -23,9 +23,7 @@ export class WaveManager {
 
 export function onWaveComplete() {
   waveIndicator.currentWave++;
-  applyWaveBuffs(waveIndicator.currentWave);
-  gameOptions.waveDuration += 20;
-  // console.log(`[Wave ${waveIndicator.currentWave}] BasicEnemy Stats:`, currentEnemyStats.BasicEnemy);
+  applyWaveBuffs(waveIndicator.currentWave)
 }
 
 
