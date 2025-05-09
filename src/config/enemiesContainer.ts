@@ -5,6 +5,8 @@ export interface BaseEnemyStatsStructure {
     Rate: number,
     Damage: number,
     FireRate?: number,
+    BulletSpeed?: number,
+    BulletDamage?: number,
     DashCooldown?: number,
 }
 export function getEnemyStats(type: EnemyType) {
@@ -24,16 +26,17 @@ export const EnemyTemplates: Record<EnemyType, BaseEnemyStatsStructure> = {
   RangedEnemy: {
     name: 'RangedEnemy',
     Health: 10,
+    BulletSpeed: 350,
     Speed: 45,
-    Rate: 2000,
+    Rate: 1000,
     Damage: 2,
-    FireRate: 10,
+    FireRate: 3000,
   },
   DashEnemy: {
     name: 'DashEnemy',
     Health: 8,
     Speed: 65,
-    Rate: 1800,
+    Rate: 1000,
     Damage: 5,
     DashCooldown: 6000, //-> Milisegundos 
   },
@@ -41,14 +44,17 @@ export const EnemyTemplates: Record<EnemyType, BaseEnemyStatsStructure> = {
     name: 'TankEnemy',
     Health: 45,
     Speed: 35,
-    Rate: 2600,
+    Rate: 1000,
     Damage: 4,
   },
   BossEnemy: {
     name: 'BossEnemy',
-    Health: 100,
+    Health: 30000,
     Speed: 25,
+    BulletSpeed: 450,
+    BulletDamage: 20,
     Damage: 10,
+    FireRate: 4000,
     Rate: 1000,
   },
 } as const;
