@@ -20,8 +20,8 @@ export class GameOverScene extends Phaser.Scene {
     this.add.text(960, 510, gameOverText, textStyle).setFontSize(36).setAlign('center').setOrigin(0.5);
     console.log('Eita macho tu perdesse. Reiniciando...');
 
-    this.time.delayedCall(2500, () => {
-      this.scene.start('gameScene');
+    this.time.delayedCall(1000, () => {
+      window.location.reload();
     });
   }
 }
