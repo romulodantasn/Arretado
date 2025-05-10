@@ -14,10 +14,38 @@
     "assetKey": "playerRun"
   },
   {
-    "key": "enemy",
+    "key": "basicEnemy",
     "frameRate": 10,
     "frames": [0, 1, 2, 3, 4, 5, 6],
     "repeat": -1,
-    "assetKey": "enemy"
+    "assetKey": "basicEnemy"
+  },
+  {
+    "key": "dashEnemy",
+    "frameRate": 10,
+    "frames": [0, 1, 2, 3, 4, 5, 6],
+    "repeat": -1,
+    "assetKey": "dashEnemy"
+  },
+  {
+    "key": "rangedEnemy",
+    "frameRate": 10,
+    "frames": [0, 1, 2, 3, 4, 5, 6],
+    "repeat": -1,
+    "assetKey": "rangedEnemy"
+  },
+  {
+    "key": "enemyBullet",
+    "frameRate": 10,
+    "frames": [0, 1, 2, 3, 4, 5, 6,7],
+    "repeat": -1,
+    "assetKey": "enemyBullet"
+  },
+  {
+    "key": "tankEnemy",
+    "frameRate": 10,
+    "frames": [0, 1, 2, 3, 4, 5, 6],
+    "repeat": -1,
+    "assetKey": "tankEnemy"
   }
 ]

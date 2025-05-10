@@ -1,11 +1,13 @@
-import { gameOptions } from './gameOptions';
-import { bootScene } from '../scenes/bootScene';
+import { gameOptions } from './gameOptionsConfig';
+import { BootScene } from '../scenes/BootScene';
 import { preloadAssets } from '../scenes/preloadAssets';
 import { titleScene } from '../scenes/titleScene';
 import { gameScene } from '../scenes/gameScene';
-import { pauseScene } from '../scenes/pauseScene';
+import { PauseScene } from '../scenes/PauseScene';
 import { nextPhaseScene } from '../scenes/nextPhaseScene';
-import { colliderScene } from '../scenes/colliderScene';
+import { GameOverScene } from '../scenes/GameOverScene';
+import { PlayerHealthBar } from '../objects/player/PlayerHealthBar';
+import { itemScene } from '../scenes/itemScene';
 
 export const scaleObject: Phaser.Types.Core.ScaleConfig = {
   mode: Phaser.Scale.FIT,
@@ -18,7 +20,17 @@ export const scaleObject: Phaser.Types.Core.ScaleConfig = {
 export const configObject: Phaser.Types.Core.GameConfig = {
   type: Phaser.WEBGL,
   scale: scaleObject,
-  scene: [bootScene, preloadAssets, gameScene, colliderScene, nextPhaseScene, pauseScene, titleScene],
+  scene: [
+    BootScene,
+    preloadAssets,
+    gameScene,
+    PlayerHealthBar,
+    GameOverScene,
+    nextPhaseScene,
+    PauseScene,
+    itemScene,
+    titleScene,
+  ],
   physics: {
     default: 'arcade',
     arcade: {

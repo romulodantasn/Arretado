@@ -1,23 +1,27 @@
 import Phaser from 'phaser';
 import { configObject } from './config/config';
-import { bootScene } from './scenes/bootScene';
+import { BootScene } from './scenes/BootScene';
 import { preloadAssets } from './scenes/preloadAssets';
 import { titleScene } from './scenes/titleScene';
 import { gameScene } from './scenes/gameScene';
-import { pauseScene } from './scenes/pauseScene';
-import { gameHud } from './objects/ui/gameHud';
+import { PauseScene } from './scenes/PauseScene';
+import { gameHud } from './objects/ui/gameHudUi';
 import { nextPhaseScene } from './scenes/nextPhaseScene';
-import { colliderScene } from './scenes/colliderScene';
+import { GameOverScene } from './scenes/GameOverScene';
+import { PlayerHealthBar } from './objects/player/PlayerHealthBar';
+import { itemScene } from './scenes/itemScene';
 
 configObject.scene = [
-  bootScene,
+  BootScene,
   preloadAssets,
   titleScene,
   gameScene,
   gameHud,
-  pauseScene,
-  colliderScene,
+  PlayerHealthBar,
+  PauseScene,
+  GameOverScene,
   nextPhaseScene,
+  itemScene,
 ];
 
 new Phaser.Game(configObject);

@@ -13,23 +13,163 @@
     },
     {
       "type": "image",
-      "key": "health-bar",
-      "url": "health-bar.png"
-    },
-    {
-      "type": "image",
       "key": "gun",
       "url": "gun.png"
     },
     {
       "type": "image",
-      "key": "gameBackgroundLimbo",
-      "url": "background-limbo.png"
+      "key": "reticle",
+      "url": "reticle.png"
+    },
+    {
+      "type": "image",
+      "key": "wave_1_background",
+      "url": "wave_1_background.png"
+    },
+    {
+      "type": "image",
+      "key": "wave_2_background",
+      "url": "wave_2_background.jpg"
+    },
+    {
+      "type": "image",
+      "key": "wave_3_background",
+      "url": "wave_3_background.jpg"
+    },
+    {
+      "type": "image",
+      "key": "wave_4_background",
+      "url": "wave_4_background.jpg"
+    },
+    {
+      "type": "image",
+      "key": "wave_5_background",
+      "url": "wave_5_background.jpg"
+    },
+    {
+      "type": "image",
+      "key": "wave_6_background",
+      "url": "wave_6_background.jpg"
+    },
+    {
+      "type": "image",
+      "key": "wave_7_background",
+      "url": "wave_7_background.jpg"
+    },
+    {
+      "type": "image",
+      "key": "wave_8_background",
+      "url": "wave_8_background.jpg"
+    },
+    {
+      "type": "image",
+      "key": "wave_9_background",
+      "url": "wave_9_background.jpg"
+    },
+    {
+      "type": "image",
+      "key": "cordel",
+      "url": "cordel.png"
+    },
+    {
+      "type": "image",
+      "key": "bodega",
+      "url": "bodega.png"
+    },
+    {
+      "type": "image",
+      "key": "chapeu",
+      "url": "chapeu.png"
+    },
+    {
+      "type": "image",
+      "key": "dadoCangaceiro",
+      "url": "dadoCangaceiro.png"
+    },
+    {
+      "type": "image",
+      "key": "esporaDeAco",
+      "url": "esporaDeAço.png"
+    },
+    {
+      "type": "image",
+      "key": "ferradura",
+      "url": "ferradura.png"
+    },
+    {
+      "type": "image",
+      "key": "guaranaJesus",
+      "url": "guaranaJesus.png"
+    },
+    {
+      "type": "image",
+      "key": "guine",
+      "url": "guine.png"
+    },
+    {
+      "type": "image",
+      "key": "mandiga",
+      "url": "mandiga.png"
+    },
+    {
+      "type": "image",
+      "key": "mocoto",
+      "url": "mocoto.png"
+    },
+    {
+      "type": "image",
+      "key": "munguza",
+      "url": "munguza.png"
+    },
+    {
+      "type": "image",
+      "key": "olhoDeCobra",
+      "url": "olhoDeCobra.png"
+    },
+    {
+      "type": "image",
+      "key": "chifre",
+      "url": "chifre.png"
+    },
+    {
+      "type": "image",
+      "key": "patuaSaoJorge",
+      "url": "patuaSaoJorge.png"
+    },
+    {
+      "type": "image",
+      "key": "peDePano",
+      "url": "peDePano.png"
     },
     {
       "type": "image",
       "key": "titleSceneBackground",
       "url": "titleSceneBackground.png"
+    },
+    {
+      "type": "image",
+      "key": "pimenta",
+      "url": "pimenta.png"
+    },
+    {
+      "type": "image",
+      "key": "pitu",
+      "url": "pitu.png"
+    },
+    {
+      "type": "image",
+      "key": "poeira",
+      "url": "poeira.png"
+    },
+    {
+      "type": "image",
+      "key": "rapadura",
+      "url": "rapadura.png"
+    },
+    {
+      "type": "image",
+      "key": "sandaliaJesus",
+      "url": "sandaliaJesus.png"
     },
     {
       "type": "spritesheet",
@@ -45,9 +185,55 @@
     },
     {
       "type": "spritesheet",
-      "key": "enemy",
-      "url": "enemyBrotato.png",
+      "key": "basicEnemy",
+      "url": "basicEnemy.png",
       "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
+    },
+    {
+      "type": "spritesheet",
+      "key": "dashEnemy",
+      "url": "dashEnemy.png",
+      "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
+    },
+    {
+      "type": "spritesheet",
+      "key": "rangedEnemy",
+      "url": "rangedEnemy.png",
+      "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
+    },
+    {
+      "type": "spritesheet",
+      "key": "enemyBullet",
+      "url": "enemyBullet.png",
+      "frameConfig": { "frameWidth": 54, "frameHeight": 50 }
+    },
+    {
+      "type": "spritesheet",
+      "key": "tankEnemy",
+      "url": "tankEnemy.png",
+      "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
+    },
+
+    {
+      "type": "spritesheet",
+      "key": "boss",
+      "url": "boss.png",
+      "frameConfig": { "frameWidth": 64, "frameHeight": 64 }
+    },
+    {
+      "type": "image",
+      "key": "health-bar",
+      "url": "health-bar.png"
+    },
+    {
+      "type": "image",
+      "key": "bossBullet",
+      "url": "bossBullet.png"
+    },
+    {
+      "type": "image",
+      "key": "health-frame",
+      "url": "health-frame.png"
     }
   ]
 }

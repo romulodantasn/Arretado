@@ -1,10 +1,6 @@
 import Phaser from 'phaser';
-import { gameOptions } from '../config/gameOptions';
-import { gameHud } from '../objects/ui/gameHud';
-
+import { gameHud } from '../objects/ui/gameHudUi';
 export class nextPhaseScene extends Phaser.Scene {
-  private nextPhaseText: Phaser.GameObjects.Text;
-
   constructor() {
     super({
       key: 'nextPhaseScene',
@@ -13,27 +9,37 @@ export class nextPhaseScene extends Phaser.Scene {
 
   create() {
     this.nextPhase();
-    console.log('nexPhaseScene Carregada');
+ 
+    // if (this.scene.isActive('gameScene')) {
+      this.scene.stop('gameScene');
+    // }
+    if (this.scene.isActive('gameHud')) {
+      this.scene.stop('gameHud');
+    }
+    if (this.scene.isActive('PlayerHealthBar')) {
+       this.scene.stop('PlayerHealthBar');
+    }
+    if (this.scene.isActive('PauseScene')) {
+      this.scene.stop('PauseScene');
+    }
+    this.input.enabled = false;
+    this.input.setDefaultCursor('none');
   }
 
   public nextPhase() {
-    this.nextPhaseText = this.add
-      .text(380, 410, `Eita caba danado! Sobreviveu! Avançando para a próxima fase...`, {
-        fontSize: '36px',
-        color: '#fff',
-      })
-      .setDepth(10);
-    console.log('Eita caba danado! Sobreviveu! Avançando para a próxima fase..');
     const hudScene = this.scene.get('gameHud') as gameHud;
+    const textStyle = { fontFamily: 'Cordelina', color: '#ffffff', stroke: '#000000', strokeThickness: 4 };
+    const nextPhaseText = ['Eita caba danado! Sobreviveu! Avançando para a próxima fase...'];
+    this.add.text( this.scale.width / 2, this.scale.height / 2 + 3, nextPhaseText, textStyle).setFontSize(36).setAlign('center').setOrigin(0.5);
+
     if (hudScene) {
       hudScene.advanceWaveCount();
     }
     this.time.delayedCall(2000, () => {
-      this.scene.start('gameScene');
+      this.scene.stop('nextPhaseScene');
+      this.scene.start('itemScene');
     });
-    gameOptions.enemyRate -= 100;
-    gameOptions.enemySpeed += 10;
-    console.log('enemySpeedUpdated: ' + gameOptions.enemySpeed);
-    console.log('enemyRateUpdated: ' + gameOptions.enemyRate);
+
+    console.log('Avançando para a próxima fase..');
   }
 }

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack serve --open --config webpack.development.js",
     "distribution": "webpack --config webpack.distribution.js",
-    "build": "webpack",
+    "build": "webpack --output-path=dist",
     "commit": "cz"
   },
   "keywords": [],
@@ -25,6 +25,7 @@
     "webpack-dev-server": "^4.15.2"
   },
   "dependencies": {
+    "cz": "^1.8.2",
     "phaser": "^3.87.0"
   },
   "config": {
