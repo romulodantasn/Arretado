@@ -3,7 +3,7 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - main  # ou benchman, se for sua branch principal
+      - main  # ou benchman, se essa for sua branch principal
 
 jobs:
   build-deploy:
@@ -28,4 +28,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs  # esta linha é essencial
+          publish_dir: ./docs
+          publish_branch: gh-pages  # <- ESSENCIAL
