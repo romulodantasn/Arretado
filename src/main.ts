@@ -10,6 +10,7 @@ import { nextPhaseScene } from './scenes/nextPhaseScene';
 import { GameOverScene } from './scenes/GameOverScene';
 import { PlayerHealthBar } from './objects/player/PlayerHealthBar';
 import { itemScene } from './scenes/itemScene';
+import { menuScene } from './scenes/menuScene';
 
 configObject.scene = [
   BootScene,
@@ -22,6 +23,7 @@ configObject.scene = [
   GameOverScene,
   nextPhaseScene,
   itemScene,
+  menuScene
 ];
 
 new Phaser.Game(configObject);

@@ -18,6 +18,11 @@
     },
     {
       "type": "image",
+      "key": "triangle",
+      "url": "triangle.png"
+    },
+    {
+      "type": "image",
       "key": "reticle",
       "url": "reticle.png"
     },

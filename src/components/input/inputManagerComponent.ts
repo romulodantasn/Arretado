@@ -10,6 +10,10 @@ export class inputManager {
       left: Phaser.Input.Keyboard.KeyCodes.A,
       down: Phaser.Input.Keyboard.KeyCodes.S,
       right: Phaser.Input.Keyboard.KeyCodes.D,
+      moveUp: Phaser.Input.Keyboard.KeyCodes.UP,
+      moveDown: Phaser.Input.Keyboard.KeyCodes.DOWN,
+      moveLeft: Phaser.Input.Keyboard.KeyCodes.LEFT,
+      moveRight: Phaser.Input.Keyboard.KeyCodes.RIGHT,
       enter: Phaser.Input.Keyboard.KeyCodes.ENTER,
       pause: Phaser.Input.Keyboard.KeyCodes.ESC,
     });

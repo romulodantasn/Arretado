@@ -8,6 +8,7 @@ import { nextPhaseScene } from '../scenes/nextPhaseScene';
 import { GameOverScene } from '../scenes/GameOverScene';
 import { PlayerHealthBar } from '../objects/player/PlayerHealthBar';
 import { itemScene } from '../scenes/itemScene';
+import { menuScene } from '../scenes/menuScene';
 
 export const scaleObject: Phaser.Types.Core.ScaleConfig = {
   mode: Phaser.Scale.FIT,
@@ -30,6 +31,7 @@ export const configObject: Phaser.Types.Core.GameConfig = {
     PauseScene,
     itemScene,
     titleScene,
+    menuScene
   ],
   physics: {
     default: 'arcade',

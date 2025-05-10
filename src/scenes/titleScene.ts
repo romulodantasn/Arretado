@@ -49,7 +49,7 @@ export class titleScene extends Phaser.Scene {
     const enterKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 
     enterKey.on('down', () => {
-      this.scene.start('gameScene');
+      this.scene.start('menuScene');
     });
   }
 
