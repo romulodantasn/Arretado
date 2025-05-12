@@ -10,6 +10,7 @@ import { PlayerHealthBar } from '../objects/player/PlayerHealthBar';
 import { itemScene } from '../scenes/itemScene';
 import { menuScene } from '../scenes/menuScene';
 import { StoreScene } from '../scenes/StoreScene';
+import { SkinScene } from '../scenes/SkinScene';
 
 export const scaleObject: Phaser.Types.Core.ScaleConfig = {
   mode: Phaser.Scale.FIT,
@@ -31,6 +32,7 @@ export const configObject: Phaser.Types.Core.GameConfig = {
     nextPhaseScene,
     PauseScene,
     StoreScene,
+    SkinScene,
     itemScene,
     titleScene,
     menuScene

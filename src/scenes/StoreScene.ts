@@ -187,6 +187,6 @@ export class StoreScene extends Phaser.Scene {
 
       skinsButton.on("pointerover", () => skinsButton.setFillStyle(0x555555));
       skinsButton.on("pointerout", () => skinsButton.setFillStyle(0x333333));
-      skinsButton.on("pointerdown", () => this.scene.start("skinScene"));
+      skinsButton.on("pointerdown", () => this.scene.start("SkinScene"));
   }
 }
