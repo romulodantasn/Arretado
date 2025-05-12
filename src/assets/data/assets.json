@@ -4,241 +4,266 @@
     {
       "type": "image",
       "key": "bullet",
-      "url": "bullet.png"
+      "url": "projectiles/bullet.png"
     },
     {
       "type": "image",
       "key": "coin",
-      "url": "coin.png"
+      "url": "icons/coin.png"
     },
     {
       "type": "image",
       "key": "gun",
-      "url": "gun.png"
+      "url": "icons/gun.png"
     },
     {
       "type": "image",
       "key": "triangle",
-      "url": "triangle.png"
+      "url": "icons/triangle.png"
     },
     {
       "type": "image",
       "key": "reticle",
-      "url": "reticle.png"
+      "url": "icons/reticle.png"
+    },
+    {
+      "type": "image",
+      "key": "apCoinIcon",
+      "url": "icons/apCoinIcon.png"
     },
     {
       "type": "image",
       "key": "wave_1_background",
-      "url": "wave_1_background.png"
+      "url": "backgrounds/wave_1_background.png"
     },
     {
       "type": "image",
       "key": "wave_2_background",
-      "url": "wave_2_background.jpg"
+      "url": "backgrounds/wave_2_background.jpg"
     },
     {
       "type": "image",
       "key": "wave_3_background",
-      "url": "wave_3_background.jpg"
+      "url": "backgrounds/wave_3_background.jpg"
     },
     {
       "type": "image",
       "key": "wave_4_background",
-      "url": "wave_4_background.jpg"
+      "url": "backgrounds/wave_4_background.jpg"
     },
     {
       "type": "image",
       "key": "wave_5_background",
-      "url": "wave_5_background.jpg"
+      "url": "backgrounds/wave_5_background.jpg"
     },
     {
       "type": "image",
       "key": "wave_6_background",
-      "url": "wave_6_background.jpg"
+      "url": "backgrounds/wave_6_background.jpg"
     },
     {
       "type": "image",
       "key": "wave_7_background",
-      "url": "wave_7_background.jpg"
+      "url": "backgrounds/wave_7_background.jpg"
     },
     {
       "type": "image",
       "key": "wave_8_background",
-      "url": "wave_8_background.jpg"
+      "url": "backgrounds/wave_8_background.jpg"
     },
     {
       "type": "image",
       "key": "wave_9_background",
-      "url": "wave_9_background.jpg"
+      "url": "backgrounds/wave_9_background.jpg"
     },
     {
       "type": "image",
       "key": "cordel",
-      "url": "cordel.png"
+      "url": "items/cordel.png"
     },
     {
       "type": "image",
       "key": "bodega",
-      "url": "bodega.png"
+      "url": "items/bodega.png"
     },
     {
       "type": "image",
       "key": "chapeu",
-      "url": "chapeu.png"
+      "url": "items/chapeu.png"
     },
     {
       "type": "image",
       "key": "dadoCangaceiro",
-      "url": "dadoCangaceiro.png"
+      "url": "items/dadoCangaceiro.png"
     },
     {
       "type": "image",
       "key": "esporaDeAco",
-      "url": "esporaDeAço.png"
+      "url": "items/esporaDeAço.png"
     },
     {
       "type": "image",
       "key": "ferradura",
-      "url": "ferradura.png"
+      "url": "items/ferradura.png"
     },
     {
       "type": "image",
       "key": "guaranaJesus",
-      "url": "guaranaJesus.png"
+      "url": "items/guaranaJesus.png"
     },
     {
       "type": "image",
       "key": "guine",
-      "url": "guine.png"
+      "url": "items/guine.png"
     },
     {
       "type": "image",
       "key": "mandiga",
-      "url": "mandiga.png"
+      "url": "items/mandiga.png"
     },
     {
       "type": "image",
       "key": "mocoto",
-      "url": "mocoto.png"
+      "url": "items/mocoto.png"
     },
     {
       "type": "image",
       "key": "munguza",
-      "url": "munguza.png"
+      "url": "items/munguza.png"
     },
     {
       "type": "image",
       "key": "olhoDeCobra",
-      "url": "olhoDeCobra.png"
+      "url": "items/olhoDeCobra.png"
     },
     {
       "type": "image",
       "key": "chifre",
-      "url": "chifre.png"
+      "url": "items/chifre.png"
     },
     {
       "type": "image",
       "key": "patuaSaoJorge",
-      "url": "patuaSaoJorge.png"
+      "url": "items/patuaSaoJorge.png"
     },
     {
       "type": "image",
       "key": "peDePano",
-      "url": "peDePano.png"
+      "url": "items/peDePano.png"
     },
     {
       "type": "image",
       "key": "titleSceneBackground",
-      "url": "titleSceneBackground.png"
+      "url": "backgrounds/titleSceneBackground.png"
     },
     {
       "type": "image",
       "key": "pimenta",
-      "url": "pimenta.png"
+      "url": "items/pimenta.png"
     },
     {
       "type": "image",
       "key": "pitu",
-      "url": "pitu.png"
+      "url": "items/pitu.png"
     },
     {
       "type": "image",
       "key": "poeira",
-      "url": "poeira.png"
+      "url": "items/poeira.png"
     },
     {
       "type": "image",
       "key": "rapadura",
-      "url": "rapadura.png"
+      "url": "items/rapadura.png"
     },
     {
       "type": "image",
       "key": "sandaliaJesus",
-      "url": "sandaliaJesus.png"
+      "url": "items/sandaliaJesus.png"
     },
     {
       "type": "spritesheet",
       "key": "playerWalk",
-      "url": "playerBrotatoWalk.png",
+      "url": "spritesheet/playerBrotatoWalk.png",
       "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
     },
     {
       "type": "spritesheet",
       "key": "playerRun",
-      "url": "playerBrotatoRun.png",
+      "url": "spritesheet/playerBrotatoRun.png",
       "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
     },
     {
       "type": "spritesheet",
       "key": "basicEnemy",
-      "url": "basicEnemy.png",
+      "url": "spritesheet/basicEnemy.png",
       "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
     },
     {
       "type": "spritesheet",
       "key": "dashEnemy",
-      "url": "dashEnemy.png",
+      "url": "spritesheet/dashEnemy.png",
       "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
     },
     {
       "type": "spritesheet",
       "key": "rangedEnemy",
-      "url": "rangedEnemy.png",
+      "url": "spritesheet/rangedEnemy.png",
       "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
     },
     {
       "type": "spritesheet",
       "key": "enemyBullet",
-      "url": "enemyBullet.png",
+      "url": "projectiles/enemyBullet.png",
       "frameConfig": { "frameWidth": 54, "frameHeight": 50 }
     },
     {
       "type": "spritesheet",
       "key": "tankEnemy",
-      "url": "tankEnemy.png",
+      "url": "spritesheet/tankEnemy.png",
       "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
     },
 
     {
       "type": "spritesheet",
       "key": "boss",
-      "url": "boss.png",
+      "url": "boss/boss.png",
       "frameConfig": { "frameWidth": 64, "frameHeight": 64 }
     },
     {
       "type": "image",
       "key": "health-bar",
-      "url": "health-bar.png"
+      "url": "ui/health-bar.png"
     },
     {
       "type": "image",
       "key": "bossBullet",
-      "url": "bossBullet.png"
+      "url": "projectiles/bossBullet.png"
     },
     {
       "type": "image",
       "key": "health-frame",
-      "url": "health-frame.png"
+      "url": "ui/health-frame.png"
+    },
+    {
+      "type": "image",
+      "key": "100moedas",
+      "url": "coins/100moedas.png"
+    },
+    {
+      "type": "image",
+      "key": "500moedas",
+      "url": "coins/500moedas.png"
+    },
+    {
+      "type": "image",
+      "key": "1000moedas",
+      "url": "coins/1000moedas.png"
+    },
+    {
+      "type": "image",
+      "key": "2000moedas",
+      "url": "coins/2000moedas.png"
     }
   ]
 }

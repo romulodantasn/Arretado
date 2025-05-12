@@ -11,6 +11,7 @@ import { GameOverScene } from './scenes/GameOverScene';
 import { PlayerHealthBar } from './objects/player/PlayerHealthBar';
 import { itemScene } from './scenes/itemScene';
 import { menuScene } from './scenes/menuScene';
+import { StoreScene } from './scenes/StoreScene';
 
 configObject.scene = [
   BootScene,
@@ -20,6 +21,7 @@ configObject.scene = [
   gameHud,
   PlayerHealthBar,
   PauseScene,
+  StoreScene,
   GameOverScene,
   nextPhaseScene,
   itemScene,
