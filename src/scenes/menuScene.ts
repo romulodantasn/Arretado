@@ -1,4 +1,5 @@
 import { inputManager } from "../components/input/inputManagerComponent";
+import { gameOptions } from "../config/gameOptionsConfig";
 
 export class menuScene extends Phaser.Scene {
   #menuItems: Phaser.GameObjects.Rectangle[] = [];
@@ -64,7 +65,7 @@ enterKey.on("down", () => {
         this.scene.start("gameScene");
         break;
       case 1:
-        this.scene.start("storeScene");
+        this.scene.start("StoreScene");
         break;
       case 2:
         this.scene.start("storeScene"); 
@@ -77,8 +78,8 @@ enterKey.on("down", () => {
 
   public titleText() {
     this.add
-      .text(860, 200, "Arretado", this.textStyle)
-      .setFontSize(64)
+      .text(gameOptions.gameSize.width / 2, 200, "Arretado", this.textStyle)
+      .setFontSize(86)
       .setAlign("center")
       .setOrigin(0.5);
   }
@@ -89,17 +90,17 @@ enterKey.on("down", () => {
   }
 
   public storeButton() {
-    const button = this.createMenuButton(202, 820, "Loja");
-    button.on("pointerup", () => this.scene.start("storeScene"));
+    const button = this.createMenuButton(155, 820, "Loja");
+    button.on("pointerup", () => this.scene.start("StoreScene"));
   }
 
   public configButton() {
-    const button = this.createMenuButton(202, 880, "Configurações", 230);
+    const button = this.createMenuButton(240, 880, "Configurações", 230);
     button.on("pointerup", () => this.scene.start("configScene")); 
   }
 
   public exitButton() {
-    const button = this.createMenuButton(202, 940, "Sair");
+    const button = this.createMenuButton(155, 940, "Sair");
     button.on("pointerup", () => this.scene.start("titleScene"));
   }
 

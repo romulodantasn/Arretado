@@ -9,6 +9,7 @@ import { GameOverScene } from '../scenes/GameOverScene';
 import { PlayerHealthBar } from '../objects/player/PlayerHealthBar';
 import { itemScene } from '../scenes/itemScene';
 import { menuScene } from '../scenes/menuScene';
+import { StoreScene } from '../scenes/StoreScene';
 
 export const scaleObject: Phaser.Types.Core.ScaleConfig = {
   mode: Phaser.Scale.FIT,
@@ -29,6 +30,7 @@ export const configObject: Phaser.Types.Core.GameConfig = {
     GameOverScene,
     nextPhaseScene,
     PauseScene,
+    StoreScene,
     itemScene,
     titleScene,
     menuScene

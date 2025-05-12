@@ -7,6 +7,7 @@ export const gameOptions = {
   type: Phaser.AUTO,
   waveDuration: 10,
   invulnerabilityDuration: 300,
+  apCoin: 0,
  
 };
 
