@@ -264,6 +264,51 @@
       "type": "image",
       "key": "2000moedas",
       "url": "coins/2000moedas.png"
+    },
+    {
+      "type":"image",
+      "key": "alagoasSkin",
+      "url":"skins/alagoasSkin.png"
+    },
+    {
+      "type":"image",
+      "key": "bahiaSkin",
+      "url":"skins/bahiaSkin.jpg"
+    },
+    {
+      "type":"image",
+      "key": "cearaSkin",
+      "url":"skins/cearaSkin.jpg"
+    },
+    {
+      "type":"image",
+      "key": "maranhaoSkin",
+      "url":"skins/maranhaoSkin.png"
+    },
+    {
+      "type":"image",
+      "key": "paraibaSkin",
+      "url":"skins/paraibaSkin.png"
+    },
+    {
+      "type":"image",
+      "key": "pernambucoSkin",
+      "url":"skins/pernambucoSkin.jpg"
+    },
+    {
+      "type":"image",
+      "key": "piauiSkin",
+      "url":"skins/piauiSkin.png"
+    },
+    {
+      "type":"image",
+      "key": "rnSkin",
+      "url":"skins/rnSkin.png"
+    },
+    {
+      "type":"image",
+      "key": "sergipeSkin",
+      "url":"skins/sergipeSkin.png"
     }
   ]
 }
