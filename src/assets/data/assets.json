@@ -33,6 +33,16 @@
     },
     {
       "type": "image",
+      "key": "tileset_default",
+      "url": "tileset.png"
+    },
+    {
+      "type": "tilemapTiledJSON",
+      "key": "map_tile_test",
+      "url": "maps/tile-test.json"
+    },
+    {
+      "type": "image",
       "key": "wave_1_background",
       "url": "backgrounds/wave_1_background.png"
     },

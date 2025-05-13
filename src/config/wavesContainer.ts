@@ -6,6 +6,12 @@ export interface WaveConfig {
     duration: number; // duração da onda em segundos
     background: string; // imagem de fundo da onda
     music: string; // música da onda
+    tilemapKey?: string; // Chave do tilemap Tiled JSON 
+    tileset?: {
+        name: string, // Nome do tileset no Tiled
+        imageKey: string, // Chave da imagem carregada no Phaser
+    }[];
+    layers?: string[] // Nomes das camadas que devem ser criadas
     belongToAct : number; // Ato a qual a onda pertence 
 }
 
@@ -18,6 +24,12 @@ export const Waves : Record <WaveNumbers, WaveConfig> = {
         duration: 20,
         background: 'wave_1_background',
         music: 'wave_1_music',
+        tilemapKey: 'map_tile_test', // Chave do tilemap carregado em assets.json
+        tileset: [
+            {name: 'baseTileset', imageKey: 'tileset_default'},
+            {name: 'natureTileset', imageKey: 'tileset_default'}
+        ],
+        layers: ['ground', 'trees'],
         belongToAct: 1,
     },
     Wave_2: {
@@ -85,4 +97,3 @@ export const Waves : Record <WaveNumbers, WaveConfig> = {
         belongToAct: 1,
     },
 }
-

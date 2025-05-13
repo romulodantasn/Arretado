@@ -1,5 +1,5 @@
 import { inputManager } from '../../components/input/inputManagerComponent';
-import { gun } from '../../config/gameOptionsConfig';
+import { gameOptions, gun } from '../../config/gameOptionsConfig';
 import { Player } from '../player/playerObject';
 import { BasicEnemyGroup } from '../enemies/BasicEnemyGroup';
 import { DashEnemyGroup } from '../enemies/DashEnemyGroup'; 
@@ -90,8 +90,8 @@ export class shootingController {
 
   containReticle() {
     if (this.#reticle) {
-      this.#reticle.x = Phaser.Math.Clamp(this.#reticle.x, 0, this.#scene.scale.width);
-      this.#reticle.y = Phaser.Math.Clamp(this.#reticle.y, 0, this.#scene.scale.height);
+      this.#reticle.x = Phaser.Math.Clamp(this.#reticle.x, 0, gameOptions.gameSize.width);
+      this.#reticle.y = Phaser.Math.Clamp(this.#reticle.y, 0, gameOptions.gameSize.height);
     }
   }
 

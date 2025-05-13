@@ -16,6 +16,7 @@ import { WaveNumbers, Waves } from '../config/wavesContainer';
 import { DashEnemyGroup } from '../objects/enemies/DashEnemyGroup';
 import { TankEnemyGroup } from '../objects/enemies/TankEnemyGroup';
 import { RangedEnemyGroup } from '../objects/enemies/RangedEnemyGroup';
+import { setupTilemap } from '../config/gameOptionsConfig';
 
 
 export class gameScene extends Phaser.Scene {
@@ -50,13 +51,25 @@ export class gameScene extends Phaser.Scene {
     this.scene.launch('gameHud');
     const currentWaveConfig = Waves[this.#currentWaveKey];
     gameOptions.waveDuration = currentWaveConfig.duration;
-
-    this.add
-      .image(0, 0, currentWaveConfig.background)
-      .setOrigin(0, 0)
-      .setDisplaySize(gameOptions.gameSize.width, gameOptions.gameSize.height);
+    if (currentWaveConfig.background) {
+      const backgroundImg = this.add
+        .image(0, 0, currentWaveConfig.background)
+        .setOrigin(0, 0)
+        .setDisplaySize(gameOptions.gameSize.width, gameOptions.gameSize.height);
+      backgroundImg.setDepth(-10); // Coloca o background bem atrás
       console.log(`Background atual: ${currentWaveConfig.background}`);
-      console.log(`Inimigos para esta onda (${this.#currentWaveKey}): `, currentWaveConfig.enemies);
+    }
+
+    if (currentWaveConfig.tilemapKey) {
+      setupTilemap(this, currentWaveConfig.tilemapKey, 'test-tiles', 'tileset_default');
+    
+      if (!gameOptions.tilemap) {
+        return; 
+      }
+    }
+    
+
+    console.log(`Inimigos para esta onda (${this.#currentWaveKey}): `, currentWaveConfig.enemies);
 
     inputManager.setupControls(this);
 
@@ -98,6 +111,10 @@ export class gameScene extends Phaser.Scene {
         this.scene.bringToTop('PlayerHealthBar');
       }
     });
+
+    this.physics.world.setBounds(0,0, gameOptions.gameSize.width, gameOptions.gameSize.height)
+    this.cameras.main.setBounds(0, 0, gameOptions.gameSize.width, gameOptions.gameSize.height);
+    this.cameras.main.startFollow(this.#player)
   }
 
   update() {
