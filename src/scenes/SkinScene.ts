@@ -87,12 +87,12 @@ export class SkinScene extends Phaser.Scene {
         const container = this.add.container(x, y, [itemBg]);
 
         const image = this.add
-            .image(0, -75, item.imageKey) // Ajusta a posição da imagem
+            .image(0, -75, item.imageKey) 
             .setDisplaySize(200 * scaleFactor, 200 * scaleFactor) 
             .setPosition(0, -75 * scaleFactor);
 
         const skinNameText = this.add
-            .text(0, 75, item.skinName, { // Nome da skin
+            .text(0, 75, item.skinName, { 
                 ...this.textStyle,
                 align: "center",
                 fontSize: `${Math.max(16, Math.floor(36 * scaleFactor))}px`,
@@ -101,7 +101,7 @@ export class SkinScene extends Phaser.Scene {
             .setPosition(0, 75 * scaleFactor);
 
         const skinZoneText = this.add
-            .text(0, 125, item.skinZone, { // Zona/Região da skin
+            .text(0, 125, item.skinZone, { 
                 ...this.textStyle,
                 align: "center",
                 fontSize: `${Math.max(14, Math.floor(28 * scaleFactor))}px`,
@@ -110,7 +110,7 @@ export class SkinScene extends Phaser.Scene {
             .setPosition(0, 125 * scaleFactor);
 
         const costText = this.add
-            .text(0, 200, `${item.skinPrice}`, { // Preço da skin
+            .text(0, 200, `${item.skinPrice}`, { 
                 ...this.textStyle,
                 align: "center",
                 fontSize: `${Math.max(18, Math.floor(48 * scaleFactor))}px`,
