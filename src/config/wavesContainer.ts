@@ -24,12 +24,11 @@ export const Waves : Record <WaveNumbers, WaveConfig> = {
         duration: 20,
         background: 'wave_1_background',
         music: 'wave_1_music',
-        tilemapKey: 'map_tile_test', // Chave do tilemap carregado em assets.json
+        tilemapKey: 'tileset_wave_1', // Chave do tilemap carregado em assets.json
         tileset: [
-            {name: 'baseTileset', imageKey: 'tileset_default'},
-            {name: 'natureTileset', imageKey: 'tileset_default'}
+            {name: 'desert_wave_1', imageKey: 'desert_wave_1'}, // key e url do png da imagem do tileset no assets.json
         ],
-        layers: ['ground', 'trees'],
+        layers: ['ground', 'objects'], // nome das layers no tileset.json
         belongToAct: 1,
     },
     Wave_2: {
@@ -38,6 +37,11 @@ export const Waves : Record <WaveNumbers, WaveConfig> = {
         duration: 25,
         background: 'wave_2_background',
         music: 'wave_2_music',
+        tilemapKey: 'tileset_wave_2', // Chave do tilemap carregado em assets.json
+        tileset: [
+            {name: 'fire_wave_1', imageKey: 'fire_wave_1'}, // key e url do png da imagem do tileset no assets.json
+        ],
+        layers: ['ground', 'objects'], // nome das layers no tileset.json
         belongToAct: 1,
     },
     Wave_3: {

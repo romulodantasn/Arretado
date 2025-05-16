@@ -1,9 +1,9 @@
 export const gameOptions : {
   gameSize: { width: number, height: number}
   tilemap?: Phaser.Tilemaps.Tilemap,
-  tilesets?: Phaser.Tilemaps.Tileset,
+  tilesets?: Phaser.Tilemaps.Tileset [],
   groundLayer?: Phaser.Tilemaps.TilemapLayer,
-  treesLayer?: Phaser.Tilemaps.TilemapLayer,
+  objectsLayer?: Phaser.Tilemaps.TilemapLayer,
   wave_1_background: string,
   type: number,
   waveDuration: number,
@@ -30,29 +30,54 @@ export const waveIndicator ={
 export const gun = {
   gunDamage: 100,
   bulletSpeed: 600, // velocidade da bala, em pixels por segundo
+  fireRate: 150,
 }
 
 
-export function setupTilemap(scene:Phaser.Scene, tilemapKey: string, tilesetName: string, tilesetImageKey: string) {
-   const map = scene.make.tilemap({ key: tilemapKey });
-  
-   if(!map) {
+export function setupTilemap(
+  scene: Phaser.Scene,
+  tilemapKey: string,
+  tilesets: { name: string; imageKey: string }[],
+  layers: string[]
+) {
+  const map = scene.make.tilemap({ key: tilemapKey });
+
+  if (!map) {
     console.error(`Falha ao criar tilemap com a chave: ${tilemapKey}`);
     return;
-   }
+  }
 
-   const tileset = map.addTilesetImage(tilesetName, tilesetImageKey);
-   if(!tileset) {
-    console.error(`Falha ao adicionar tileset "${tilesetName}" usando a imagem "${tilesetImageKey}" ao mapa.}`)
-    return;
-   }
-   const groundLayer = map.createLayer("ground", tileset);
-   const treesLayer = map.createLayer("trees", tileset);
+  const addedTilesets: Phaser.Tilemaps.Tileset[] = tilesets.reduce((acc, { name, imageKey }) => {
+  const tileset = map.addTilesetImage(name, imageKey);
+  if (tileset) acc.push(tileset);
+  else console.error(`Falha ao adicionar tileset "${name}" com imagem "${imageKey}"`);
+  return acc;
+}, [] as Phaser.Tilemaps.Tileset[]);
 
-   gameOptions.tilemap = map;
-   gameOptions.tilesets = tileset;
-   gameOptions.groundLayer = groundLayer!;
-   gameOptions.treesLayer = treesLayer!;
-   gameOptions.gameSize.width = map.widthInPixels;
-   gameOptions.gameSize.height = map.heightInPixels;
+
+  const createdLayers: Record<string, Phaser.Tilemaps.TilemapLayer> = {};
+  for (const layerName of layers) {
+    const layer = map.createLayer(layerName, addedTilesets);
+    if (layer) {
+      createdLayers[layerName] = layer;
+    } else {
+      console.warn(`Camada "${layerName}" não foi criada.`);
+    }
+  }
+
+  gameOptions.tilemap = map;
+  gameOptions.tilesets = addedTilesets;
+  if (createdLayers['ground']) {
+    gameOptions.groundLayer = createdLayers['ground'];
+  } else {
+    console.warn('Camada "ground" não encontrada.');
+  }
+  
+  if (createdLayers['objects']) {
+    gameOptions.objectsLayer = createdLayers['objects'];
+  } 
+
+  gameOptions.gameSize.width = map.widthInPixels;
+  gameOptions.gameSize.height = map.heightInPixels;
 }
+

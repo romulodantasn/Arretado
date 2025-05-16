@@ -32,14 +32,24 @@
       "url": "icons/apCoinIcon.png"
     },
     {
-      "type": "image",
-      "key": "tileset_default",
-      "url": "tileset.png"
+      "type": "tilemapTiledJSON",
+      "key": "tileset_wave_1",
+      "url": "tilesets/tileset_wave_1.json"
     },
     {
       "type": "tilemapTiledJSON",
-      "key": "map_tile_test",
-      "url": "maps/tile-test.json"
+      "key": "tileset_wave_2",
+      "url": "tilesets/tileset_wave_2.json"
+    },
+    {
+      "type": "image",
+      "key": "desert_wave_1",
+      "url": "/backgrounds/wave_1/desert_wave_1.png"
+    },
+    {
+      "type": "image",
+      "key": "fire_wave_1",
+      "url": "/backgrounds/wave_1/fire_wave_1.png"
     },
     {
       "type": "image",
@@ -183,8 +193,8 @@
     },
     {
       "type": "image",
-      "key": "rapadura",
-      "url": "items/rapadura.png"
+      "key": "manga",
+      "url": "items/manga.png"
     },
     {
       "type": "image",
