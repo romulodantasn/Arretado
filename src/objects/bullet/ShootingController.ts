@@ -50,26 +50,18 @@ export class shootingController {
 
     if (this.#DashEnemyGroup) {
       this.#scene.physics.add.collider(this.#bulletGroup, this.#DashEnemyGroup, this.bulletDashEnemyCollision, undefined, this);
-    } else {
-      console.warn("DashEnemyGroup não inicializado, pulando colisão com balas.");
     }
 
     if (this.#RangedEnemyGroup) {
       this.#scene.physics.add.collider(this.#bulletGroup, this.#RangedEnemyGroup, this.rangedEnemyCollision, undefined, this);
-    } else {
-      console.warn("RangedEnemyGroup não inicializado, pulando colisão com balas.");
-    }
+    } 
 
     if (this.#TankEnemyGroup) {
       this.#scene.physics.add.collider(this.#bulletGroup, this.#TankEnemyGroup, this.bulletTankEnemyCollision, undefined, this);
-    } else {
-      console.warn("TankEnemyGroup não inicializado, pulando colisão com balas.");
-    }
+    } 
 
     if (this.#boss?.active) {
       this.#scene.physics.add.collider(this.#bulletGroup, this.#boss, this.bulletBossCollision, undefined, this);
-    } else {
-      console.warn("Boss não inicializado, pulando colisão com balas.");
     }
   }
 
@@ -99,6 +91,7 @@ export class shootingController {
     inputManager.setupClicks(this.#scene, {
       onFire: () => {
         this.fireBullet(this.#player, this.#reticle);
+        
       },
     });
   }
