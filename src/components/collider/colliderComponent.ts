@@ -84,8 +84,6 @@ export class collider {
                 this.#handlePlayerHit(currentEnemyStats.BossEnemy.Damage, this.#playerBossCollider!);
             }
         });
-    } else {
-        console.warn("Boss instance not provided or inactive, skipping player-boss collider setup.");
     }
 
     if (this.#boss && this.#boss.bulletGroup) {

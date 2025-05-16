@@ -112,11 +112,11 @@ export const lifeItems: itemsContainer[] = [
     },
   },
   {
-    imageKey: 'rapadura',
-    name: 'Rapadura',
+    imageKey: 'manga',
+    name: 'Manga',
     type: 'vida',
     description: '+20 de vida',
-    sentence: '"É sweet mas não é soft não."',
+    sentence: '"Manguinha docinha pra nois comer"',
     cost: 100,
     effect: () => {
       console.log(`${name} Comprado, Vida aumentada`);

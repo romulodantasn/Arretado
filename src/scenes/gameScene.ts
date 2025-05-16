@@ -9,8 +9,6 @@ import { shootingController } from '../objects/bullet/ShootingController';
 import { HealthComponent } from '../components/playerHealth/HealthComponent';
 import { globalEventEmitter } from '../components/events/globalEventEmitter';
 import { BossEnemy } from '../objects/enemies/BossEnemy';
-import { currentEnemyStats } from '../config/enemiesContainer';
-import { waveIndicator } from '../config/gameOptionsConfig';
 import { WaveManager } from '../config/waveManager';
 import { WaveNumbers, Waves } from '../config/wavesContainer';
 import { DashEnemyGroup } from '../objects/enemies/DashEnemyGroup';
@@ -56,20 +54,18 @@ export class gameScene extends Phaser.Scene {
         .image(0, 0, currentWaveConfig.background)
         .setOrigin(0, 0)
         .setDisplaySize(gameOptions.gameSize.width, gameOptions.gameSize.height);
-      backgroundImg.setDepth(-10); // Coloca o background bem atrás
+      backgroundImg.setDepth(-10); 
       console.log(`Background atual: ${currentWaveConfig.background}`);
     }
 
-    if (currentWaveConfig.tilemapKey) {
-      setupTilemap(this, currentWaveConfig.tilemapKey, 'test-tiles', 'tileset_default');
-    
+    if (currentWaveConfig.tilemapKey && currentWaveConfig.tileset) {
+      setupTilemap(this, currentWaveConfig.tilemapKey, currentWaveConfig.tileset, currentWaveConfig.layers ?? []);
+      
+
       if (!gameOptions.tilemap) {
         return; 
       }
     }
-    
-
-    console.log(`Inimigos para esta onda (${this.#currentWaveKey}): `, currentWaveConfig.enemies);
 
     inputManager.setupControls(this);
 
@@ -77,7 +73,6 @@ export class gameScene extends Phaser.Scene {
     
     if(Waves[this.#currentWaveKey].enemies.includes('BasicEnemy')) {
       this.#basicEnemy = new BasicEnemyGroup(this, this.#player);
-      // console.log(`[Wave ${waveIndicator.currentWave}] BasicEnemy Stats:`, currentEnemyStats.BasicEnemy);
     }
 
     if(Waves[this.#currentWaveKey].enemies.includes('RangedEnemy')) {
