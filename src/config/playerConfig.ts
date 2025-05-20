@@ -3,6 +3,6 @@ export const playerStats = {
     Health: 100, // vida do player
     Damage: 10, // dano do player
     Lucky: 0, // chance de crítico do player
-    FireRate: 1000, // rate do player, tiros por milisegundos
+    FireRate: 100, // rate do player, tiros por milisegundos
     CoinGame: 0, // moedas do player
   }

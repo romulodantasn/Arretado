@@ -38,7 +38,7 @@ export class gameScene extends Phaser.Scene {
   
   init(data: { waveKey?: WaveNumbers }) {
     this.#waveData = WaveManager.getWaveData(data.waveKey);
-    this.#currentWaveKey = `Wave_${this.#waveData.waveNumber}` as WaveNumbers; // Inicializar #currentWaveKey
+    this.#currentWaveKey = `Wave_${this.#waveData.waveNumber}` as WaveNumbers;
   }
 
   create() {

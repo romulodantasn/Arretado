@@ -92,6 +92,7 @@ export class shootingController {
       onFire: () => {
         this.fireBullet(this.#player, this.#reticle);
         
+          this.#player.play('cangaceiroShoot', true);
       },
     });
   }
@@ -99,11 +100,12 @@ export class shootingController {
   fireBullet(shooter: Player, target: Phaser.GameObjects.Sprite) {
     const bullet = this.#bulletGroup.get(shooter.x, shooter.y, 'bullet') as Phaser.Physics.Arcade.Sprite;
     const angle = Phaser.Math.Angle.Between(shooter.x, shooter.y, target.x, target.y);
-    const speed = gun.bulletSpeed;
+    const speed = gun.bulletSpeed; 
 
     this.#bulletGroup.add(bullet);
     bullet.setVelocity(Math.cos(angle) * speed, Math.sin(angle) * speed);
     bullet.setActive(true).setVisible(true);
+    shooter.play('cangaceiroShoot', true); // Mover a animação para cá
   }
 
   private showDamageText(x: number, y: number, damage: number) {

@@ -42,14 +42,84 @@
       "url": "tilesets/tileset_wave_2.json"
     },
     {
-      "type": "image",
-      "key": "desert_wave_1",
-      "url": "/backgrounds/wave_1/desert_wave_1.png"
+      "type": "tilemapTiledJSON",
+      "key": "tileset_wave_3",
+      "url": "tilesets/tileset_wave_3.json"
+    },
+    {
+      "type": "tilemapTiledJSON",
+      "key": "tileset_wave_4",
+      "url": "tilesets/tileset_wave_4.json"
+    },
+    {
+      "type": "tilemapTiledJSON",
+      "key": "tileset_wave_5",
+      "url": "tilesets/tileset_wave_5.json"
+    },
+    {
+      "type": "tilemapTiledJSON",
+      "key": "tileset_wave_6",
+      "url": "tilesets/tileset_wave_6.json"
+    },
+    {
+      "type": "tilemapTiledJSON",
+      "key": "tileset_wave_7",
+      "url": "tilesets/tileset_wave_7.json"
+    },
+    {
+      "type": "tilemapTiledJSON",
+      "key": "tileset_wave_8",
+      "url": "tilesets/tileset_wave_8.json"
+    },
+    {
+      "type": "tilemapTiledJSON",
+      "key": "tileset_wave_9",
+      "url": "tilesets/tileset_wave_9.json"
     },
     {
       "type": "image",
-      "key": "fire_wave_1",
-      "url": "/backgrounds/wave_1/fire_wave_1.png"
+      "key": "limbo_wave_1",
+      "url": "/backgrounds/wave_1/limbo_wave_1.png"
+    },
+    {
+      "type": "image",
+      "key": "luxury_wave_2",
+      "url": "/backgrounds/wave_2/luxury_wave_2.png"
+    },
+    {
+      "type": "image",
+      "key": "gluttony_wave_3",
+      "url": "/backgrounds/wave_3/gluttony_wave_3.png"
+    },
+    {
+      "type": "image",
+      "key": "greed_wave_4",
+      "url": "/backgrounds/wave_4/greed_wave_4.png"
+    },
+    {
+      "type": "image",
+      "key": "rage_wave_5",
+      "url": "/backgrounds/wave_5/rage_wave_5.png"
+    },
+    {
+      "type": "image",
+      "key": "heresy_wave_6",
+      "url": "/backgrounds/wave_6/heresy_wave_6.png"
+    },
+    {
+      "type": "image",
+      "key": "violence_wave_7",
+      "url": "/backgrounds/wave_7/violence_wave_7.png"
+    },
+    {
+      "type": "image",
+      "key": "fraud_wave_8",
+      "url": "/backgrounds/wave_8/fraud_wave_8.png"
+    },
+    {
+      "type": "image",
+      "key": "betrayel_wave_9",
+      "url": "/backgrounds/wave_9/betrayel_wave_9.png"
     },
     {
       "type": "image",
@@ -212,6 +282,24 @@
       "key": "playerRun",
       "url": "spritesheet/playerBrotatoRun.png",
       "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
+    },
+    {
+      "type": "spritesheet",
+      "key": "cangaceiroIdle",
+      "url": "spritesheet/cangaceiro.png",
+      "frameConfig": { "frameWidth": 128, "frameHeight": 128 }
+    },
+    {
+      "type": "spritesheet",
+      "key": "cangaceiroRun",
+      "url": "spritesheet/cangaceiro.png",
+      "frameConfig": { "frameWidth": 128, "frameHeight": 128 }
+    },
+    {
+      "type": "spritesheet",
+      "key": "cangaceiroShoot",
+      "url": "spritesheet/cangaceiro.png",
+      "frameConfig": { "frameWidth": 128, "frameHeight": 128 }
     },
     {
       "type": "spritesheet",

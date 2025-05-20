@@ -1,4 +1,6 @@
 import Phaser from "phaser";
+import { gameOptions } from "../../config/gameOptionsConfig";
+import { gun } from "../../config/gameOptionsConfig";
 
 export class inputManager {
   static controlKeys: any;
@@ -38,7 +40,7 @@ export class inputManager {
           callbacks.onFire(pointer);
 
           fireInterval = scene.time.addEvent({
-            delay: 550,
+            delay: gun.fireRate,
             loop: true,
             callback: () => callbacks.onFire?.(pointer),
           });
