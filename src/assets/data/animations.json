@@ -14,25 +14,18 @@
     "assetKey": "playerRun"
   },
   {
-    "key": "cangaceiroIdle",
-    "frameRate": 3,
-    "frames": [0, 1, 2],
+    "key": "lampiaoIdle",
+    "frameRate": 16,
+    "frames": [0],
     "repeat": -1,
-    "assetKey": "cangaceiro"
+    "assetKey": "lampiaoIdle"
   },
   {
-    "key": "cangaceiroRun",
-    "frameRate": 10,
-    "frames": [3, 4, 5],
+    "key": "lampiaoRun",
+    "frameRate": -12,
+    "frames": [0, 1],
     "repeat": -1,
-    "assetKey": "cangaceiro"
-  },
-  {
-    "key": "cangaceiroShoot",
-    "frameRate": 8,
-    "frames": [6, 7, 8, 9, 10, 11],
-    "repeat": -1,
-    "assetKey": "cangaceiro"
+    "assetKey": "lampiaoRun"
   },
   {
     "key": "basicEnemy",

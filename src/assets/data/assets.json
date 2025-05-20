@@ -283,23 +283,17 @@
       "url": "spritesheet/playerBrotatoRun.png",
       "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
     },
-    {
+    { 
       "type": "spritesheet",
-      "key": "cangaceiroIdle",
-      "url": "spritesheet/cangaceiro.png",
-      "frameConfig": { "frameWidth": 128, "frameHeight": 128 }
+      "key": "lampiaoIdle",
+      "url": "spritesheet/lampiaoIdle.png",
+      "frameConfig": { "frameWidth": 64, "frameHeight": 64 }
     },
     {
       "type": "spritesheet",
-      "key": "cangaceiroRun",
-      "url": "spritesheet/cangaceiro.png",
-      "frameConfig": { "frameWidth": 128, "frameHeight": 128 }
-    },
-    {
-      "type": "spritesheet",
-      "key": "cangaceiroShoot",
-      "url": "spritesheet/cangaceiro.png",
-      "frameConfig": { "frameWidth": 128, "frameHeight": 128 }
+      "key": "lampiaoRun",
+      "url": "spritesheet/lampiaoRun.png",
+      "frameConfig": { "frameWidth": 64, "frameHeight": 64 }
     },
     {
       "type": "spritesheet",

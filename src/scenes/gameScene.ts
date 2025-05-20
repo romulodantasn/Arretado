@@ -43,6 +43,8 @@ export class gameScene extends Phaser.Scene {
 
   create() {
     console.log('gameScene carregado');
+console.log(this.anims.exists('lampiao_idle')); // deve imprimir true
+console.log(this.anims.exists('lampiao_run'));  // idem
 
     this.#health = new HealthComponent(playerStats.Health, playerStats.Health, 'player');
 

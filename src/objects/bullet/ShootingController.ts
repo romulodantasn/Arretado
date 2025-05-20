@@ -91,8 +91,6 @@ export class shootingController {
     inputManager.setupClicks(this.#scene, {
       onFire: () => {
         this.fireBullet(this.#player, this.#reticle);
-        
-          this.#player.play('cangaceiroShoot', true);
       },
     });
   }
@@ -105,7 +103,6 @@ export class shootingController {
     this.#bulletGroup.add(bullet);
     bullet.setVelocity(Math.cos(angle) * speed, Math.sin(angle) * speed);
     bullet.setActive(true).setVisible(true);
-    shooter.play('cangaceiroShoot', true); // Mover a animação para cá
   }
 
   private showDamageText(x: number, y: number, damage: number) {

@@ -16,6 +16,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.body = this.body as Phaser.Physics.Arcade.Body;
     this.setCollideWorldBounds(true);
     this.setDepth(30);
+    this.setScale(3)
     this.setOffset(3, 3);
 
     this.controlKeys = inputManager.getKeys();
@@ -42,10 +43,12 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
     if (this.controlKeys.right.isDown) {
       movementDirection.x++;
+      this.flipX = false;
       isMoving = true;
     }
     if (this.controlKeys.left.isDown) {
       movementDirection.x--;
+      this.flipX = true;
       isMoving = true;
     }
     if (this.controlKeys.up.isDown) {
@@ -75,12 +78,12 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
   public playerAnimation() {
     if (this.playerMovement()) {
-      if (this.anims.currentAnim?.key !== 'playerRun') {
-        this.play('playerRun', true);
+      if (this.anims.currentAnim?.key !== 'lampiaoRun') {
+        this.play('lampiaoRun', true);
       }
     } else {
-      if (this.anims.currentAnim?.key !== 'playerWalk') {
-        this.play('playerWalk', true);
+      if (this.anims.currentAnim?.key !== 'lampiaoIdle') {
+        this.play('lampiaoIdle', true);
       }
     }
   }
