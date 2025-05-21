@@ -17,7 +17,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.setCollideWorldBounds(true);
     this.setDepth(30);
     this.setScale(3)
-    this.setOffset(3, 3);
+    this.setOffset(14,18);
 
     this.controlKeys = inputManager.getKeys();
 

@@ -21,12 +21,15 @@ export class collider {
   #boss?: BossEnemy;
   #playerHealth: HealthComponent; 
   #isInvulnerable: boolean = false;
+
   #playerBasicEnemyCollider: Phaser.Physics.Arcade.Collider;
   #playerRangedBulletCollider?: Phaser.Physics.Arcade.Collider;
   #playerDashEnemyCollider?: Phaser.Physics.Arcade.Collider; 
   #playerTankEnemyCollider?: Phaser.Physics.Arcade.Collider; 
   #playerBossCollider?: Phaser.Physics.Arcade.Collider;
   #playerBossBulletCollider?: Phaser.Physics.Arcade.Collider;
+  #playerTilemapColliders: Phaser.Physics.Arcade.Collider[] = [];
+
 
   constructor(scene: gameScene, player: Player, BasicEnemyGroup: BasicEnemyGroup, RangedEnemyGroup?: RangedEnemyGroup, DashEnemyGroup?: DashEnemyGroup, TankEnemyGroup?: TankEnemyGroup, boss?: BossEnemy, playerHealth?: HealthComponent) {
     this.#scene = scene;
@@ -40,6 +43,9 @@ export class collider {
   }
   create() {
     this.createColliders();
+    this.#createTilemapColliders();
+        console.log('[ColliderComponent] Colliders criados.');
+
   }
 
   public createColliders() {
@@ -54,7 +60,7 @@ export class collider {
         (player, bullet) => {          
           if (bullet instanceof Phaser.Physics.Arcade.Sprite && bullet.active) {
             if (!this.#isInvulnerable) {
-              bullet.destroy(); // Destruir a bala remove ela da cena e da física
+              bullet.destroy(); 
               this.#handlePlayerHit(currentEnemyStats.RangedEnemy.Damage, this.#playerRangedBulletCollider!);
             }
           }
@@ -129,6 +135,26 @@ export class collider {
       if (this.#playerTankEnemyCollider) this.#playerTankEnemyCollider.active = true;
       if (this.#playerBossCollider) this.#playerBossCollider.active = true;
       if (this.#playerBossBulletCollider) this.#playerBossBulletCollider.active = true;
+    });
+  }
+
+  #createTilemapColliders() {
+    const tilemap = gameOptions.tilemap;
+    if (!tilemap){
+      console.warn('[ColliderComponent] Tilemap não está definido em gameOptions. Nenhum colisor de tilemap será criado.');
+      return;
+    }
+      
+    console.log('[ColliderComponent] Iniciando criação de colisores com tilemap...');
+    tilemap.layers.forEach((layerData: Phaser.Tilemaps.LayerData) => {
+      const actualTilemapLayer = layerData.tilemapLayer;
+      console.log(`[ColliderComponent] Processando camada do tilemap: ${layerData.name}`);
+
+      if (actualTilemapLayer) {
+        const colliderInstance = this.#scene.physics.add.collider(this.#player, actualTilemapLayer);
+        this.#playerTilemapColliders.push(colliderInstance);
+        console.log(`[ColliderComponent] Collider adicionado entre jogador e camada do tilemap: ${actualTilemapLayer.layer.name}`);
+      }
     });
   }
 

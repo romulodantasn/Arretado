@@ -38,7 +38,8 @@ export function setupTilemap(
   scene: Phaser.Scene,
   tilemapKey: string,
   tilesets: { name: string; imageKey: string }[],
-  layers: string[]
+  layers: string[],
+  collisionLayers?: string[]
 ) {
   const map = scene.make.tilemap({ key: tilemapKey });
 
@@ -58,8 +59,14 @@ export function setupTilemap(
   const createdLayers: Record<string, Phaser.Tilemaps.TilemapLayer> = {};
   for (const layerName of layers) {
     const layer = map.createLayer(layerName, addedTilesets);
+    layer?.setDepth(-5)
     if (layer) {
       createdLayers[layerName] = layer;
+
+      if(collisionLayers?.includes(layerName)) {
+          layer?.setCollisionByProperty({collides: true});
+         console.log(`Colisao aplicada a camada "${layerName}"`)
+      }
     } else {
       console.warn(`Camada "${layerName}" não foi criada.`);
     }

@@ -43,8 +43,6 @@ export class gameScene extends Phaser.Scene {
 
   create() {
     console.log('gameScene carregado');
-console.log(this.anims.exists('lampiao_idle')); // deve imprimir true
-console.log(this.anims.exists('lampiao_run'));  // idem
 
     this.#health = new HealthComponent(playerStats.Health, playerStats.Health, 'player');
 
@@ -61,7 +59,7 @@ console.log(this.anims.exists('lampiao_run'));  // idem
     }
 
     if (currentWaveConfig.tilemapKey && currentWaveConfig.tileset) {
-      setupTilemap(this, currentWaveConfig.tilemapKey, currentWaveConfig.tileset, currentWaveConfig.layers ?? []);
+      setupTilemap(this, currentWaveConfig.tilemapKey, currentWaveConfig.tileset, currentWaveConfig.layers ?? [], currentWaveConfig.collisionLayers ?? []);
       
 
       if (!gameOptions.tilemap) {
