@@ -16,7 +16,7 @@ export const gameOptions : {
   wave_1_background: 'wave_1_background',
   type: Phaser.AUTO,
   waveDuration: 10,
-  invulnerabilityDuration: 300,
+  invulnerabilityDuration: 100,
   apCoin: 0,
   };
 
@@ -74,16 +74,6 @@ export function setupTilemap(
 
   gameOptions.tilemap = map;
   gameOptions.tilesets = addedTilesets;
-  if (createdLayers['ground']) {
-    gameOptions.groundLayer = createdLayers['ground'];
-  } else {
-    console.warn('Camada "ground" não encontrada.');
-  }
-  
-  if (createdLayers['objects']) {
-    gameOptions.objectsLayer = createdLayers['objects'];
-  } 
-
   gameOptions.gameSize.width = map.widthInPixels;
   gameOptions.gameSize.height = map.heightInPixels;
 }

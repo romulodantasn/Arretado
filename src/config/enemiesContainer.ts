@@ -30,7 +30,7 @@ export const EnemyTemplates: Record<EnemyType, BaseEnemyStatsStructure> = {
     Speed: 45,
     Rate: 1000,
     Damage: 2,
-    FireRate: 3000,
+    FireRate: 6000,
   },
   DashEnemy: {
     name: 'DashEnemy',

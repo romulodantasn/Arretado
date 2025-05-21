@@ -237,18 +237,28 @@
                  "id":153,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"damage",
                          "type":"int",
-                         "value":20
+                         "value":10
                         }]
                 }, 
                 {
                  "id":154,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"damage",
                          "type":"int",
-                         "value":20
+                         "value":10
                         }]
                 }, 
                 {
@@ -291,27 +301,42 @@
                  "id":183,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"damage",
                          "type":"int",
-                         "value":20
+                         "value":10
                         }]
                 }, 
                 {
                  "id":184,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"damage",
                          "type":"int",
-                         "value":20
+                         "value":10
                         }]
                 }, 
                 {
                  "id":185,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"damage",
                          "type":"int",
-                         "value":20
+                         "value":10
                         }]
                 }, 
                 {
@@ -355,27 +380,42 @@
                  "id":213,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"damage",
                          "type":"int",
-                         "value":20
+                         "value":10
                         }]
                 }, 
                 {
                  "id":214,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"damage",
                          "type":"int",
-                         "value":20
+                         "value":10
                         }]
                 }, 
                 {
                  "id":215,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"damage",
                          "type":"int",
-                         "value":20
+                         "value":10
                         }]
                 }, 
                 {
@@ -418,27 +458,42 @@
                  "id":243,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"damage",
                          "type":"int",
-                         "value":20
+                         "value":10
                         }]
                 }, 
                 {
                  "id":244,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"damage",
                          "type":"int",
-                         "value":20
+                         "value":10
                         }]
                 }, 
                 {
                  "id":245,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"damage",
                          "type":"int",
-                         "value":20
+                         "value":10
                         }]
                 }, 
                 {
@@ -788,9 +843,14 @@
                  "id":642,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"damage",
                          "type":"int",
-                         "value":20
+                         "value":10
                         }]
                 }, 
                 {
@@ -824,27 +884,42 @@
                  "id":671,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"damage",
                          "type":"int",
-                         "value":20
+                         "value":10
                         }]
                 }, 
                 {
                  "id":672,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"damage",
                          "type":"int",
-                         "value":20
+                         "value":10
                         }]
                 }, 
                 {
                  "id":673,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"damage",
                          "type":"int",
-                         "value":20
+                         "value":10
                         }]
                 }, 
                 {
@@ -869,9 +944,14 @@
                  "id":701,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"damage",
                          "type":"int",
-                         "value":20
+                         "value":10
                         }]
                 },
             
@@ -879,18 +959,28 @@
                  "id":702,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"damage",
                          "type":"int",
-                         "value":20
+                         "value":10
                         }]
                 }, 
                 {
                  "id":703,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"damage",
                          "type":"int",
-                         "value":20
+                         "value":10
                         }]
                 }, 
                 {
@@ -915,18 +1005,28 @@
                  "id":732,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"damage",
                          "type":"int",
-                         "value":20
+                         "value":10
                         }]
                 }, 
                 {
                  "id":733,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"damage",
                          "type":"int",
-                         "value":20
+                         "value":10
                         }]
                 }, 
                 {
@@ -951,18 +1051,28 @@
                  "id":762,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"damage",
                          "type":"int",
-                         "value":20
+                         "value":10
                         }]
                 }, 
                 {
                  "id":763,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"damage",
                          "type":"int",
-                         "value":20
+                         "value":10
                         }]
                 }, 
                 {

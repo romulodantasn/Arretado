@@ -44,14 +44,13 @@ export class collider {
   create() {
     this.createColliders();
     this.#createTilemapColliders();
-        console.log('[ColliderComponent] Colliders criados.');
 
   }
 
   public createColliders() {
     this.#playerBasicEnemyCollider = this.#scene.physics.add.collider(this.#player, this.#BasicEnemyGroup, () => {
       if (!this.#isInvulnerable) {
-        this.#handlePlayerHit(currentEnemyStats.BasicEnemy.Damage, this.#playerBasicEnemyCollider); 
+        this.#handlePlayerHit(currentEnemyStats.BasicEnemy.Damage, 'BasicEnemy', this.#playerBasicEnemyCollider); 
       }
     });
 
@@ -61,7 +60,7 @@ export class collider {
           if (bullet instanceof Phaser.Physics.Arcade.Sprite && bullet.active) {
             if (!this.#isInvulnerable) {
               bullet.destroy(); 
-              this.#handlePlayerHit(currentEnemyStats.RangedEnemy.Damage, this.#playerRangedBulletCollider!);
+              this.#handlePlayerHit(currentEnemyStats.RangedEnemy.Damage, 'RangedEnemyBullet', this.#playerRangedBulletCollider!);
             }
           }
         }
@@ -71,7 +70,7 @@ export class collider {
     if (this.#DashEnemyGroup) {
       this.#playerDashEnemyCollider = this.#scene.physics.add.collider(this.#player, this.#DashEnemyGroup, () => {
         if (!this.#isInvulnerable) {
-          this.#handlePlayerHit(currentEnemyStats.DashEnemy.Damage, this.#playerDashEnemyCollider!); 
+          this.#handlePlayerHit(currentEnemyStats.DashEnemy.Damage, 'DashEnemy', this.#playerDashEnemyCollider!); 
         }
       });
     }
@@ -79,7 +78,7 @@ export class collider {
     if (this.#TankEnemyGroup) {
       this.#playerTankEnemyCollider = this.#scene.physics.add.collider(this.#player, this.#TankEnemyGroup, () => {
         if (!this.#isInvulnerable) {
-          this.#handlePlayerHit(currentEnemyStats.TankEnemy.Damage, this.#playerTankEnemyCollider!); 
+          this.#handlePlayerHit(currentEnemyStats.TankEnemy.Damage, 'TankEnemy', this.#playerTankEnemyCollider!); 
         }
       });
     }
@@ -87,7 +86,7 @@ export class collider {
     if (this.#boss && this.#boss.active) {
         this.#playerBossCollider = this.#scene.physics.add.collider(this.#player, this.#boss, () => {
             if (!this.#isInvulnerable) {
-                this.#handlePlayerHit(currentEnemyStats.BossEnemy.Damage, this.#playerBossCollider!);
+                this.#handlePlayerHit(currentEnemyStats.BossEnemy.Damage, 'BossEnemy', this.#playerBossCollider!);
             }
         });
     }
@@ -96,21 +95,21 @@ export class collider {
       this.#playerBossBulletCollider = this.#scene.physics.add.collider(this.#player, this.#boss.bulletGroup, (player, bullet) => {
         if (bullet instanceof Phaser.Physics.Arcade.Sprite && bullet.active && !this.#isInvulnerable) {
           bullet.destroy(); 
-          const damage = currentEnemyStats.BossEnemy.BulletDamage!;
-          this.#handlePlayerHit(damage, this.#playerBossBulletCollider!);
+          const bossBulletDamage = currentEnemyStats.BossEnemy.BulletDamage!;
+          this.#handlePlayerHit(bossBulletDamage, 'BossBullet', this.#playerBossBulletCollider!);
         }
       });
     }
 }
 
 
-  #handlePlayerHit(damage: number, colliderToDeactivate: Phaser.Physics.Arcade.Collider) {
+  #handlePlayerHit(damage: number, sourceType: string, colliderToDeactivate: Phaser.Physics.Arcade.Collider) {
     this.#scene.cameras.main.shake(200, 0.0025);
     this.#player.setTint(0xff0000);
     this.#scene.time.delayedCall(200, () => {
       this.#player.clearTint();
     });
-    console.log(`Colisão detectada! Jogador perde ${damage} de vida.`);
+    console.log(`[ColliderComponent] Colisão com ${sourceType} detectada! Jogador perde ${damage} de vida. Dano: ${damage}`);
 
     this.#playerHealth.loseHealth(damage);
     this.#scene.events.emit(
@@ -135,6 +134,9 @@ export class collider {
       if (this.#playerTankEnemyCollider) this.#playerTankEnemyCollider.active = true;
       if (this.#playerBossCollider) this.#playerBossCollider.active = true;
       if (this.#playerBossBulletCollider) this.#playerBossBulletCollider.active = true;
+      this.#playerTilemapColliders.forEach(collider => {
+        collider.active = true;
+      });
     });
   }
 
@@ -145,18 +147,28 @@ export class collider {
       return;
     }
       
-    console.log('[ColliderComponent] Iniciando criação de colisores com tilemap...');
     tilemap.layers.forEach((layerData: Phaser.Tilemaps.LayerData) => {
       const actualTilemapLayer = layerData.tilemapLayer;
-      console.log(`[ColliderComponent] Processando camada do tilemap: ${layerData.name}`);
-
       if (actualTilemapLayer) {
-        const colliderInstance = this.#scene.physics.add.collider(this.#player, actualTilemapLayer);
+        const colliderInstance = this.#scene.physics.add.collider(this.#player, actualTilemapLayer,(player, tile) => {
+          this.#handleTileCollision(tile as Phaser.Tilemaps.Tile, colliderInstance);
+      });
         this.#playerTilemapColliders.push(colliderInstance);
-        console.log(`[ColliderComponent] Collider adicionado entre jogador e camada do tilemap: ${actualTilemapLayer.layer.name}`);
       }
     });
   }
+
+  #handleTileCollision(tile: Phaser.Tilemaps.Tile, colliderInstance: Phaser.Physics.Arcade.Collider) {
+    if (tile && tile.properties) {
+      const damage = tile.properties.damage;
+      if(damage !== undefined && damage > 0 && !this.#isInvulnerable){
+        console.log(`[ColliderComponent] Colisao com tile danoso( ID: ${tile.index}, Dano: ${damage})`);
+        this.#handlePlayerHit(damage, `Tilemap (${tile.layer.name})`, colliderInstance);
+      } else if (tile.properties.collides === true) {
+        console.log(`[ColliderComponent] colisao com tile colidivel (ID: ${tile.index}) na camada ${tile.layer.name}.`);
+      }
+  }
+}
 
   // Método auxiliar para lidar com a morte do jogador
   #handlePlayerDeath() {
