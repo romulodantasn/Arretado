@@ -20,7 +20,7 @@ export const EnemyTemplates: Record<EnemyType, BaseEnemyStatsStructure> = {
     name: 'BasicEnemy',
     Health: 20,
     Speed: 50,
-    Rate: 1000,
+    Rate: 300,
     Damage: 1,
   },
   RangedEnemy: {
@@ -59,7 +59,7 @@ export const EnemyTemplates: Record<EnemyType, BaseEnemyStatsStructure> = {
   },
 } as const;
 
-// Cria uma cópia mutável dos atributos dos inimigos
+// cópia mutável dos atributos dos inimigos
 export const currentEnemyStats: Record<EnemyType, BaseEnemyStatsStructure> = 
   JSON.parse(JSON.stringify(EnemyTemplates));
 

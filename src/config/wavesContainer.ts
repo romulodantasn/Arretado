@@ -22,7 +22,7 @@ export const Waves : Record <WaveNumbers, WaveConfig> = {
     Wave_1: {
         waveNumber: 1,
         enemies: ['BasicEnemy'],
-        duration: 20,
+        duration: 5,
         background: 'wave_1_background',
         music: 'wave_1_music',
         tilemapKey: 'tileset_wave_1', // key do tilemap carregado em assets.json

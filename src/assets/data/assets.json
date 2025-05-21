@@ -299,19 +299,19 @@
       "type": "spritesheet",
       "key": "basicEnemy",
       "url": "spritesheet/basicEnemy.png",
-      "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
+      "frameConfig": { "frameWidth": 64, "frameHeight": 64 }
     },
     {
       "type": "spritesheet",
       "key": "dashEnemy",
       "url": "spritesheet/dashEnemy.png",
-      "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
+      "frameConfig": { "frameWidth": 64, "frameHeight": 64 }
     },
     {
       "type": "spritesheet",
       "key": "rangedEnemy",
       "url": "spritesheet/rangedEnemy.png",
-      "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
+      "frameConfig": { "frameWidth": 16, "frameHeight": 16 }
     },
     {
       "type": "spritesheet",
@@ -323,7 +323,7 @@
       "type": "spritesheet",
       "key": "tankEnemy",
       "url": "spritesheet/tankEnemy.png",
-      "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
+      "frameConfig": { "frameWidth": 64, "frameHeight": 64 }
     },
 
     {

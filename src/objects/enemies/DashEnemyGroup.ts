@@ -43,6 +43,8 @@ export class DashEnemyGroup extends Phaser.Physics.Arcade.Group {
             dashEnemy.setDepth(10)
             dashEnemy.setActive(true)
             dashEnemy.setVisible(true);
+            dashEnemy.setScale(3);
+            dashEnemy.setOffset(14, 18);
             
             const enemyId = `enemy_${Date.now()}_${Math.random().toString(16).slice(2)}`; 
             const enemyHealthComponent = new HealthComponent(

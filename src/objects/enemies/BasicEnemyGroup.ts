@@ -40,6 +40,8 @@ export class BasicEnemyGroup extends Phaser.Physics.Arcade.Group {
         if(basicEnemy) {
           basicEnemy.setDepth(10)
           basicEnemy.setActive(true).setVisible(true);
+          basicEnemy.setScale(3);
+          basicEnemy.setOffset(14, 18);
           
           const enemyId = `enemy_${Date.now()}_${Math.random().toString(16).slice(2)}`; 
           const enemyHealthComponent = new HealthComponent(

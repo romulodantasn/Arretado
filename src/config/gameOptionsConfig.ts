@@ -28,9 +28,9 @@ export const waveIndicator ={
 }
 
 export const gun = {
-  gunDamage: 100,
+  gunDamage: 1000,
   bulletSpeed: 600, // velocidade da bala, em pixels por segundo
-  fireRate: 150,
+  fireRate: 250,
 }
 
 

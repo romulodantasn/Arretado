@@ -39,9 +39,13 @@ export class RangedEnemyGroup extends Phaser.Physics.Arcade.Group {
       callback: () => {
         const spawnPoint = Phaser.Geom.Rectangle.RandomOutside(outerRectangle, innerRectangle);
         const rangedEnemy = this.create(spawnPoint.x, spawnPoint.y, 'enemy') as Phaser.Physics.Arcade.Sprite;
+        
 
         if (rangedEnemy) {
-          rangedEnemy.setDepth(10).setActive(true).setVisible(true).play('rangedEnemy', true);
+          rangedEnemy.setDepth(10).
+          setActive(true).setVisible(true).play('rangedEnemy', true);
+          rangedEnemy.setDisplaySize(64,64);
+          // rangedEnemy.setOffset(3, 6);
 
           const enemyId = `enemy_${Date.now()}_${Math.random().toString(16).slice(2)}`;
           const enemyHealthComponent = new HealthComponent(

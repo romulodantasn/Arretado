@@ -15,6 +15,7 @@ export class BossEnemy extends Phaser.Physics.Arcade.Sprite {
 
     this.setScale(6);
     this.setSize(48, 48);
+    this.setOffset(6, 6);
     this.setDepth(20);
     this.setCollideWorldBounds(true);
     this.bulletGroup = this.scene.physics.add.group();

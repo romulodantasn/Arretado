@@ -40,6 +40,8 @@ export class TankEnemyGroup extends Phaser.Physics.Arcade.Group {
         if(TankEnemy) {
             TankEnemy.setDepth(10)
             TankEnemy.setActive(true).setVisible(true);
+            TankEnemy.setScale(3);
+            TankEnemy.setOffset(14, 18);
           
           const enemyId = `enemy_${Date.now()}_${Math.random().toString(16).slice(2)}`; 
           const enemyHealthComponent = new HealthComponent(

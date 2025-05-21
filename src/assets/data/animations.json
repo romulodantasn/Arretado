@@ -29,22 +29,22 @@
   },
   {
     "key": "basicEnemy",
-    "frameRate": 10,
-    "frames": [0, 1, 2, 3, 4, 5, 6],
+    "frameRate": 5,
+    "frames": [0, 1, 2],
     "repeat": -1,
     "assetKey": "basicEnemy"
   },
   {
     "key": "dashEnemy",
-    "frameRate": 10,
-    "frames": [0, 1, 2, 3, 4, 5, 6],
+    "frameRate": 5,
+    "frames": [0, 1, 2],
     "repeat": -1,
     "assetKey": "dashEnemy"
   },
   {
     "key": "rangedEnemy",
-    "frameRate": 10,
-    "frames": [0, 1, 2, 3, 4, 5, 6],
+    "frameRate": 16,
+    "frames": [0, 1, 2, 3],
     "repeat": -1,
     "assetKey": "rangedEnemy"
   },
@@ -57,9 +57,17 @@
   },
   {
     "key": "tankEnemy",
-    "frameRate": 10,
-    "frames": [0, 1, 2, 3, 4, 5, 6],
+    "frameRate": 5,
+    "frames": [0, 1, 2],
     "repeat": -1,
     "assetKey": "tankEnemy"
+  },
+  {
+    "key": "boss",
+    "frameRate": 5,
+    "frames": [0, 1, 2],
+    "repeat": -1,
+    "assetKey": "boss"
   }
 ]
+
