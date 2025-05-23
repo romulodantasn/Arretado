@@ -272,16 +272,14 @@
       "url": "items/sandaliaJesus.png"
     },
     {
-      "type": "spritesheet",
-      "key": "playerWalk",
-      "url": "spritesheet/playerBrotatoWalk.png",
-      "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
+      "type": "image",
+      "key": "lampiao",
+      "url": "spritesheet/lampiao.png"
     },
-    {
-      "type": "spritesheet",
-      "key": "playerRun",
-      "url": "spritesheet/playerBrotatoRun.png",
-      "frameConfig": { "frameWidth": 40, "frameHeight": 40 }
+     {
+      "type": "image",
+      "key": "mariaBonita",
+      "url": "spritesheet/mariaBonita.png"
     },
     { 
       "type": "spritesheet",
@@ -339,13 +337,58 @@
     },
     {
       "type": "image",
-      "key": "bossBullet",
-      "url": "projectiles/bossBullet.png"
+      "key": "health-frame",
+      "url": "ui/health-frame.png"
     },
     {
       "type": "image",
-      "key": "health-frame",
-      "url": "ui/health-frame.png"
+      "key": "moldura",
+      "url": "ui/moldura.png"
+    },
+    {
+      "type": "image",
+      "key": "moldura2",
+      "url": "ui/moldura2.png"
+    },
+    {
+      "type": "image",
+      "key": "molduraSkin",
+      "url": "ui/molduraSkin.png"
+    },
+    {
+      "type": "image",
+      "key": "molduraSkin2",
+      "url": "ui/molduraSkin2.png"
+    },
+    {
+      "type": "image",
+      "key": "molduraPersonagem",
+      "url": "ui/molduraPersonagem.png"
+    },
+    {
+      "type": "image",
+      "key": "molduraContainerItems",
+      "url": "ui/molduraContainerItems.png"
+    },
+    {
+      "type": "image",
+      "key": "molduraItems",
+      "url": "ui/molduraItems.png"
+    },
+    {
+      "type": "image",
+      "key": "molduraLojaAp",
+      "url": "ui/molduraLojaAp.png"
+    },
+    {
+      "type": "image",
+      "key": "molduraMenu",
+      "url": "ui/molduraMenu.png"
+    },
+    {
+      "type": "image",
+      "key": "bossBullet",
+      "url": "projectiles/bossBullet.png"
     },
     {
       "type": "image",
@@ -411,6 +454,61 @@
       "type":"image",
       "key": "sergipeSkin",
       "url":"skins/sergipeSkin.png"
+    },
+    {
+      "type":"spritesheet",
+      "key": "bandeiraAlagoas",
+      "url":"skins/skinFlag/bandeiraAlagoas.png",
+      "frameConfig": { "frameWidth": 200, "frameHeight": 131 }
+    },
+    {
+      "type":"spritesheet",
+      "key": "bandeiraBahia",
+      "url":"skins/skinFlag/bandeiraBahia.png",
+      "frameConfig": { "frameWidth": 200, "frameHeight": 133 }
+    },
+    {
+      "type":"spritesheet",
+      "key": "bandeiraCeara",
+      "url":"skins/skinFlag/bandeiraCeara.png",
+      "frameConfig": { "frameWidth": 200, "frameHeight": 139 }
+    },
+    {
+      "type":"spritesheet",
+      "key": "bandeiraMaranhao",
+      "url":"skins/skinFlag/bandeiraMaranhao.png",
+      "frameConfig": { "frameWidth": 200, "frameHeight": 133 }
+    },
+    {
+      "type":"spritesheet",
+      "key": "bandeiraParaiba",
+      "url":"skins/skinFlag/bandeiraParaiba.png",
+      "frameConfig": { "frameWidth": 200, "frameHeight": 163 }
+    },
+    {
+      "type":"spritesheet",
+      "key": "bandeiraPernambuco",
+      "url":"skins/skinFlag/bandeiraPernambuco.png",
+      "frameConfig": { "frameWidth": 200, "frameHeight": 139 }
+    },
+    
+    {
+      "type":"spritesheet",
+      "key": "bandeiraPiaui",
+      "url":"skins/skinFlag/bandeiraPiaui.png",
+      "frameConfig": { "frameWidth": 200, "frameHeight": 133 }
+    },
+    {
+      "type":"spritesheet",
+      "key": "bandeiraRn",
+      "url":"skins/skinFlag/bandeiraRn.png",
+      "frameConfig": { "frameWidth": 200, "frameHeight": 133 }
+    },
+    {
+      "type":"spritesheet",
+      "key": "bandeiraSergipe",
+      "url":"skins/skinFlag/bandeiraSergipe.png",
+      "frameConfig": { "frameWidth": 200, "frameHeight": 139 }
     }
   ]
 }
