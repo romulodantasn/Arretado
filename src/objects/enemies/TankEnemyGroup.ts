@@ -62,6 +62,11 @@ export class TankEnemyGroup extends Phaser.Physics.Arcade.Group {
     this.getChildren().forEach((enemy: Phaser.GameObjects.GameObject) => {
       if (enemy.active && enemy instanceof Phaser.Physics.Arcade.Sprite) {
         scene.physics.moveToObject(enemy, this.player, currentEnemyStats.TankEnemy.Speed);
+         if (this.player.x < enemy.x) {
+          enemy.setFlipX(true);
+        } else {
+          enemy.setFlipX(false);
+        }
       }
     });
   }

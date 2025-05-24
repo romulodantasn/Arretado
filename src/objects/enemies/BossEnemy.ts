@@ -45,6 +45,11 @@ export class BossEnemy extends Phaser.Physics.Arcade.Sprite {
 
 public updateEnemyBossMovement(scene:Phaser.Scene) {
   this.scene.physics.moveToObject(this, this.#player, currentEnemyStats.BossEnemy.Speed);
+   if (this.x < this.x) {
+          this.setFlipX(false); // se estiver invertido
+        } else {
+          this.setFlipX(true);
+        }
 }
 
 
