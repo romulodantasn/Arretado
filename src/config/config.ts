@@ -1,3 +1,5 @@
+
+import NinePatchPlugin from 'phaser3-rex-plugins/plugins/ninepatch-plugin.js';
 import { gameOptions } from './gameOptionsConfig';
 import { BootScene } from '../scenes/BootScene';
 import { preloadAssets } from '../scenes/preloadAssets';
@@ -11,6 +13,7 @@ import { itemScene } from '../scenes/itemScene';
 import { menuScene } from '../scenes/menuScene';
 import { StoreScene } from '../scenes/StoreScene';
 import { SkinScene } from '../scenes/SkinScene';
+import { CharacterSelectScene } from '../scenes/CharacterSelectScene';
 
 export const scaleObject: Phaser.Types.Core.ScaleConfig = {
   mode: Phaser.Scale.FIT,
@@ -23,6 +26,7 @@ export const scaleObject: Phaser.Types.Core.ScaleConfig = {
 export const configObject: Phaser.Types.Core.GameConfig = {
   type: Phaser.WEBGL,
   scale: scaleObject,
+  pixelArt: true,
   scene: [
     BootScene,
     preloadAssets,
@@ -35,7 +39,8 @@ export const configObject: Phaser.Types.Core.GameConfig = {
     SkinScene,
     itemScene,
     titleScene,
-    menuScene
+    menuScene,
+    CharacterSelectScene,
   ],
   physics: {
     default: 'arcade',
@@ -43,5 +48,14 @@ export const configObject: Phaser.Types.Core.GameConfig = {
       debug: false,
       gravity: { y: 0, x: 0 },
     },
+  },
+  plugins: {
+    global: [
+      {
+        key: 'rexNinePatchPlugin',
+        plugin: NinePatchPlugin,
+        start: true
+      },
+    ],
   },
 };

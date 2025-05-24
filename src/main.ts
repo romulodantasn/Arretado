@@ -13,6 +13,7 @@ import { itemScene } from './scenes/itemScene';
 import { menuScene } from './scenes/menuScene';
 import { StoreScene } from './scenes/StoreScene';
 import { SkinScene } from './scenes/SkinScene';
+import { CharacterSelectScene } from './scenes/CharacterSelectScene';
 
 configObject.scene = [
   BootScene,
@@ -27,7 +28,8 @@ configObject.scene = [
   GameOverScene,
   nextPhaseScene,
   itemScene,
-  menuScene
+  menuScene,
+  CharacterSelectScene,
 ];
 
 new Phaser.Game(configObject);
