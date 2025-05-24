@@ -1,6 +1,5 @@
 import { inputManager } from "../components/input/inputManagerComponent";
 import { gameOptions } from "../config/gameOptionsConfig";
-
 export class menuScene extends Phaser.Scene {
   #menuItems: Phaser.GameObjects.Rectangle[] = [];
   #selectedItemIndex: number = 0;
@@ -18,38 +17,44 @@ export class menuScene extends Phaser.Scene {
   };
 
   create() {
+    
+    this.add.nineslice(gameOptions.gameSize.width / 2, gameOptions.gameSize.height / 2, "molduraMenu",0, 1916, 1076, 16, 16, 16, 16)
     this.titleText();
     this.newGameButton();
     this.storeButton();
     this.configButton();
     this.exitButton();
-    this.cameras.main.setBackgroundColor('#444444');
+    this.cameras.main.setBackgroundColor("#222222");
+    
 
     inputManager.setupControls(this);
-    // const keys = inputManager.getKeys();
-    const keyboard = this.input.keyboard as Phaser.Input.Keyboard.KeyboardPlugin;
+    const keyboard = this.input
+      .keyboard as Phaser.Input.Keyboard.KeyboardPlugin;
     const upKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
     const downKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
     const enterKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
-   this.#selectorIcon = this.add.image(70, this.#menuItems[0].y, "triangle")
-  .setScale(0.15)           
-  .setRotation(Phaser.Math.DegToRad(90))
-  .setOrigin(0.5);
+    this.#selectorIcon = this.add
+      .image(70, this.#menuItems[0].y, "triangle")
+      .setScale(0.15)
+      .setRotation(Phaser.Math.DegToRad(90))
+      .setOrigin(0.5);
 
+    upKey.on("down", () => {
+      this.#selectedItemIndex =
+        (this.#selectedItemIndex - 1 + this.#menuItems.length) %
+        this.#menuItems.length;
+      this.updateSelectorPosition();
+    });
 
-   upKey.on("down", () => {
-  this.#selectedItemIndex = (this.#selectedItemIndex - 1 + this.#menuItems.length) % this.#menuItems.length;
-  this.updateSelectorPosition();
-});
+    downKey.on("down", () => {
+      this.#selectedItemIndex =
+        (this.#selectedItemIndex + 1) % this.#menuItems.length;
+      this.updateSelectorPosition();
+    });
 
-downKey.on("down", () => {
-  this.#selectedItemIndex = (this.#selectedItemIndex + 1) % this.#menuItems.length;
-  this.updateSelectorPosition();
-});
-
-enterKey.on("down", () => {
-  this.handleSelection();
-});
+    enterKey.on("down", () => {
+      this.handleSelection();
+    });
 
     this.updateSelectorPosition();
   }
@@ -62,13 +67,13 @@ enterKey.on("down", () => {
   handleSelection() {
     switch (this.#selectedItemIndex) {
       case 0:
-        this.scene.start("gameScene");
+        this.scene.start("CharacterSelectScene");
         break;
       case 1:
         this.scene.start("StoreScene");
         break;
       case 2:
-        this.scene.start("storeScene"); 
+        this.scene.start("CreditsScene");
         break;
       case 3:
         this.scene.start("titleScene");
@@ -86,7 +91,7 @@ enterKey.on("down", () => {
 
   public newGameButton() {
     const button = this.createMenuButton(202, 760, "Novo Jogo");
-    button.on("pointerup", () => this.scene.start("gameScene"));
+    button.on("pointerup", () => this.scene.start("CharacterSelectScene"));
   }
 
   public storeButton() {
@@ -96,7 +101,7 @@ enterKey.on("down", () => {
 
   public configButton() {
     const button = this.createMenuButton(240, 880, "Configurações", 230);
-    button.on("pointerup", () => this.scene.start("configScene")); 
+    button.on("pointerup", () => this.scene.start("configScene"));
   }
 
   public exitButton() {
@@ -104,7 +109,12 @@ enterKey.on("down", () => {
     button.on("pointerup", () => this.scene.start("titleScene"));
   }
 
-  private createMenuButton(x: number, y: number, label: string, width: number = 200) {
+  private createMenuButton(
+    x: number,
+    y: number,
+    label: string,
+    width: number = 200
+  ) {
     const button = this.add
       .rectangle(x, y, width, 50)
       .setOrigin(0.5)

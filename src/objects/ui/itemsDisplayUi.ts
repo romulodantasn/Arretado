@@ -41,6 +41,18 @@ export class itemsDisplayUi extends Phaser.GameObjects.Container {
   create() {
     this.scene.input.setDefaultCursor("default");
 
+    const sceneWidth = this.scene.cameras.main.width;
+    const sceneHeight = this.scene.cameras.main.height;
+    this.scene.add.nineslice(
+      sceneWidth / 2,
+      sceneHeight / 2,
+      "molduraMenu", 
+      0, 
+      sceneWidth - 20, 
+      sceneHeight - 20,
+      16, 16, 16, 16,
+    );
+
     const titleText = ["Eai, Caba. O que vai ser?"];
     const statsTitleText = ["Atributos"];
     this.scene.add
@@ -49,7 +61,7 @@ export class itemsDisplayUi extends Phaser.GameObjects.Container {
       .setAlign("center")
       .setOrigin(0.5);
     this.scene.add
-      .text(1775, 350, statsTitleText, this.textStyle)
+      .text(1775, 220, statsTitleText, this.textStyle)
       .setFontSize(40)
       .setAlign("center")
       .setOrigin(0.5);
@@ -106,14 +118,24 @@ export class itemsDisplayUi extends Phaser.GameObjects.Container {
     items: itemsContainer[],
     type: string
   ): Phaser.GameObjects.Container | undefined {
+    const containerWidth = 350;
+    const containerHeight = 580;
+    const imageDisplayWidth = 134;
+    const imageDisplayHeight = 134;
+    const imageFramePadding = 10; // Espaçamento entre a imagem e sua moldura
+
     const itemBg = this.scene.add
-      .rectangle(0, 0, 350, 580, color)
-      .setStrokeStyle(2, 0xffffff)
+      .rectangle(0, 0, containerWidth, containerHeight, color)
+      // .setStrokeStyle(2, 0xffffff) // A moldura do container pode substituir esta borda
       .setInteractive({ useHandCursor: true });
-    const containerItem = this.scene.add.container(x, y, [itemBg]);
+
+    // Moldura para o contêiner do item (o card inteiro)
+    // Posição (0,0) relativa ao containerItem, tamanho igual ao itemBg
+    const containerFrame = this.scene.add.nineslice(0, 0, 'molduraContainerItems', 0, containerWidth, containerHeight, 16, 16, 16, 16);
+    const containerItem = this.scene.add.container(x, y, [itemBg, containerFrame]);
 
     containerItem.setInteractive(
-      new Phaser.Geom.Rectangle(-175, -290, 350, 580),
+      new Phaser.Geom.Rectangle(-containerWidth / 2, -containerHeight / 2, containerWidth, containerHeight),
       Phaser.Geom.Rectangle.Contains
     );
 
@@ -125,10 +147,23 @@ export class itemsDisplayUi extends Phaser.GameObjects.Container {
     });
 
     const item = items[0];
+    const imageX = 0;
+    const imageY = -200;
+
+    // Moldura para a imagem do item
+    // Posicionada onde a imagem estará, um pouco maior que a imagem
+    const itemImageFrame = this.scene.add.nineslice(
+      imageX,
+      imageY,
+      'molduraItems', 0,
+      imageDisplayWidth + imageFramePadding * 2,
+      imageDisplayHeight + imageFramePadding * 2,
+      10, 10, 10, 10 // Ajuste os cantos da moldura da imagem conforme necessário
+    );
+
     const image = this.scene.add
-      .image(0, -200, item.imageKey)
-      .setScale(0.5)
-      .setDisplaySize(134, 134);
+      .image(imageX, imageY, item.imageKey)
+      .setDisplaySize(imageDisplayWidth, imageDisplayHeight);
     const textStyle = {
       fontFamily: "Cordelina",
       color: "#ffffff",
@@ -173,6 +208,7 @@ export class itemsDisplayUi extends Phaser.GameObjects.Container {
       .setFontSize(32);
 
     containerItem.add([
+      itemImageFrame, // Adiciona a moldura da imagem antes da imagem
       image,
       nameText,
       typeText,
@@ -254,12 +290,22 @@ export class itemsDisplayUi extends Phaser.GameObjects.Container {
     const damage = playerStats.Damage;
     const moveSpeed = playerStats.MoveSpeed;
     const lucky = playerStats.Lucky;
-
+    
     const statsBg = this.scene.add
       .rectangle(-25, 0, -250, 400)
       .setStrokeStyle(2, 0xffffff)
       .setFillStyle(0x333333);
+    const playerImg = this.scene.add
+      .rectangle(-55, 0, 50, 40)
+      .setStrokeStyle(2, 0xffffff)
+      .setFillStyle(0x333333);
+    const playerImgContainer = this.scene.add.container(x, y, [playerImg] )
+    playerImgContainer.add(this.scene.add
+      .image(-25, -280, 'lampiao')
+      .setScale(0.5)
+      .setDisplaySize(134, 134))
     const container = this.scene.add.container(x, y, [statsBg]);
+
     container.setInteractive(
       new Phaser.Geom.Rectangle(-175, -290, 200, 400),
       Phaser.Geom.Rectangle.Contains
@@ -277,7 +323,6 @@ export class itemsDisplayUi extends Phaser.GameObjects.Container {
       .text(-30, 0, `Velocidade: ${moveSpeed}`, this.textStyle)
       .setOrigin(0.5)
       .setFontSize(28);
-
     const luckyText = this.scene.add
       .text(-30, 75, `Sorte: ${lucky}`, this.textStyle)
       .setOrigin(0.5)

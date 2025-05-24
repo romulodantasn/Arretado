@@ -18,7 +18,8 @@ export class StoreScene extends Phaser.Scene {
   };
 
   create() {
-    this.cameras.main.setBackgroundColor("#444444");
+    this.add.nineslice(gameOptions.gameSize.width / 2, gameOptions.gameSize.height / 2, "molduraLojaAp",0, 1916, 1076, 16, 16, 16, 16)
+    this.cameras.main.setBackgroundColor("#222222");
     this.input.setDefaultCursor("default");
 
     this.add
@@ -43,14 +44,13 @@ export class StoreScene extends Phaser.Scene {
     const yPos = 500;
 
     itemsToDisplay.forEach((item, index) => {
-      this.createStoreItemContainer(startX + index * 380, yPos, 0x333333, item);
+      this.createStoreItemContainer(startX + index * 380, yPos, item);
     });
   }
 
-  private createStoreItemContainer(x: number, y: number, color: number, item: any) {
+  private createStoreItemContainer(x: number, y: number, item: (typeof storeSpecificItems)[number]) {
     const itemBg = this.add
-      .rectangle(0, 0, 350, 500, color)
-      .setStrokeStyle(2, 0xffffff)
+      .nineslice(0, 0, 'molduraLojaAp',0, 350, 500, 4 ,4, 4, 4)
       .setInteractive({ useHandCursor: true });
 
     const container = this.add.container(x, y, [itemBg]);
@@ -77,11 +77,11 @@ export class StoreScene extends Phaser.Scene {
 
     container.add([image, itemValueText, costText]);
 
-    itemBg.on("pointerover", () => itemBg.setFillStyle(0x555555));
-    itemBg.on("pointerout", () => itemBg.setFillStyle(color));
+    itemBg.on("pointerover", () => itemBg.setTint(0x555555));
+    itemBg.on("pointerout", () => itemBg.setTint());
 
     itemBg.on("pointerdown", () => {
-      if (gameOptions.apCoin < item.cost) return;
+
       const confirmBg = this.add.rectangle(x, y, 350, 300, 0x000000, 0.85).setOrigin(0.5);
       const confirmText = this.add
         .text(x, y - 60, "Deseja comprar este item?", {
@@ -101,9 +101,7 @@ export class StoreScene extends Phaser.Scene {
         .setOrigin(0.5)
         .setInteractive({ useHandCursor: true })
         .on("pointerdown", () => {
-          console.log('Antes de aplicar efeito:', gameOptions.apCoin);
           item.effect();
-          console.log('Depois de aplicar efeito:', gameOptions.apCoin);          
           this.game.events.emit("buyUpdatedCoin", gameOptions.apCoin);
           
           const confirmation = this.add
@@ -113,7 +111,6 @@ export class StoreScene extends Phaser.Scene {
               fontSize: "26px",
             })
             .setOrigin(0.5);
-          console.log(`Arretado Points Atualizados: ${gameOptions.apCoin}`)
           this.time.delayedCall(2000, () => confirmation.destroy());
     
           destroyConfirmation();

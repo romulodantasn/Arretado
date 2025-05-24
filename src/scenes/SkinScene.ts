@@ -7,13 +7,13 @@ export class SkinScene extends Phaser.Scene {
   private readonly itemsPerPage = 3;
   private readonly orderedSkinZones = [
     ["Paraíba", "Pernambuco", "Bahia"],
-    ["Maranhão", "Ceará", "Rio Grande Do Norte"], // Corrigido para corresponder a storeSkinItems.ts
-    ["Sergipe", "Piaui", "Alagoas"],             // Corrigido para corresponder a storeSkinItems.ts
+    ["Maranhão", "Ceará", "Rio Grande Do Norte"], 
+    ["Sergipe", "Piaui", "Alagoas"],             
   ];
   private effectiveSkinPages: string[][] = [];
   private apCoinText!: Phaser.GameObjects.Text;
   private skinItemGroup!: Phaser.GameObjects.Group;
-  private ownedSkinIds: Set<string> = new Set(); // Para rastrear skins compradas
+  private ownedSkinIds: Set<string> = new Set(); 
   private confirmationDialogGroup?: Phaser.GameObjects.Group;
 
   private readonly textStyle = {
@@ -165,7 +165,7 @@ export class SkinScene extends Phaser.Scene {
       .setOrigin(0.5).setDepth(3);
 
     if (this.ownedSkinIds.has(item.id)) {
-      priceText.setText("Adquirido").setX(0); // 
+      priceText.setText("Adquirido").setX(0);
       priceIcon.setVisible(false);
     } else {
       priceText.setText(item.skinPrice);
@@ -214,17 +214,14 @@ export class SkinScene extends Phaser.Scene {
       .setStrokeStyle(2, 0xffffff)
       .setInteractive({ useHandCursor: true })
       .setDepth(12);
-    // Crie o texto do botão e atribua a uma variável
     const confirmText = this.add.text(confirmButton.x, confirmButton.y, "Confirmar", { ...this.textStyle, fontSize: "28px" }).setOrigin(0.5).setDepth(12);
 
     const cancelButton = this.add.rectangle(dialogX + 100, dialogY + 80, 180, 60, 0xdc3545)
       .setStrokeStyle(2, 0xffffff)
       .setInteractive({ useHandCursor: true })
       .setDepth(12);
-    // Crie o texto do botão e atribua a uma variável
     const cancelText = this.add.text(cancelButton.x, cancelButton.y, "Cancelar", { ...this.textStyle, fontSize: "28px" }).setOrigin(0.5).setDepth(12);
 
-    // Adicione todas as variáveis ao grupo
     this.confirmationDialogGroup.addMultiple([
       overlay, dialogBg, titleText, priceText, priceIcon, confirmButton, confirmText, cancelButton, cancelText
     ]);
@@ -250,7 +247,7 @@ export class SkinScene extends Phaser.Scene {
       // localStorage.setItem('ownedSkins', JSON.stringify(Array.from(this.ownedSkinIds)));
       // localStorage.setItem('apCoin', gameOptions.apCoin.toString());
 
-      this.game.events.emit("buyUpdatedCoin"); // Atualiza o HUD de AP Coin
+      this.game.events.emit("buyUpdatedCoin"); 
       if (this.confirmationDialogGroup) this.confirmationDialogGroup.destroy(true);
       this.displaySkinItems(); 
     } else {
@@ -291,7 +288,7 @@ export class SkinScene extends Phaser.Scene {
       .setStrokeStyle(2, 0xffffff)
       .setInteractive({ useHandCursor: true });
     this.add
-      .text(x, y, "Loja", this.textStyle) // Changed text
+      .text(x, y, "Loja", this.textStyle) 
       .setFontSize(38)
       .setAlign("center")
       .setOrigin(0.5);
