@@ -20,7 +20,7 @@ export const EnemyTemplates: Record<EnemyType, BaseEnemyStatsStructure> = {
     name: 'BasicEnemy',
     Health: 20,
     Speed: 50,
-    Rate: 300,
+    Rate: 1000,
     Damage: 1,
   },
   RangedEnemy: {
@@ -35,14 +35,14 @@ export const EnemyTemplates: Record<EnemyType, BaseEnemyStatsStructure> = {
   DashEnemy: {
     name: 'DashEnemy',
     Health: 8,
-    Speed: 65,
+    Speed: 105,
     Rate: 1000,
     Damage: 5,
     DashCooldown: 6000, //-> Milisegundos 
   },
   TankEnemy: {
     name: 'TankEnemy',
-    Health: 45,
+    Health: 10,
     Speed: 35,
     Rate: 1000,
     Damage: 4,
@@ -50,7 +50,7 @@ export const EnemyTemplates: Record<EnemyType, BaseEnemyStatsStructure> = {
   BossEnemy: {
     name: 'BossEnemy',
     Health: 30000,
-    Speed: 25,
+    Speed: 15,
     BulletSpeed: 450,
     BulletDamage: 20,
     Damage: 10,
@@ -59,7 +59,6 @@ export const EnemyTemplates: Record<EnemyType, BaseEnemyStatsStructure> = {
   },
 } as const;
 
-// cópia mutável dos atributos dos inimigos
 export const currentEnemyStats: Record<EnemyType, BaseEnemyStatsStructure> = 
   JSON.parse(JSON.stringify(EnemyTemplates));
 
