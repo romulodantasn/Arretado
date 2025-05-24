@@ -76,7 +76,7 @@ export class BasicEnemyGroup extends Phaser.Physics.Arcade.Group {
           currentEnemyStats.BasicEnemy.Speed
         );
         if (this.player.x < enemy.x) {
-          enemy.setFlipX(false); // se estiver invertido
+          enemy.setFlipX(false);
         } else {
           enemy.setFlipX(true);
         }

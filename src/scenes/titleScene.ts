@@ -18,6 +18,7 @@ export class titleScene extends Phaser.Scene {
   }
 
   create() {
+    this.add.nineslice(gameOptions.gameSize.width / 2, gameOptions.gameSize.height / 2, "molduraMenu",0, gameOptions.gameSize.width - 10, gameOptions.gameSize.height -10 , 16, 16, 16, 16)
     console.log('titleScene carregada');
 
     this.add
