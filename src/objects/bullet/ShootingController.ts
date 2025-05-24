@@ -72,7 +72,7 @@ export class shootingController {
 
   setupReticle() {
     this.#reticle = this.#reticle || this.#scene.add.sprite(this.#player.x, this.#player.y - 50, 'reticle');
-    this.#reticle.setOrigin(0.5).setDisplaySize(40, 40).setActive(true).setVisible(true);
+    this.#reticle.setOrigin(0.5).setDisplaySize(40, 40).setActive(true).setVisible(true).setDepth(35)
     this.#scene.input.setDefaultCursor('none');
 
     this.#scene.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
@@ -91,6 +91,7 @@ export class shootingController {
     inputManager.setupClicks(this.#scene, {
       onFire: () => {
         this.fireBullet(this.#player, this.#reticle);
+            this.#scene.cameras.main.shake(200, 0.0005);
       },
     });
   }

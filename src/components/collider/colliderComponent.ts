@@ -104,7 +104,7 @@ export class collider {
 
 
   #handlePlayerHit(damage: number, sourceType: string, colliderToDeactivate: Phaser.Physics.Arcade.Collider) {
-    this.#scene.cameras.main.shake(200, 0.0025);
+    this.#scene.cameras.main.shake(200, 0.0030);
     this.#player.setTint(0xff0000);
     this.#scene.time.delayedCall(200, () => {
       this.#player.clearTint();
