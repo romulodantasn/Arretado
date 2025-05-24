@@ -1,4 +1,3 @@
-import { gameOptions } from "./gameOptionsConfig";
 
 export const storeSkinItems = [
   {
@@ -6,6 +5,7 @@ export const storeSkinItems = [
     imageKey: "alagoasSkin",
     skinName: "Iracema",
     skinZone: "Alagoas",
+    flagZoneKey: "bandeiraAlagoas",
     skinPrice: "2000",
   },
   {
@@ -13,6 +13,7 @@ export const storeSkinItems = [
     imageKey: "bahiaSkin",
     skinName: "Marinalva",
     skinZone: "Bahia",
+    flagZoneKey: "bandeiraBahia",
     skinPrice: "2000",
   },
   {
@@ -20,6 +21,7 @@ export const storeSkinItems = [
     imageKey: "cearaSkin",
     skinName: "Raimundinho",
     skinZone: "Ceará",
+    flagZoneKey: "bandeiraCeara",
     skinPrice: "2000",
   },
   {
@@ -27,7 +29,7 @@ export const storeSkinItems = [
     imageKey: "maranhaoSkin",
     skinName: "Zeca",
     skinZone: "Maranhão",
-
+    flagZoneKey: "bandeiraMaranhao",
     skinPrice: "2000",
   },
   {
@@ -35,7 +37,7 @@ export const storeSkinItems = [
     imageKey: "paraibaSkin",
     skinName: "Bené",
     skinZone: "Paraíba",
-
+    flagZoneKey: "bandeiraParaiba",
     skinPrice: "2000",
   },
   {
@@ -43,7 +45,7 @@ export const storeSkinItems = [
     imageKey: "pernambucoSkin",
     skinName: "Rita",
     skinZone: "Pernambuco",
-
+    flagZoneKey: "bandeiraPernambuco",
     skinPrice: "2000",
   },
   {
@@ -52,21 +54,22 @@ export const storeSkinItems = [
     skinName: "Inácio",
     skinZone: "Piaui",
     skinPrice: "2000",
+    flagZoneKey: "bandeiraPiaui",
   },
   {
     id: "rn",
     imageKey: "rnSkin",
     skinName: "Irandir",
     skinZone: "Rio Grande Do Norte",
-
+    flagZoneKey: "bandeiraRn",
     skinPrice: "2000",
   },
   {
     id: "sergipe",
     imageKey: "sergipeSkin",
     skinName: "Zazá",
-    skinZone: "Sergipeh",
-
+    skinZone: "Sergipe",
+    flagZoneKey: "bandeiraSergipe",
     skinPrice: "2000",
   },
 ] as const;

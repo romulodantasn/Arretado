@@ -1,216 +1,349 @@
 import Phaser from "phaser";
 import { gameOptions } from "../config/gameOptionsConfig";
-import { storeSkinItems } from "../config/skinItems"; 
+import { storeSkinItems } from "../config/skinItems";
 
 export class SkinScene extends Phaser.Scene {
-    private apCoinText: Phaser.GameObjects.Text;
+  private currentPageIndex = 0;
+  private readonly itemsPerPage = 3;
+  private readonly orderedSkinZones = [
+    ["Paraíba", "Pernambuco", "Bahia"],
+    ["Maranhão", "Ceará", "Rio Grande Do Norte"], // Corrigido para corresponder a storeSkinItems.ts
+    ["Sergipe", "Piaui", "Alagoas"],             // Corrigido para corresponder a storeSkinItems.ts
+  ];
+  private effectiveSkinPages: string[][] = [];
+  private apCoinText!: Phaser.GameObjects.Text;
+  private skinItemGroup!: Phaser.GameObjects.Group;
+  private ownedSkinIds: Set<string> = new Set(); // Para rastrear skins compradas
+  private confirmationDialogGroup?: Phaser.GameObjects.Group;
 
-    constructor() {
-        super({ key: "SkinScene" });
+  private readonly textStyle = {
+    fontFamily: "Cordelina",
+    color: "#ffffff",
+    stroke: "#000000",
+    strokeThickness: 4,
+  };
+
+  constructor() {
+    super({ key: "SkinScene" });
+  }
+
+  init(data: { pageIndex?: number }) {
+    this.currentPageIndex = data.pageIndex || 0;
+    //  const savedOwnedSkins = localStorage.getItem('ownedSkins');
+    // (savedOwnedSkins); this.ownedSkinIds = new Set(JSON.parse(savedOwnedSkins));
+    this.setupPagination();
+  }
+
+  create() {
+    this.add.nineslice(gameOptions.gameSize.width / 2, gameOptions.gameSize.height / 2, "molduraSkin2",0, 1916, 1076, 16, 16, 16, 16)
+    this.cameras.main.setBackgroundColor("#222");
+    this.input.setDefaultCursor("default");
+
+    this.skinItemGroup = this.add.group();
+
+    this.add.text(this.cameras.main.width / 2, 70, "Skins", this.textStyle)
+      .setFontSize(72)
+      .setOrigin(0.5);
+
+    this.displaySkinItems();
+    this.createNavigationButtons();
+    this.apCoinHud();
+
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      this.game.events.off("buyUpdatedCoin", this.updateApCoinHud, this);
+      if (this.confirmationDialogGroup) {
+        this.confirmationDialogGroup.destroy(true);
+      }
+    });
+  }
+
+  private setupPagination() {
+    const remainingSkins = [...storeSkinItems];
+    this.effectiveSkinPages = [];
+
+    for (const zones of this.orderedSkinZones) {
+      const pageSkins: string[] = [];
+
+      zones.forEach(zone => {
+        const index = remainingSkins.findIndex(s => s.skinZone === zone);
+        if (index !== -1) {
+          pageSkins.push(zone);
+          remainingSkins.splice(index, 1);
+        }
+      });
+
+      if (pageSkins.length) this.effectiveSkinPages.push(pageSkins);
     }
 
-    textStyle = {
-        fontFamily: "Cordelina",
-        color: "#ffffff",
-        stroke: "#000000",
-        strokeThickness: 4,
-    };
+    while (remainingSkins.length) {
+      this.effectiveSkinPages.push(
+        remainingSkins.splice(0, this.itemsPerPage).map(s => s.skinZone)
+      );
+    }
+  }
 
-    create() {
-        this.cameras.main.setBackgroundColor("#444444");
-        this.input.setDefaultCursor("default");
+  private displaySkinItems() {
+    this.skinItemGroup.clear(true, true);
 
-        this.add
-            .text(this.cameras.main.width / 2, 100, "Skins", this.textStyle)
-            .setFontSize(72)
-            .setAlign("center")
-            .setOrigin(0.5);
+    const page = this.effectiveSkinPages[this.currentPageIndex] || [];
+    const items = page
+  .map(zone => storeSkinItems.find(s => s.skinZone === zone))
+  .filter((item): item is typeof storeSkinItems[number] => !!item);
 
-        this.displaySkinItems();
-        this.createBackButton(200, 987);
-        this.apCoinHud();
 
-        this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
-            this.game.events.off("buyUpdatedCoin", this.updateApCoinHud, this);
+    if (!items.length) return;
+
+    const width = this.cameras.main.width;
+    const itemWidth = 450;
+    const itemHeight = 550;
+    const spacing = 200;
+    const offsetY = 50;
+
+    const totalWidth = items.length * itemWidth + (items.length - 1) * spacing;
+    const startX = (width - totalWidth) / 2 + itemWidth / 2;
+
+    const contentTop = 136;
+    const contentBottom = 947;
+    const centerY = (contentBottom + contentTop) / 2 - offsetY;
+
+    items.forEach((item, i) => {
+      const x = startX + i * (itemWidth + spacing);
+      this.createSkinItemContainer(x, centerY, item, itemWidth, itemHeight);
+    });
+  }
+
+  private createSkinItemContainer(
+    x: number,
+    y: number,
+    item: (typeof storeSkinItems)[number],
+    width: number,
+    height: number
+  ) {
+    const scale = 1.3;
+    const cornerSize = 16;
+
+    const container = this.add.container(x, y);
+
+    this.skinItemGroup.add(container);
+
+    const image = this.add.image(0, 0, item.imageKey)
+      .setDisplaySize(338 * scale, 418 * scale)
+      .setDepth(1);
+
+    const frame = this.add.nineslice(0, 0, "molduraSkin", undefined, width, height,
+      cornerSize, cornerSize, cornerSize, cornerSize)
+      .setDepth(2);
+
+    const flagSprite = this.add.sprite(150, 200, item.flagZoneKey)
+    const flagDisplayScale = 0.8 * scale;
+    flagSprite.setScale(flagDisplayScale).setOrigin(0.5, 0.5).setDepth(3);
+     flagSprite.play(item.flagZoneKey);
+    
+
+    const nameText = this.add.text(0, 245 * scale, item.skinName, {
+      ...this.textStyle,
+      fontSize: `${Math.max(16, Math.floor(36 * scale))}px`,
+      align: "center",
+    }).setOrigin(0.5).setDepth(3);
+    
+    const zoneText = this.add.text(0, -235 * scale, item.skinZone, {
+      ...this.textStyle,
+      fontSize: `${Math.max(14, Math.floor(28 * scale))}px`,
+      align: "center",
+    }).setOrigin(0.5).setDepth(3);
+    
+    const iconSize = 30 * scale;
+    const priceTextY = 300 * scale;
+
+    const priceText = this.add.text(nameText.x, priceTextY, "", { 
+      ...this.textStyle,
+      fontSize: "32px",
+    }).setOrigin(0.5).setDepth(3);
+
+    const priceIcon = this.add.image(priceText.x - 60 , priceTextY, "apCoinIcon")
+      .setDisplaySize(iconSize, iconSize)
+      .setOrigin(0.5).setDepth(3);
+
+    if (this.ownedSkinIds.has(item.id)) {
+      priceText.setText("Adquirido").setX(0); // 
+      priceIcon.setVisible(false);
+    } else {
+      priceText.setText(item.skinPrice);
+      priceIcon.setVisible(true);
+      frame.setInteractive({ useHandCursor: true })
+        .on("pointerdown", () => {
+          this.showPurchaseConfirmation(item);
         });
     }
 
-    private displaySkinItems() {
-        const itemsToDisplay = storeSkinItems; 
-        const itemsPerRow = 3; 
-        const numRows = Math.ceil(itemsToDisplay.length / itemsPerRow);
+    container.add([image, frame, flagSprite, nameText, zoneText, priceIcon, priceText]);
+  }
 
-        // Define as dimensões visuais desejadas para cada item para que caibam na tela
-        // Proporção original do itemBg era ~350x500. Nova altura 240px.
-        const targetItemVisualHeight = 240;
-        const targetItemVisualWidth = Math.floor(targetItemVisualHeight * (350 / 500)); // ~168px
-
-        const verticalSpacingBetweenItems = 25;
-        const horizontalSpacingBetweenItems = 35;
-
-        // Calcula a altura total do bloco de itens
-        const totalBlockHeight = numRows * targetItemVisualHeight + (numRows > 1 ? (numRows - 1) * verticalSpacingBetweenItems : 0);
-        // Calcula a largura total do bloco de itens
-        const totalBlockWidth = itemsPerRow * targetItemVisualWidth + (itemsPerRow > 1 ? (itemsPerRow - 1) * horizontalSpacingBetweenItems : 0);
-
-        // Define a área vertical usável (abaixo do título, acima do botão de voltar)
-        const usableTopY = 100 + 72 / 2 + 30; // Y do título + meia altura + margem
-        const usableBottomY = 987 - 80 / 2 - 30; // Y do botão voltar - meia altura - margem
-        const usableScreenHeight = usableBottomY - usableTopY;
-
-        // Calcula startY para o centro do primeiro item da primeira linha, centralizando o bloco verticalmente
-        const startY = usableTopY + (usableScreenHeight - totalBlockHeight) / 2 + targetItemVisualHeight / 2;
-
-        // Calcula startX para o centro do primeiro item da primeira linha, centralizando o bloco horizontalmente
-        const startX = (this.cameras.main.width - totalBlockWidth) / 2 + targetItemVisualWidth / 2;
-
-        itemsToDisplay.forEach((item, index) => {
-            const rowIndex = Math.floor(index / itemsPerRow);
-            const colIndex = index % itemsPerRow;
-
-            const xPos = startX + colIndex * (targetItemVisualWidth + horizontalSpacingBetweenItems);
-            const yPos = startY + rowIndex * (targetItemVisualHeight + verticalSpacingBetweenItems);
-
-            this.createSkinItemContainer(xPos, yPos, 0x333333, item, targetItemVisualWidth, targetItemVisualHeight);
-        });
+  private showPurchaseConfirmation(item: typeof storeSkinItems[number]) {
+    if (this.confirmationDialogGroup && this.confirmationDialogGroup.active) {
+      this.confirmationDialogGroup.destroy(true);
     }
 
-    private createSkinItemContainer(x: number, y: number, color: number, item: (typeof storeSkinItems)[number], itemRenderWidth: number, itemRenderHeight: number) {
-        // Fator de escala baseado na redução da altura original (500) para a nova (itemRenderHeight)
-        const scaleFactor = itemRenderHeight / 500;
+    this.confirmationDialogGroup = this.add.group();
 
-        const itemBg = this.add
-            .rectangle(0, 0, itemRenderWidth, itemRenderHeight, color)
-            .setStrokeStyle(2, 0xffffff)
-            .setInteractive({ useHandCursor: true });
+    const dialogWidth = 600;
+    const dialogHeight = 350;
+    const dialogX = this.cameras.main.width / 2;
+    const dialogY = this.cameras.main.height / 2;
 
-        const container = this.add.container(x, y, [itemBg]);
+    const overlay = this.add.rectangle(0, 0, this.cameras.main.width, this.cameras.main.height, 0x000000, 0.7)
+      .setOrigin(0,0)
+      .setInteractive() 
+      .setDepth(10); 
 
-        const image = this.add
-            .image(0, -75, item.imageKey) 
-            .setDisplaySize(200 * scaleFactor, 200 * scaleFactor) 
-            .setPosition(0, -75 * scaleFactor);
+    const dialogBg = this.add.nineslice(dialogX, dialogY, "molduraSkin2", undefined, dialogWidth, dialogHeight, 16, 16, 16, 16)
+      .setDepth(11);
 
-        const skinNameText = this.add
-            .text(0, 75, item.skinName, { 
-                ...this.textStyle,
-                align: "center",
-                fontSize: `${Math.max(16, Math.floor(36 * scaleFactor))}px`,
-            })
-            .setOrigin(0.5)
-            .setPosition(0, 75 * scaleFactor);
+    const titleText = this.add.text(dialogX, dialogY - 100, `Comprar ${item.skinName}?`, {
+      ...this.textStyle, fontSize: "40px", align: "center",
+      wordWrap: { width: dialogWidth - 40 }
+    }).setOrigin(0.5).setDepth(12);
 
-        const skinZoneText = this.add
-            .text(0, 125, item.skinZone, { 
-                ...this.textStyle,
-                align: "center",
-                fontSize: `${Math.max(14, Math.floor(28 * scaleFactor))}px`,
-            })
-            .setOrigin(0.5)
-            .setPosition(0, 125 * scaleFactor);
+    const priceText = this.add.text(dialogX, dialogY - 30, `Preço: ${item.skinPrice}`, {
+      ...this.textStyle, fontSize: "32px",
+    }).setOrigin(0.5).setDepth(12);
 
-        const costText = this.add
-            .text(0, 200, `${item.skinPrice}`, { 
-                ...this.textStyle,
-                align: "center",
-                fontSize: `${Math.max(18, Math.floor(48 * scaleFactor))}px`,
-            })
-            .setOrigin(0.5)
-            .setPosition(0, 185 * scaleFactor); // Ajustado um pouco para cima devido ao tamanho
+    const priceIcon = this.add.image(dialogX - priceText.width / 2 - 30, dialogY - 30, "apCoinIcon").setScale(0.1).setDepth(12);
 
-        container.add([image, skinNameText, skinZoneText, costText]);
+    const confirmButton = this.add.rectangle(dialogX - 100, dialogY + 80, 180, 60, 0x28a745)
+      .setStrokeStyle(2, 0xffffff)
+      .setInteractive({ useHandCursor: true })
+      .setDepth(12);
+    // Crie o texto do botão e atribua a uma variável
+    const confirmText = this.add.text(confirmButton.x, confirmButton.y, "Confirmar", { ...this.textStyle, fontSize: "28px" }).setOrigin(0.5).setDepth(12);
 
-        itemBg.on("pointerover", () => itemBg.setFillStyle(0x555555));
-        itemBg.on("pointerout", () => itemBg.setFillStyle(color));
+    const cancelButton = this.add.rectangle(dialogX + 100, dialogY + 80, 180, 60, 0xdc3545)
+      .setStrokeStyle(2, 0xffffff)
+      .setInteractive({ useHandCursor: true })
+      .setDepth(12);
+    // Crie o texto do botão e atribua a uma variável
+    const cancelText = this.add.text(cancelButton.x, cancelButton.y, "Cancelar", { ...this.textStyle, fontSize: "28px" }).setOrigin(0.5).setDepth(12);
 
-        itemBg.on("pointerdown", () => {
-            const skinPrice = parseInt(item.skinPrice, 10);
-            if (gameOptions.apCoin < skinPrice) return;
+    // Adicione todas as variáveis ao grupo
+    this.confirmationDialogGroup.addMultiple([
+      overlay, dialogBg, titleText, priceText, priceIcon, confirmButton, confirmText, cancelButton, cancelText
+    ]);
 
-            const confirmBg = this.add.rectangle(this.cameras.main.centerX, this.cameras.main.centerY, 450, 200, 0x000000, 0.85).setOrigin(0.5).setDepth(1);
-            const confirmText = this.add
-                .text(this.cameras.main.centerX, this.cameras.main.centerY - 40, `Comprar ${item.skinName}?`, {
-                    ...this.textStyle,
-                    fontSize: "28px",
-                    color: "#ffffff",
-                })
-                .setOrigin(0.5).setDepth(1);
+    confirmButton.on("pointerdown", () => this.handlePurchase(item));
+    cancelButton.on("pointerdown", () => {
+      if (this.confirmationDialogGroup) this.confirmationDialogGroup.destroy(true);
+    });
+  }
 
-            const yesButton = this.add
-                .text(this.cameras.main.centerX - 100, this.cameras.main.centerY + 40, "Sim", {
-                    ...this.textStyle,
-                    fontSize: "30px",
-                    backgroundColor: "#00aa00",
-                    padding: { x: 20, y: 10 },
-                })
-                .setOrigin(0.5)
-                .setInteractive({ useHandCursor: true }).setDepth(1)
-                .on("pointerdown", () => {
-                    gameOptions.apCoin -= skinPrice;
-                    console.log(`Skin ${item.skinName} comprada! AP restantes: ${gameOptions.apCoin}`);
-                    this.game.events.emit("buyUpdatedCoin", gameOptions.apCoin);
-
-                    const confirmation = this.add
-                        .text(0, itemRenderHeight / 2 + 20 * scaleFactor, `Comprado!`, { // Posição da mensagem de comprado abaixo do item
-                            ...this.textStyle,
-                            color: "#00ff00",
-                            fontSize: `${Math.max(14, Math.floor(26 * scaleFactor))}px`,
-                        })
-                        .setOrigin(0.5);
-                    container.add(confirmation); // Adiciona ao container para posicionamento relativo
-                    this.time.delayedCall(1500, () => confirmation.destroy());
-                    destroyConfirmation();
-                });
-
-            const noButton = this.add
-                .text(this.cameras.main.centerX + 100, this.cameras.main.centerY + 40, "Não", {
-                    ...this.textStyle,
-                    fontSize: "30px",
-                    backgroundColor: "#aa0000",
-                    padding: { x: 20, y: 10 },
-                })
-                .setOrigin(0.5)
-                .setInteractive({ useHandCursor: true }).setDepth(1)
-                .on("pointerdown", () => {
-                    destroyConfirmation();
-                });
-
-            function destroyConfirmation() {
-                confirmBg.destroy();
-                confirmText.destroy();
-                yesButton.destroy();
-                noButton.destroy();
-            }
-        });
+  private handlePurchase(item: typeof storeSkinItems[number]) {
+    const price = parseInt(item.skinPrice);
+    if (isNaN(price)) {
+      console.error("Preço da skin inválido:", item.skinPrice);
+      if (this.confirmationDialogGroup) this.confirmationDialogGroup.destroy(true);
+      return;
     }
 
-    private apCoinHud() {
-        this.apCoinText = this.add
-            .text(1805, 100, `${gameOptions.apCoin}`, this.textStyle)
-            .setFontSize(64)
-            .setOrigin(0.5);
-        this.add.image(1685, 100, 'apCoinIcon').setDisplaySize(75, 75);
+    if (gameOptions.apCoin >= price) {
+      gameOptions.apCoin -= price;
+      this.ownedSkinIds.add(item.id);
 
-        this.game.events.on("buyUpdatedCoin", this.updateApCoinHud, this);
+      // localStorage.setItem('ownedSkins', JSON.stringify(Array.from(this.ownedSkinIds)));
+      // localStorage.setItem('apCoin', gameOptions.apCoin.toString());
+
+      this.game.events.emit("buyUpdatedCoin"); // Atualiza o HUD de AP Coin
+      if (this.confirmationDialogGroup) this.confirmationDialogGroup.destroy(true);
+      this.displaySkinItems(); 
+    } else {
+      const insufficientFundsText = this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2 + 140, "AP Coins insuficientes!", {
+        ...this.textStyle, fontSize: "28px", color: "#ff0000"
+      }).setOrigin(0.5).setDepth(13);
+      if (this.confirmationDialogGroup) this.confirmationDialogGroup.add(insufficientFundsText);
+      this.time.delayedCall(2000, () => { 
+        insufficientFundsText.destroy();
+      });
     }
+  }
 
-    private updateApCoinHud() {
-        this.apCoinText.setText(`${gameOptions.apCoin}`);
+  private createNavigationButtons() {
+    const { width } = gameOptions.gameSize;
+    this.createStoreReturnButton(150, 987);
+    this.createPreviousButton(width - 450, 987);
+    this.createNextButton(width - 150, 987);
+  }
+
+  private apCoinHud() {
+    this.apCoinText = this.add
+      .text(1805, 100, `${gameOptions.apCoin}`, this.textStyle)
+      .setFontSize(64)
+      .setOrigin(0.5);
+    this.add.image(1685, 100, "apCoinIcon").setDisplaySize(75, 75);
+
+    this.game.events.on("buyUpdatedCoin", this.updateApCoinHud, this);
+  }
+
+  private updateApCoinHud() {
+    this.apCoinText.setText(`${gameOptions.apCoin}`);
+  }
+
+  private createStoreReturnButton(x: number, y: number) {
+    const backButton = this.add
+      .rectangle(x, y, 200, 60, 0x333333)
+      .setStrokeStyle(2, 0xffffff)
+      .setInteractive({ useHandCursor: true });
+    this.add
+      .text(x, y, "Loja", this.textStyle) // Changed text
+      .setFontSize(38)
+      .setAlign("center")
+      .setOrigin(0.5);
+
+    backButton.on("pointerover", () => backButton.setFillStyle(0x555555));
+    backButton.on("pointerout", () => backButton.setFillStyle(0x333333));
+    backButton.on("pointerdown", () => this.scene.start("StoreScene"));
+  }
+
+  private createPreviousButton(x: number, y: number) {
+    if (this.currentPageIndex > 0 && this.effectiveSkinPages.length > 1) {
+      const prevButton = this.add
+        .rectangle(x, y, 200, 60, 0x333333)
+        .setStrokeStyle(2, 0xffffff)
+        .setInteractive({ useHandCursor: true });
+      this.add
+
+        .text(x, y, "Anterior", this.textStyle)
+        .setFontSize(38)
+        .setAlign("center")
+        .setOrigin(0.5);
+
+      prevButton.on("pointerover", () => prevButton.setFillStyle(0x555555));
+      prevButton.on("pointerout", () => prevButton.setFillStyle(0x333333));
+      prevButton.on("pointerdown", () => {
+        if (this.confirmationDialogGroup) this.confirmationDialogGroup.destroy(true);
+        this.scene.start("SkinScene", { pageIndex: this.currentPageIndex - 1 });
+      });
     }
+  }
 
-    private createBackButton(x: number, y: number) {
-        const backButton = this.add
-            .rectangle(x, y, 300, 80, 0x333333)
-            .setStrokeStyle(2, 0xffffff)
-            .setInteractive({ useHandCursor: true });
-        this.add
-            .text(x, y, "Voltar", this.textStyle)
-            .setFontSize(38)
-            .setAlign("center")
-            .setOrigin(0.5);
+  private createNextButton(x: number, y: number) {
+    const totalPages = this.effectiveSkinPages.length;
 
-        backButton.on("pointerover", () => backButton.setFillStyle(0x555555));
-        backButton.on("pointerout", () => backButton.setFillStyle(0x333333));
-        backButton.on("pointerdown", () => this.scene.start("StoreScene")); // Volta para a StoreScene ou MenuScene
+    if (this.currentPageIndex < totalPages - 1 && totalPages > 1) {
+      const nextButton = this.add
+        .rectangle(x, y, 200, 60, 0x333333)
+        .setStrokeStyle(2, 0xffffff)
+        .setInteractive({ useHandCursor: true });
+      this.add
+
+        .text(x, y, "Seguinte", this.textStyle)
+        .setFontSize(38)
+        .setAlign("center")
+        .setOrigin(0.5);
+
+      nextButton.on("pointerover", () => nextButton.setFillStyle(0x555555));
+      nextButton.on("pointerout", () => nextButton.setFillStyle(0x333333));
+      nextButton.on("pointerdown", () => {
+        if (this.confirmationDialogGroup) this.confirmationDialogGroup.destroy(true);
+        this.scene.start("SkinScene", { pageIndex: this.currentPageIndex + 1 });
+      });
     }
+  }
 }
