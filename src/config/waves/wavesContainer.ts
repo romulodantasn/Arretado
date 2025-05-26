@@ -1,4 +1,4 @@
-import { EnemyType } from "./enemiesContainer";
+import { EnemyType } from "../enemies/EnemiesContainer";
 
 export interface WaveConfig {
     waveNumber: number; // número da onda

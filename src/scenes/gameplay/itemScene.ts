@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { itemsDisplayUi } from '../objects/ui/itemsDisplayUi';
+import { itemsDisplayUi } from '../ui/itemsDisplayUi';
 
 export class itemScene extends Phaser.Scene {
   #itemsDisplayUi: itemsDisplayUi;

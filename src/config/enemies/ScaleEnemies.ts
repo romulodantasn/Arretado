@@ -1,6 +1,6 @@
-import { EnemyType } from "./enemiesContainer";
-import { BaseEnemyStatsStructure } from "./enemiesContainer";
-import { currentEnemyStats } from "./enemiesContainer";
+import { EnemyType } from "./EnemiesContainer";
+import { BaseEnemyStatsStructure } from "./EnemiesContainer";
+import { currentEnemyStats } from "./EnemiesContainer";
 
 type EnemyBuffs = Partial<Pick<BaseEnemyStatsStructure, 'Health' | 'Speed' | 'Rate' | 'Damage'>>;
 

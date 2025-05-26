@@ -1,4 +1,4 @@
-import { playerStats } from "../../config/playerConfig";
+import { playerStats } from "../../config/player/PlayerConfig";
 import Phaser from "phaser"
 
 export function coinOnKillEvent(scene: Phaser.Scene) {

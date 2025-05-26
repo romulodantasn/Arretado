@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { gameOptions } from '../../config/gameOptionsConfig';
+import { gameOptions } from '../../config/GameOptionsConfig';
 
 export class timer {
   #scene: Phaser.Scene;

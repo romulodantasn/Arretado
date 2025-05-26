@@ -1,9 +1,9 @@
 import Phaser from "phaser";
-import { onWaveComplete } from "../../config/waveManager";
-import { currentEnemyStats } from "../../config/enemiesContainer";
-import { playerStats } from "../../config/playerConfig";
-import { WaveManager } from "../../config/waveManager";
-import { WaveNumbers, Waves } from "../../config/wavesContainer";
+import { onWaveComplete } from "../../config/waves/waveManager";
+import { currentEnemyStats } from "../../config/enemies/EnemiesContainer";
+import { playerStats } from "../../config/player/PlayerConfig";
+import { WaveManager } from "../../config/waves/waveManager";
+import { WaveNumbers, Waves } from "../../config/waves/wavesContainer";
 
 import {
   damageItems,
@@ -11,7 +11,7 @@ import {
   moveSpeedItems,
   luckyItems,
   itemsContainer,
-} from "../upgrades/itemsContainer";
+} from "../../objects/upgrades/ItemsContainer";
 
 function shuffleItems(items: itemsContainer[]) {
   for (let i = items.length - 1; i > 0; i--) {

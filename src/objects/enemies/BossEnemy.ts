@@ -1,6 +1,6 @@
 import { HealthComponent } from "../../components/playerHealth/HealthComponent";
-import { currentEnemyStats } from "../../config/enemiesContainer";
-import { Player } from "../player/playerObject";
+import { currentEnemyStats } from "../../config/enemies/EnemiesContainer";
+import { Player } from "../player/Player";
 
 export class BossEnemy extends Phaser.Physics.Arcade.Sprite {
   #player: Player;

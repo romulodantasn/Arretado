@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
-import { gameOptions, waveIndicator } from '../../config/gameOptionsConfig';
-import { playerStats } from '../../config/playerConfig';
-import { timer } from '../../components/timer/timerComponent';
+import { gameOptions, waveIndicator } from '../../config/GameOptionsConfig';
+import { playerStats } from '../../config/player/PlayerConfig';
+import { timer } from '../../components/timer/Timer';
 
 type hudElement = 'coins' | 'wave' | 'act' | 'timer' | 'gun';
 export class gameHud extends Phaser.Scene {

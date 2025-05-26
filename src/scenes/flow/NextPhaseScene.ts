@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { gameHud } from '../objects/ui/gameHudUi';
+import { gameHud } from '../ui/gameHudUi';
 export class nextPhaseScene extends Phaser.Scene {
   constructor() {
     super({

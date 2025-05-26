@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
-import { inputManager } from '../../components/input/inputManagerComponent';
-import { playerStats } from '../../config/playerConfig';
+import { inputManager } from '../../components/input/InputManager';
+import { playerStats } from '../../config/player/PlayerConfig';
 import { HealthComponent } from '../../components/playerHealth/HealthComponent';
 
 export class Player extends Phaser.Physics.Arcade.Sprite {

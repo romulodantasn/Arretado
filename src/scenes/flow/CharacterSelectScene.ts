@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { gameOptions } from "../config/gameOptionsConfig"; 
+import { gameOptions } from "../../config/GameOptionsConfig";
 
 interface CharacterInfo {
   id: string;

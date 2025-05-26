@@ -1,5 +1,5 @@
-import { inputManager } from "../components/input/inputManagerComponent";
-import { gameOptions } from "../config/gameOptionsConfig";
+import { inputManager } from "../../components/input/InputManager";
+import { gameOptions } from "../../config/GameOptionsConfig";
 export class menuScene extends Phaser.Scene {
   #menuItems: Phaser.GameObjects.Rectangle[] = [];
   #selectedItemIndex: number = 0;

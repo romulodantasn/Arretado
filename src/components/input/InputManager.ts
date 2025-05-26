@@ -1,6 +1,6 @@
 import Phaser from "phaser";
-import { gameOptions } from "../../config/gameOptionsConfig";
-import { gun } from "../../config/gameOptionsConfig";
+import { gameOptions } from "../../config/GameOptionsConfig";
+import { gun } from "../../config/GameOptionsConfig";
 
 export class inputManager {
   static controlKeys: any;

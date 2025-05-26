@@ -1,8 +1,8 @@
 
-import { gameOptions } from "./gameOptionsConfig";
-import { applyWaveBuffs } from "./scaleEnemies";
-import { waveIndicator } from "./gameOptionsConfig";
-import { WaveNumbers, Waves } from '../config/wavesContainer';
+import { gameOptions } from "../GameOptionsConfig";
+import { applyWaveBuffs } from "../enemies/ScaleEnemies";
+import { waveIndicator } from "../GameOptionsConfig";
+import { WaveNumbers, Waves } from "./wavesContainer";
 
 export class WaveManager {
   private static defaultWaveKey: WaveNumbers = 'Wave_1';

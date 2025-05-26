@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
-import { gameOptions } from '../../config/gameOptionsConfig';
-import { currentEnemyStats } from '../../config/enemiesContainer';
-import { Player } from '../player/playerObject';
+import { gameOptions } from '../../config/GameOptionsConfig';
+import { currentEnemyStats } from '../../config/enemies/EnemiesContainer';
+import { Player } from '../player/Player';
 import { HealthComponent } from '../../components/playerHealth/HealthComponent';
 
 export class RangedEnemyGroup extends Phaser.Physics.Arcade.Group {

@@ -1,10 +1,10 @@
 import Phaser from "phaser";
-import { gameOptions } from "../../config/gameOptionsConfig";
+import { gameOptions } from "../../config/GameOptionsConfig";
 import {
   BaseEnemyStatsStructure,
   currentEnemyStats,
-} from "../../config/enemiesContainer";
-import { Player } from "../player/playerObject";
+} from "../../config/enemies/EnemiesContainer";
+import { Player } from "../player/Player";
 import { HealthComponent } from "../../components/playerHealth/HealthComponent";
 export class BasicEnemyGroup extends Phaser.Physics.Arcade.Group {
   private player: Player;

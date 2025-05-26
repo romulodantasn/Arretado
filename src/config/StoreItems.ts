@@ -1,4 +1,4 @@
-import { gameOptions } from "./gameOptionsConfig";
+import { gameOptions } from "./GameOptionsConfig";
 
 export const storeSpecificItems = [
   {

@@ -1,6 +1,6 @@
 import Phaser from "phaser";
-import { gameOptions } from "../config/gameOptionsConfig";
-import { storeSkinItems } from "../config/skinItems";
+import { gameOptions } from "../../config/GameOptionsConfig";
+import { storeSkinItems } from "../../config/SkinItems";
 
 export class SkinScene extends Phaser.Scene {
   private currentPageIndex = 0;

@@ -1,6 +1,6 @@
-import { inputManager } from '../../components/input/inputManagerComponent';
-import { gameOptions, gun } from '../../config/gameOptionsConfig';
-import { Player } from '../player/playerObject';
+import { inputManager } from '../../components/input/InputManager';
+import { gameOptions, gun } from '../../config/GameOptionsConfig';
+import { Player } from '../player/Player';
 import { BasicEnemyGroup } from '../enemies/BasicEnemyGroup';
 import { DashEnemyGroup } from '../enemies/DashEnemyGroup'; 
 import { coinOnKillEvent } from '../../components/events/coinOnKillEvent';

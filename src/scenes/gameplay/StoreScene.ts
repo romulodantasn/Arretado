@@ -1,7 +1,7 @@
 import Phaser from "phaser";
-import { playerStats } from "../config/playerConfig";
-import { storeSpecificItems } from "../config/storeItems";
-import { gameOptions } from "../config/gameOptionsConfig";
+import { playerStats } from "../../config/player/PlayerConfig";
+import { storeSpecificItems } from "../../config/StoreItems";
+import { gameOptions } from "../../config/GameOptionsConfig";
 
 export class StoreScene extends Phaser.Scene {
    private apCoinText: Phaser.GameObjects.Text;

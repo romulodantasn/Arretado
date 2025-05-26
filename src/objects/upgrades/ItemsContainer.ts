@@ -1,5 +1,5 @@
-import { gun } from '../../config/gameOptionsConfig';
-import { playerStats } from '../../config/playerConfig';
+import { gun } from '../../config/GameOptionsConfig';
+import { playerStats } from '../../config/player/PlayerConfig';
 
 export interface itemsContainer {
   imageKey: string;

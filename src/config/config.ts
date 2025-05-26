@@ -1,19 +1,19 @@
 
 import NinePatchPlugin from 'phaser3-rex-plugins/plugins/ninepatch-plugin.js';
-import { gameOptions } from './gameOptionsConfig';
-import { BootScene } from '../scenes/BootScene';
-import { preloadAssets } from '../scenes/preloadAssets';
-import { titleScene } from '../scenes/titleScene';
-import { gameScene } from '../scenes/gameScene';
-import { PauseScene } from '../scenes/PauseScene';
-import { nextPhaseScene } from '../scenes/nextPhaseScene';
-import { GameOverScene } from '../scenes/GameOverScene';
+import { gameOptions } from './GameOptionsConfig';
+import { BootScene } from '../scenes/flow/BootScene';
+import { preloadAssets } from '../scenes/base/preloadAssets';
+import { titleScene } from '../scenes/flow/TitleScene';
+import { GameScene } from '../scenes/gameplay/GameScene';
+import { PauseScene } from '../scenes/flow/PauseScene';
+import { nextPhaseScene } from '../scenes/flow/NextPhaseScene';
+import { GameOverScene } from '../scenes/flow/GameOverScene';
 import { PlayerHealthBar } from '../objects/player/PlayerHealthBar';
-import { itemScene } from '../scenes/itemScene';
-import { menuScene } from '../scenes/menuScene';
-import { StoreScene } from '../scenes/StoreScene';
-import { SkinScene } from '../scenes/SkinScene';
-import { CharacterSelectScene } from '../scenes/CharacterSelectScene';
+import { itemScene } from '../scenes/gameplay/itemScene';
+import { menuScene } from '../scenes/flow/MenuScene';
+import { StoreScene } from '../scenes/gameplay/StoreScene';
+import { SkinScene } from '../scenes/gameplay/SkinScene';
+import { CharacterSelectScene } from '../scenes/flow/CharacterSelectScene';
 
 export const scaleObject: Phaser.Types.Core.ScaleConfig = {
   mode: Phaser.Scale.FIT,
@@ -30,7 +30,7 @@ export const configObject: Phaser.Types.Core.GameConfig = {
   scene: [
     BootScene,
     preloadAssets,
-    gameScene,
+    GameScene,
     PlayerHealthBar,
     GameOverScene,
     nextPhaseScene,

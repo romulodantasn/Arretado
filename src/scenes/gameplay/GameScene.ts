@@ -1,23 +1,23 @@
 import Phaser from 'phaser';
-import { gameOptions } from '../config/gameOptionsConfig';
-import { playerStats } from '../config/playerConfig';
-import { inputManager } from '../components/input/inputManagerComponent';
-import { Player } from '../objects/player/playerObject';
-import { BasicEnemyGroup } from '../objects/enemies/BasicEnemyGroup';
-import { collider } from '../components/collider/colliderComponent';
-import { shootingController } from '../objects/bullet/ShootingController';
-import { HealthComponent } from '../components/playerHealth/HealthComponent';
-import { globalEventEmitter } from '../components/events/globalEventEmitter';
-import { BossEnemy } from '../objects/enemies/BossEnemy';
-import { WaveManager } from '../config/waveManager';
-import { WaveNumbers, Waves } from '../config/wavesContainer';
-import { DashEnemyGroup } from '../objects/enemies/DashEnemyGroup';
-import { TankEnemyGroup } from '../objects/enemies/TankEnemyGroup';
-import { RangedEnemyGroup } from '../objects/enemies/RangedEnemyGroup';
-import { setupTilemap } from '../config/gameOptionsConfig';
+import { gameOptions } from '../../config/GameOptionsConfig';
+import { playerStats } from '../../config/player/PlayerConfig';
+import { inputManager } from '../../components/input/InputManager';
+import { Player } from '../../objects/player/Player';
+import { BasicEnemyGroup } from '../../objects/enemies/BasicEnemyGroup';
+import { collider } from '../../components/collider/colliderComponent';
+import { shootingController } from '../../objects/bullet/ShootingController';
+import { HealthComponent } from '../../components/playerHealth/HealthComponent';
+import { globalEventEmitter } from '../../components/events/globalEventEmitter';
+import { BossEnemy } from '../../objects/enemies/BossEnemy';
+import { WaveManager } from '../../config/waves/waveManager';
+import { WaveNumbers, Waves } from '../../config/waves/wavesContainer';
+import { DashEnemyGroup } from '../../objects/enemies/DashEnemyGroup';
+import { TankEnemyGroup } from '../../objects/enemies/TankEnemyGroup';
+import { RangedEnemyGroup } from '../../objects/enemies/RangedEnemyGroup';
+import { setupTilemap } from '../../config/GameOptionsConfig';
 
 
-export class gameScene extends Phaser.Scene {
+export class GameScene extends Phaser.Scene {
   #keys: any;
   #player: Player;
   #basicEnemy: BasicEnemyGroup;

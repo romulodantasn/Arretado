@@ -1,18 +1,18 @@
-import { gameScene } from '../../scenes/gameScene';
-import { Player } from '../../objects/player/playerObject';
+import { GameScene } from '../../scenes/gameplay/GameScene';
+import { Player } from '../../objects/player/Player';
 import { BasicEnemyGroup } from '../../objects/enemies/BasicEnemyGroup';
 import { DashEnemyGroup } from '../../objects/enemies/DashEnemyGroup'; 
-import {  gameOptions, waveIndicator } from '../../config/gameOptionsConfig';
-import { gameHud } from '../../objects/ui/gameHudUi';
+import {  gameOptions, waveIndicator } from '../../config/GameOptionsConfig';
+import { gameHud } from '../../scenes/ui/gameHudUi';
 import { HealthComponent } from '../playerHealth/HealthComponent';
 import { healthEvents } from '../events/healthEvent';
 import { BossEnemy } from '../../objects/enemies/BossEnemy';
-import { currentEnemyStats } from '../../config/enemiesContainer';
+import { currentEnemyStats } from '../../config/enemies/EnemiesContainer';
 import { TankEnemyGroup } from '../../objects/enemies/TankEnemyGroup';
 import { RangedEnemyGroup } from '../../objects/enemies/RangedEnemyGroup';
 
 export class collider {
-  #scene: gameScene;
+  #scene: GameScene;
   #player: Player;
   #BasicEnemyGroup: BasicEnemyGroup;
   #RangedEnemyGroup?: RangedEnemyGroup
@@ -31,7 +31,7 @@ export class collider {
   #playerTilemapColliders: Phaser.Physics.Arcade.Collider[] = [];
 
 
-  constructor(scene: gameScene, player: Player, BasicEnemyGroup: BasicEnemyGroup, RangedEnemyGroup?: RangedEnemyGroup, DashEnemyGroup?: DashEnemyGroup, TankEnemyGroup?: TankEnemyGroup, boss?: BossEnemy, playerHealth?: HealthComponent) {
+  constructor(scene: GameScene  , player: Player, BasicEnemyGroup: BasicEnemyGroup, RangedEnemyGroup?: RangedEnemyGroup, DashEnemyGroup?: DashEnemyGroup, TankEnemyGroup?: TankEnemyGroup, boss?: BossEnemy, playerHealth?: HealthComponent) {
     this.#scene = scene;
     this.#player = player;
     this.#BasicEnemyGroup = BasicEnemyGroup;

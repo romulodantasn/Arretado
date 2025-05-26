@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
-import { currentEnemyStats } from '../../config/enemiesContainer';
-import { gameOptions } from '../../config/gameOptionsConfig';
-import { Player } from '../player/playerObject';
+import { currentEnemyStats } from '../../config/enemies/EnemiesContainer';
+import { gameOptions } from '../../config/GameOptionsConfig';
+import { Player } from '../player/Player';
 import { HealthComponent } from '../../components/playerHealth/HealthComponent';
 
 
