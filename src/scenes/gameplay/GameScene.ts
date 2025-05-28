@@ -4,7 +4,7 @@ import { playerStats } from '../../config/player/PlayerConfig';
 import { inputManager } from '../../components/input/InputManager';
 import { Player } from '../../objects/player/Player';
 import { BasicEnemyGroup } from '../../objects/enemies/BasicEnemyGroup';
-import { collider } from '../../components/collider/colliderComponent';
+import { Collider } from '../../components/collider/colliderComponent';
 import { shootingController } from '../../objects/bullet/ShootingController';
 import { HealthComponent } from '../../components/playerHealth/HealthComponent';
 import { globalEventEmitter } from '../../components/events/globalEventEmitter';
@@ -27,7 +27,7 @@ export class GameScene extends Phaser.Scene {
   #boss?: BossEnemy;
   #shootingController!: shootingController;
   #reticle: Phaser.GameObjects.Sprite;
-  #collider: collider;
+  #collider: Collider;
   #health: HealthComponent;
   #currentWaveKey: WaveNumbers;
   #waveData: any;
@@ -47,6 +47,7 @@ export class GameScene extends Phaser.Scene {
     this.#health = new HealthComponent(playerStats.Health, playerStats.Health, 'player');
 
     this.scene.launch('gameHud');
+    this.scene.launch('PlayerBoostCooldownUI');
     const currentWaveConfig = Waves[this.#currentWaveKey];
     gameOptions.waveDuration = currentWaveConfig.duration;
     if (currentWaveConfig.background) {
@@ -69,11 +70,8 @@ export class GameScene extends Phaser.Scene {
 
     inputManager.setupControls(this);
 
-    this.#player = new Player(this, gameOptions.gameSize.width / 2, gameOptions.gameSize.height / 2);
-    
-    if(Waves[this.#currentWaveKey].enemies.includes('BasicEnemy')) {
-      this.#basicEnemy = new BasicEnemyGroup(this, this.#player);
-    }
+    this.#player = new Player(this, gameOptions.gameSize.width / 2, gameOptions.gameSize.height / 2);    
+    this.#basicEnemy = new BasicEnemyGroup(this, this.#player);
 
     if(Waves[this.#currentWaveKey].enemies.includes('RangedEnemy')) {
       this.#rangedEnemy = new RangedEnemyGroup(this, this.#player);
@@ -96,7 +94,7 @@ export class GameScene extends Phaser.Scene {
     this.#shootingController = new shootingController(this, this.#player, this.#basicEnemy,this.#rangedEnemy, this.#dashEnemy, this.#tankEnemy, this.#boss, this.#reticle);
     this.#shootingController.create();
 
-    this.#collider = new collider(this, this.#player, this.#basicEnemy,this.#rangedEnemy, this.#dashEnemy, this.#tankEnemy, this.#boss, this.#health);
+    this.#collider = new Collider(this, this.#player, this.#basicEnemy,this.#rangedEnemy, this.#dashEnemy, this.#tankEnemy, this.#boss, this.#health);
     this.#collider.create();
     this.#keys = inputManager.getKeys();
 
@@ -104,6 +102,7 @@ export class GameScene extends Phaser.Scene {
       if (!this.scene.isActive('PlayerHealthBar')) {
         this.scene.launch('PlayerHealthBar', { emitter: globalEventEmitter, health: this.#health });
         this.scene.bringToTop('PlayerHealthBar');
+        this.scene.bringToTop('PlayerBoostCooldownUI'); 
       }
     });
 
@@ -145,5 +144,43 @@ export class GameScene extends Phaser.Scene {
       if (isHudActive) this.scene.pause(gameHud);
       this.scene.launch(PauseScene);
     }
+  }
+
+  shutdown() {
+    console.log('GameScene shutdown');
+    this.time.removeAllEvents();
+    
+    if (this.scene.isActive('gameHud')) {
+      this.scene.stop('gameHud');
+    }
+    if (this.scene.isActive('PlayerHealthBar')) {
+      this.scene.stop('PlayerHealthBar');
+    }
+    if (this.scene.isActive('PlayerBoostCooldownUI')) {
+      this.scene.stop('PlayerBoostCooldownUI');
+    }
+    if (this.#player) {
+      this.#player.destroy();
+    }
+    this.#basicEnemy?.destroy(true);
+    this.#rangedEnemy?.destroy(true);
+    this.#dashEnemy?.destroy(true);
+    this.#tankEnemy?.destroy(true);
+    this.#boss?.destroy(true);
+
+    // Chamar o destroy do collider component
+    this.#collider?.destroy();
+
+    this.#player = undefined!; 
+    this.#basicEnemy = undefined!;
+    this.#rangedEnemy = undefined;
+    this.#dashEnemy = undefined;
+    this.#tankEnemy = undefined;
+    this.#boss = undefined;
+    this.#shootingController = undefined!;
+    this.#collider = undefined!;
+    this.#health = undefined!;
+    this.#keys = undefined;
+    this.#waveData = undefined;
   }
 }
