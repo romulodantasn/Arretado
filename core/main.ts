@@ -14,6 +14,8 @@ import { menuScene } from '../src/scenes/flow/MenuScene';
 import { StoreScene } from '../src/scenes/gameplay/StoreScene';
 import { SkinScene } from '../src/scenes/gameplay/SkinScene';
 import { CharacterSelectScene } from '../src/scenes/flow/CharacterSelectScene';
+import { PlayerBoostCooldownUI } from '../src/objects/player/PlayerBoostCooldownUI';
+
 
 configObject.scene = [
   BootScene,
@@ -30,6 +32,7 @@ configObject.scene = [
   itemScene,
   menuScene,
   CharacterSelectScene,
+  PlayerBoostCooldownUI
 ];
 
 new Phaser.Game(configObject);
