@@ -148,30 +148,54 @@ export class GameScene extends Phaser.Scene {
 
   shutdown() {
     console.log('GameScene shutdown');
+
     this.time.removeAllEvents();
     
-    if (this.scene.isActive('gameHud')) {
-      this.scene.stop('gameHud');
+    ['gameHud', 'PlayerHealthBar', 'PlayerBoostCooldownUI'].forEach(sceneName => {
+      if (this.scene.isActive(sceneName)) {
+        this.scene.stop(sceneName);
+      }
+    });
+
+    if (this.#shootingController) {
+      this.#shootingController.destroy();
     }
-    if (this.scene.isActive('PlayerHealthBar')) {
-      this.scene.stop('PlayerHealthBar');
+
+    if (this.#basicEnemy) {
+      this.#basicEnemy.clear(true, true);
+      this.#basicEnemy.destroy(true);
     }
-    if (this.scene.isActive('PlayerBoostCooldownUI')) {
-      this.scene.stop('PlayerBoostCooldownUI');
+    if (this.#rangedEnemy) {
+      this.#rangedEnemy.clear(true, true);
+      this.#rangedEnemy.destroy(true);
     }
+    if (this.#dashEnemy) {
+      this.#dashEnemy.clear(true, true);
+      this.#dashEnemy.destroy(true);
+    }
+    if (this.#tankEnemy) {
+      this.#tankEnemy.clear(true, true);
+      this.#tankEnemy.destroy(true);
+    }
+    if (this.#boss) {
+      this.#boss.destroy();
+    }
+
     if (this.#player) {
       this.#player.destroy();
     }
-    this.#basicEnemy?.destroy(true);
-    this.#rangedEnemy?.destroy(true);
-    this.#dashEnemy?.destroy(true);
-    this.#tankEnemy?.destroy(true);
-    this.#boss?.destroy(true);
 
-    // Chamar o destroy do collider component
-    this.#collider?.destroy();
+    if (this.#collider) {
+      this.#collider.destroy();
+    }
 
-    this.#player = undefined!; 
+    if (this.physics && this.physics.world) {
+      this.physics.world.colliders.destroy();
+      this.physics.world.bodies.clear();
+      this.physics.world.staticBodies.clear();
+    }
+
+    this.#player = undefined!;
     this.#basicEnemy = undefined!;
     this.#rangedEnemy = undefined;
     this.#dashEnemy = undefined;
@@ -182,5 +206,8 @@ export class GameScene extends Phaser.Scene {
     this.#health = undefined!;
     this.#keys = undefined;
     this.#waveData = undefined;
+
+    this.scene.stop();
+    this.scene.remove();
   }
 }

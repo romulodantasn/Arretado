@@ -14,6 +14,8 @@ import { menuScene } from '../scenes/flow/MenuScene';
 import { StoreScene } from '../scenes/gameplay/StoreScene';
 import { SkinScene } from '../scenes/gameplay/SkinScene';
 import { CharacterSelectScene } from '../scenes/flow/CharacterSelectScene';
+import { PlayerBoostCooldownUI } from '../objects/player/PlayerBoostCooldownUI';
+
 
 export const scaleObject: Phaser.Types.Core.ScaleConfig = {
   mode: Phaser.Scale.FIT,
@@ -41,6 +43,7 @@ export const configObject: Phaser.Types.Core.GameConfig = {
     titleScene,
     menuScene,
     CharacterSelectScene,
+    PlayerBoostCooldownUI
   ],
   physics: {
     default: 'arcade',

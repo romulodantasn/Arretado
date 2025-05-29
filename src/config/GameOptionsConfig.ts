@@ -64,9 +64,7 @@ export function setupTilemap(
       createdLayers[layerName] = layer;
 
       if(collisionLayers?.includes(layerName)) {
-          layer?.setCollisionByProperty({collides: true});
-         console.log(`Colisao aplicada a camada "${layerName}"`)
-      }
+          layer?.setCollisionByProperty({collides: true});      }
     } else {
       console.warn(`Camada "${layerName}" não foi criada.`);
     }

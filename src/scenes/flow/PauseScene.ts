@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
 
 export class PauseScene extends Phaser.Scene {
+  private confirmDialogGroup: Phaser.GameObjects.Group | null = null;
+
   constructor() {
     super({
       key: 'PauseScene',
@@ -47,7 +49,7 @@ export class PauseScene extends Phaser.Scene {
     const escKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
 
     escKey.on('down', () => {
-      if (!this.scene.get('ConfirmationDialog')) {
+      if (!this.confirmDialogGroup || !this.confirmDialogGroup.active) {
         console.log('Jogo Retomado');
         this.scene.stop('PauseScene');
         this.input.setDefaultCursor('none'); 
@@ -62,7 +64,7 @@ export class PauseScene extends Phaser.Scene {
     const buttonHeight = 70;
 
     const buttonBg = this.add
-      .rectangle(x, y, buttonWidth, buttonHeight, 0x80000) // Cor vermelha escura
+      .rectangle(x, y, buttonWidth, buttonHeight, 0x80000)
       .setStrokeStyle(2, 0xffffff)
       .setInteractive({ useHandCursor: true });
 
@@ -78,38 +80,48 @@ export class PauseScene extends Phaser.Scene {
   }
 
   private showConfirmationDialog(style: any) {
+    // Se o diálogo já estiver visível, não faz nada
+    if (this.confirmDialogGroup && this.confirmDialogGroup.active) {
+      return;
+    }
+
     const dialogWidth = 450;
     const dialogHeight = 250;
     const dialogX = this.cameras.main.width / 2;
     const dialogY = this.cameras.main.height / 2;
 
-    const confirmGroup = this.add.group(); 
+    this.confirmDialogGroup = this.add.group();
 
     const dialogBg = this.add.rectangle(dialogX, dialogY, dialogWidth, dialogHeight, 0x222222, 0.95).setStrokeStyle(2, 0xffffff);
     const confirmText = this.add.text(dialogX, dialogY - 50, 'Deseja realmente voltar ao menu?\nTodo o progresso  será perdido.', { ...style, fontSize: '24px', align: 'center', wordWrap: { width: dialogWidth - 40 } }).setOrigin(0.5);
 
     const yesButton = this.add.rectangle(dialogX - 100, dialogY + 50, 120, 50, 0x008800).setStrokeStyle(1, 0xffffff).setInteractive({ useHandCursor: true });
     const yesText = this.add.text(dialogX - 100, dialogY + 50, 'Sim', { ...style, fontSize: '28px' }).setOrigin(0.5);
-
     const noButton = this.add.rectangle(dialogX + 100, dialogY + 50, 120, 50, 0x880000).setStrokeStyle(1, 0xffffff).setInteractive({ useHandCursor: true });
     const noText = this.add.text(dialogX + 100, dialogY + 50, 'Não', { ...style, fontSize: '28px' }).setOrigin(0.5);
 
-    confirmGroup.addMultiple([dialogBg, confirmText, yesButton, yesText, noButton, noText]);
-    this.scene.add('ConfirmationDialog', confirmGroup as any, true); 
+    this.confirmDialogGroup.addMultiple([dialogBg, confirmText, yesButton, yesText, noButton, noText]);
 
     yesButton.on('pointerdown', () => {
       this.scene.stop('gameScene');
       if (this.scene.isActive('gameHud')) this.scene.stop('gameHud');
       if (this.scene.isActive('PlayerHealthBar')) this.scene.stop('PlayerHealthBar');
+      if (this.scene.isActive('PlayerBoostCooldownUI')) this.scene.stop('PlayerBoostCooldownUI');
+
+      if (this.confirmDialogGroup) {
+        this.confirmDialogGroup.destroy(true);
+        this.confirmDialogGroup = null;
+      }
+
       this.scene.stop('PauseScene');
-      confirmGroup.destroy(true);
-      this.scene.remove('ConfirmationDialog');
       this.scene.start('menuScene');
     });
 
     noButton.on('pointerdown', () => {
-      confirmGroup.destroy(true);
-      this.scene.remove('ConfirmationDialog');
+      if (this.confirmDialogGroup) {
+        this.confirmDialogGroup.destroy(true);
+        this.confirmDialogGroup = null;
+      }
     });
   }
 }

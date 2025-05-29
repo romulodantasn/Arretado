@@ -94,7 +94,7 @@ export class CharacterSelectScene extends Phaser.Scene {
         itemBg.on("pointerdown", () => {
             console.log(`Personagem selecionado: ${character.name} (ID: ${character.id})`);
             this.scene.start("gameScene", { selectedCharacterId: character.id });
-        });
+                  });
     } else {
         itemBg.disableInteractive();
         const lockedText = this.add

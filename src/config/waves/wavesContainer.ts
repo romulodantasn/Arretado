@@ -29,8 +29,8 @@ export const Waves : Record <WaveNumbers, WaveConfig> = {
         tileset: [
             {name: 'limbo_wave_1', imageKey: 'limbo_wave_1'}, // key e url do png da imagem do tileset no assets.json
         ],
-        layers: ['ground'], // nome das layers no tileset.json
-        collisionLayers: ['ground'],
+        layers: ['Tile Layer 1'],  // nome das layers no tileset.json
+        collisionLayers: ['Tile Layer 1'], 
         belongToAct: 1,
     },
     Wave_2: {
@@ -57,8 +57,8 @@ export const Waves : Record <WaveNumbers, WaveConfig> = {
         tileset: [
             {name: 'gluttony_wave_3', imageKey: 'gluttony_wave_3'}, 
         ],
-        layers: ['ground'],
-        collisionLayers: ['ground'],
+        layers: ['Tile Layer 1'], 
+        collisionLayers: ['Tile Layer 1'],
         belongToAct: 1,
     },
     Wave_4: {
