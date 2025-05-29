@@ -1,21 +1,14 @@
-import { GameScene } from '../gameplay/GameScene';
 import { gameOptions } from '../../config/GameOptionsConfig';
 
 export class titleScene extends Phaser.Scene {
-  static controlKeys: any;
-  static titleSceneAudio: Phaser.Sound.BaseSound;
-  titleFont = { fontFamily: 'Cordelina', color: '#ffffff', stroke: '#000000', strokeThickness: 6 };
+  private titleMusic!: Phaser.Sound.BaseSound; 
+  private titleFont = { fontFamily: 'Cordelina', color: '#ffffff', stroke: '#000000', strokeThickness: 6 };
 
   constructor() {
     super('titleScene');
   }
 
-  preload() {
-    this.load.audio('titleSceneAudio', [
-      'assets/audio/titleSceneAudio.ogg',
-      'assets/audio/titleSceneAudio.mp3'
-    ]);
-  }
+ 
 
   create() {
     this.add.nineslice(gameOptions.gameSize.width / 2, gameOptions.gameSize.height / 2, "molduraMenu",0, gameOptions.gameSize.width - 10, gameOptions.gameSize.height -10 , 16, 16, 16, 16)
@@ -26,19 +19,15 @@ export class titleScene extends Phaser.Scene {
       .setOrigin(0, 0)
       .setDisplaySize(gameOptions.gameSize.width, gameOptions.gameSize.height);
 
-    titleScene.titleSceneAudio = this.sound.add('titleSceneAudio', { loop: true, volume: 0.15 });
+    this.titleMusic = this.sound.add('titleSceneAudio', { loop: true, volume: 0.15 });
 
     if (this.sound.locked) {
       this.sound.once('unlocked', () => {
-        titleScene.titleSceneAudio.play();
+        this.titleMusic.play();
       });
     } else {
-      titleScene.titleSceneAudio.play();
+      this.titleMusic.play();
     }
-
-    this.events.once('shutdown', () => {
-      titleScene.titleSceneAudio.stop();
-    });
 
     const gameName = ['ARRETADO'];
     const instructions = ['Pressione ENTER para começar'];
@@ -55,8 +44,8 @@ export class titleScene extends Phaser.Scene {
   }
 
   shutdown() {
-    if (titleScene.titleSceneAudio) {
-      titleScene.titleSceneAudio.stop();
+    if (this.titleMusic) {
+      this.titleMusic.stop();
     }
   }
 }

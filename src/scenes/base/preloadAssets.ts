@@ -8,18 +8,19 @@ export class preloadAssets extends Phaser.Scene {
 
   preload() {
     this.load.pack('asset_pack', 'assets/data/assets.json');
+    this.load.pack('audio_pack', 'assets/data/audio_assets.json')
     this.load.font('Cordelina', 'assets/font/cordelina.otf');
   }
 
   create() {
     console.log('preloadAssets carregado');
     this.#createAnimations();
-    // this.scene.start('titleScene');
+    this.scene.start('titleScene');
     // this.scene.start('menuScene')
     // this.scene.start('SkinScene');
     // this.scene.start('StoreScene')
     // this.scene.start('itemScene')
-    this.scene.start('gameScene');
+    // this.scene.start('gameScene');
     // this.scene.start('CharacterSelectScene');
   }
 
