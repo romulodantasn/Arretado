@@ -19,6 +19,7 @@ export class inputManager {
       moveRight: Phaser.Input.Keyboard.KeyCodes.RIGHT,
       enter: Phaser.Input.Keyboard.KeyCodes.ENTER,
       pause: Phaser.Input.Keyboard.KeyCodes.ESC,
+      space: Phaser.Input.Keyboard.KeyCodes.SPACE,
     });
   }
 

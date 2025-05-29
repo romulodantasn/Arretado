@@ -2,11 +2,17 @@ import Phaser from 'phaser';
 import { inputManager } from '../../components/input/InputManager';
 import { playerStats } from '../../config/player/PlayerConfig';
 import { HealthComponent } from '../../components/playerHealth/HealthComponent';
+import { globalEventEmitter } from '../../components/events/globalEventEmitter';
+import { playerEvents } from '../../components/events/playerEvent';
 
 export class Player extends Phaser.Physics.Arcade.Sprite {
   direction: number = 0;
   controlKeys: any;
   #healthComponent: HealthComponent;
+
+  #isCurrentlyBoosting: boolean = false;
+  readonly #boostCooldownDuration: number = 5000;
+  #nextBoostActivationTime: number = 0; 
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, 'player');
@@ -16,7 +22,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.body = this.body as Phaser.Physics.Arcade.Body;
     this.setCollideWorldBounds(true);
     this.setDepth(30);
-    this.setScale(3)
+    this.setScale(2);
     this.setOffset(14,18);
 
     this.controlKeys = inputManager.getKeys();
@@ -39,41 +45,67 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
   public playerMovement() {
     let movementDirection = new Phaser.Math.Vector2(0, 0);
-    let isMoving = false;
+    let isMovingByKeyPress = false;
 
     if (this.controlKeys.right.isDown) {
       movementDirection.x++;
       this.flipX = false;
-      isMoving = true;
+      isMovingByKeyPress = true;
     }
     if (this.controlKeys.left.isDown) {
       movementDirection.x--;
       this.flipX = true;
-      isMoving = true;
+      isMovingByKeyPress = true;
     }
     if (this.controlKeys.up.isDown) {
       movementDirection.y--;
-      isMoving = true;
+      isMovingByKeyPress = true;
     }
     if (this.controlKeys.down.isDown) {
       movementDirection.y++;
-      isMoving = true;
+      isMovingByKeyPress = true;
+    }
+
+    if (this.controlKeys.space.isDown) {
+      if (this.#isCurrentlyBoosting) {
+      } else {
+        if (this.scene.time.now >= this.#nextBoostActivationTime) {
+          this.#isCurrentlyBoosting = true;
+          this.#nextBoostActivationTime = this.scene.time.now + this.#boostCooldownDuration;
+          console.log(
+            `Boost ativado! Tempo atual: ${this.scene.time.now}, Boost termina em: ${
+              this.#nextBoostActivationTime
+            }`
+          );
+          globalEventEmitter.emit(playerEvents.boostActivated, this.#nextBoostActivationTime);
+        }
+      }
+    } else {
+      this.#isCurrentlyBoosting = false; 
+    }
+
+    let effectiveSpeed = playerStats.MoveSpeed;
+    if (this.#isCurrentlyBoosting) {
+      const SPEED_BOOST_FACTOR = 1.5;
+      effectiveSpeed *= SPEED_BOOST_FACTOR;
     }
 
     this.setVelocity(0, 0);
-
-    if (movementDirection.x === 0 || movementDirection.y === 0) {
-      this.setVelocity(
-        movementDirection.x * playerStats.MoveSpeed,
-        movementDirection.y * playerStats.MoveSpeed
-      );
-    } else {
-      this.setVelocity(
-        (movementDirection.x * playerStats.MoveSpeed) / Math.sqrt(2),
-        (movementDirection.y * playerStats.MoveSpeed) / Math.sqrt(2)
-      );
+    if (movementDirection.x !== 0 || movementDirection.y !== 0) {
+      if (movementDirection.x === 0 || movementDirection.y === 0) { 
+        this.setVelocity(
+          movementDirection.x * effectiveSpeed,
+          movementDirection.y * effectiveSpeed
+        );
+      } else { 
+        const diagonalFactor = Math.sqrt(2);
+        this.setVelocity(
+          (movementDirection.x * effectiveSpeed) / diagonalFactor,
+          (movementDirection.y * effectiveSpeed) / diagonalFactor
+        );
+      }
     }
-    return isMoving;
+    return isMovingByKeyPress;
   }
 
   public playerAnimation() {
