@@ -1,0 +1,12 @@
+{
+    "audio": {
+        "prefix": "assets/audio/",
+        "files": [
+            {
+                "type": "audio",
+                "key": "titleSceneAudio",
+                "url": ["soundtrack/titleSceneAudio.mp3"]
+            }
+        ]
+    }
+}
