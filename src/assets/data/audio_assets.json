@@ -1,12 +1,115 @@
 {
-    "audio": {
-        "prefix": "assets/audio/",
+    "path": "assets/audio", 
         "files": [
             {
                 "type": "audio",
+                "key": "wave_1_music",
+                "url": "soundtrack/Ato 1 - 1ª Onda.mp3"
+            },
+            {
+                "type": "audio",
+                "key": "wave_2_music",
+                "url": "soundtrack/Ato 1 - 2ª Onda.mp3"
+            },
+            {
+                "type": "audio",
+                "key": "wave_3_music",
+                "url": "soundtrack/Ato 1 - 3ª Onda.mp3"
+            },
+            {
+                "type": "audio",
+                "key": "wave_4_music",
+                "url": "soundtrack/Ato 1 - 4ª Onda.mp3"
+            },
+            {
+                "type": "audio",
+                "key": "wave_5_music",
+                "url": "soundtrack/Ato 1 - 5ª Onda.mp3"
+            },
+            {
+                "type": "audio",
+                "key": "wave_6_music",
+                "url": "soundtrack/Ato 1 - 6ª Onda.mp3"
+            },
+            {
+                "type": "audio",
+                "key": "wave_7_music",
+                "url": "soundtrack/Ato 1 - 7ª Onda.mp3"
+            },
+            {
+                "type": "audio",
+                "key": "wave_8_music",
+                "url": "soundtrack/Ato 1 - 8ª Onda.mp3"
+            },
+            {
+                "type": "audio",
+                "key": "wave_9_music",
+                "url": "soundtrack/Ato 1 - 9ª Onda.mp3"
+            },
+            {
+                "type": "audio",
                 "key": "titleSceneAudio",
-                "url": ["soundtrack/titleSceneAudio.mp3"]
+                "url": "soundtrack/titleSceneAudio.mp3"
+            },
+            {
+                "type": "audio",
+                "key": "basicEnemyDeath",
+                "url": "sfx/basicEnemyDeath.mp3"
+            },
+            {
+                "type": "audio",
+                "key": "rangedEnemyDeath",
+                "url": "sfx/rangedEnemyDeath.mp3"
+            },
+            {
+                "type": "audio",
+                "key": "dashEnemyDeath",
+                "url": "sfx/dashEnemyDeath.mp3"
+            },
+            {
+                "type": "audio",
+                "key": "tankEnemyDeath",
+                "url": "sfx/tankEnemyDeath.mp3"
+            },
+            {
+                "type": "audio",
+                "key": "enter_store",
+                "url": "sfx/enter_store.wav"
+            },
+            {
+                "type": "audio",
+                "key": "openItemStore",
+                "url": "sfx/openItemStore.wav"
+            },
+            {
+                "type": "audio",
+                "key": "ui_change_menu_select",
+                "url": "sfx/ui_change_menu_select.mp3"
+            },
+            {
+                "type": "audio",
+                "key": "menuBackground",
+                "url": "sfx/menuBackground.mp3"
+            },
+            {
+                "type": "audio",
+                "key": "buyItemAP",
+                "url": "sfx/buyItemAP.mp3"
+            },
+            {
+                "type": "audio",
+                "key": "gun_shoot",
+                "url": "sfx/gun_shoot.wav"
+            },
+            {
+                "type": "audio",
+                "key": "bahiaBuy",
+                "url": "sfx/bahiaBuy.mp3"
+            },
+            {
+                "type": "audio",
+                "key": "bossDeath",
+                "url": "sfx/bossDeath.mp3"
             }
         ]
     }
-}
