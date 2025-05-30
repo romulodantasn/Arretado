@@ -8,6 +8,7 @@ import { HealthComponent } from '../../components/playerHealth/HealthComponent';
 import { BossEnemy } from '../enemies/BossEnemy';
 import { TankEnemyGroup } from '../enemies/TankEnemyGroup';
 import { RangedEnemyGroup } from '../enemies/RangedEnemyGroup';
+import { SoundManager } from '../../config/SoundManager';
 
 export class shootingController {
   #scene: Phaser.Scene;
@@ -48,22 +49,42 @@ export class shootingController {
   }
 
   #setupColliders() {
-    this.#scene.physics.add.collider(this.#bulletGroup, this.#BasicEnemyGroup, this.basicEnemyCollision, undefined, this);
-
-    if (this.#DashEnemyGroup) {
-      this.#scene.physics.add.collider(this.#bulletGroup, this.#DashEnemyGroup, this.bulletDashEnemyCollision, undefined, this);
-    }
+    this.#scene.physics.add.collider(
+      this.#bulletGroup,
+      this.#BasicEnemyGroup,
+      this.basicEnemyCollision.bind(this)
+    );
 
     if (this.#RangedEnemyGroup) {
-      this.#scene.physics.add.collider(this.#bulletGroup, this.#RangedEnemyGroup, this.rangedEnemyCollision, undefined, this);
-    } 
+      this.#scene.physics.add.collider(
+        this.#bulletGroup,
+        this.#RangedEnemyGroup,
+        this.rangedEnemyCollision.bind(this)
+      );
+    }
+
+    if (this.#DashEnemyGroup) {
+      this.#scene.physics.add.collider(
+        this.#bulletGroup,
+        this.#DashEnemyGroup,
+        this.dashEnemyCollision.bind(this)
+      );
+    }
 
     if (this.#TankEnemyGroup) {
-      this.#scene.physics.add.collider(this.#bulletGroup, this.#TankEnemyGroup, this.bulletTankEnemyCollision, undefined, this);
-    } 
+      this.#scene.physics.add.collider(
+        this.#bulletGroup,
+        this.#TankEnemyGroup,
+        this.tankEnemyCollision.bind(this)
+      );
+    }
 
-    if (this.#boss?.active) {
-      this.#scene.physics.add.collider(this.#bulletGroup, this.#boss, this.bulletBossCollision, undefined, this);
+    if (this.#boss) {
+      this.#scene.physics.add.collider(
+        this.#bulletGroup,
+        this.#boss,
+        this.bossCollision.bind(this)
+      );
     }
   }
 
@@ -105,6 +126,8 @@ export class shootingController {
           this.fireBullet(this.#player, this.#reticle);
           this.#scene.cameras.main.shake(200, 0.0005);
           this.startCooldown();
+          const fireBulletSFX = this.#scene.sound.add('gun_shoot', {volume: 0.20});
+          fireBulletSFX.play();
         }
       },
     });
@@ -118,6 +141,7 @@ export class shootingController {
     this.#bulletGroup.add(bullet);
     bullet.setVelocity(Math.cos(angle) * speed, Math.sin(angle) * speed);
     bullet.setActive(true).setVisible(true);
+    
   }
 
   private showDamageText(x: number, y: number, damage: number) {
@@ -154,6 +178,7 @@ export class shootingController {
     enemyHealth.loseHealth(damage);
 
     if (enemyHealth.isDead()) {
+      SoundManager.playBasicEnemyDeathSFX();
       coinOnKillEvent(this.#scene);
       enemy.destroy();
     }
@@ -172,6 +197,7 @@ export class shootingController {
     enemyHealth.loseHealth(damage);
 
     if (enemyHealth.isDead()) {
+      SoundManager.playRangedEnemyDeathSFX();
       coinOnKillEvent(this.#scene);
       enemy.destroy();
     }
@@ -179,7 +205,7 @@ export class shootingController {
     bullet.destroy();
   }
 
-  private bulletDashEnemyCollision(bullet: any, dashEnemy: any) {
+  private dashEnemyCollision(bullet: any, dashEnemy: any) {
     if (!bullet.active || !dashEnemy.active) return;
 
    const enemyHealth = DashEnemyGroup.getHealthComponent(dashEnemy);
@@ -191,6 +217,7 @@ export class shootingController {
     enemyHealth.loseHealth(damage);
 
     if (enemyHealth.isDead()) {
+      SoundManager.playDashEnemyDeathSFX();
       coinOnKillEvent(this.#scene);
       dashEnemy.destroy();
     }
@@ -198,7 +225,7 @@ export class shootingController {
     bullet.destroy();
   }
 
-  private bulletTankEnemyCollision(bullet: any, tankEnemy: any) {
+  private tankEnemyCollision(bullet: any, tankEnemy: any) {
     if (!bullet.active || !tankEnemy.active) return;
 
    const enemyHealth = TankEnemyGroup.getHealthComponent(tankEnemy);
@@ -210,6 +237,7 @@ export class shootingController {
     enemyHealth.loseHealth(damage);
 
     if (enemyHealth.isDead()) {
+      SoundManager.playTankEnemyDeathSFX();
       coinOnKillEvent(this.#scene);
       tankEnemy.destroy();
     }
@@ -217,26 +245,20 @@ export class shootingController {
     bullet.destroy();
   }
 
-  private bulletBossCollision(obj1: any, obj2: any) {
-    const boss = obj1 instanceof BossEnemy ? obj1 : obj2 instanceof BossEnemy ? obj2 : null;
-    const bullet = obj1 instanceof Phaser.Physics.Arcade.Sprite && !(obj1 instanceof BossEnemy)
-      ? obj1 : obj2 instanceof Phaser.Physics.Arcade.Sprite && !(obj2 instanceof BossEnemy)
-      ? obj2 : null;
+  private bossCollision(bullet: any, boss: any) {
+    if (!bullet.active || !boss.active) return;
 
-    if (!boss || !bullet || !boss.active || !bullet.active) return;
-
-    const bossHealth = boss.getData('healthComponent') as HealthComponent | null;
-    if (!bossHealth) {
-      console.warn("Boss sem HealthComponent.");
-      return;
-    }
+    const bossHealth = boss.getData('healthComponent') as HealthComponent;
+    if (!bossHealth) return;
 
     const damage = gun.gunDamage;
     this.showDamageText(boss.x, boss.y - 50, damage);
-    boss.takeDamage(damage);
+    bossHealth.loseHealth(damage);
 
-    if (!boss.active) {
+    if (bossHealth.isDead()) {
+      SoundManager.playBossDeathSFX();
       coinOnKillEvent(this.#scene);
+      boss.destroy();
     }
 
     bullet.destroy();

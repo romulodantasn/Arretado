@@ -1,5 +1,7 @@
 import { inputManager } from "../../components/input/InputManager";
 import { gameOptions } from "../../config/GameOptionsConfig";
+import { SoundManager } from "../../config/SoundManager";
+
 export class menuScene extends Phaser.Scene {
   #menuItems: Phaser.GameObjects.Rectangle[] = [];
   #selectedItemIndex: number = 0;
@@ -17,8 +19,18 @@ export class menuScene extends Phaser.Scene {
   };
 
   create() {
-    
-    this.add.nineslice(gameOptions.gameSize.width / 2, gameOptions.gameSize.height / 2, "molduraMenu",0, 1916, 1076, 16, 16, 16, 16)
+    this.add.nineslice(
+      gameOptions.gameSize.width / 2,
+      gameOptions.gameSize.height / 2,
+      "molduraMenu",
+      0,
+      1916,
+      1076,
+      16,
+      16,
+      16,
+      16
+    );
     this.titleText();
     this.newGameButton();
     this.storeButton();
@@ -26,10 +38,11 @@ export class menuScene extends Phaser.Scene {
     this.exitButton();
     this.cameras.main.setBackgroundColor("#222222");
     
+    SoundManager.init(this);
+    SoundManager.playMenuBackgroundSFX();
 
     inputManager.setupControls(this);
-    const keyboard = this.input
-      .keyboard as Phaser.Input.Keyboard.KeyboardPlugin;
+    const keyboard = this.input.keyboard as Phaser.Input.Keyboard.KeyboardPlugin;
     const upKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
     const downKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
     const enterKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
@@ -44,12 +57,14 @@ export class menuScene extends Phaser.Scene {
         (this.#selectedItemIndex - 1 + this.#menuItems.length) %
         this.#menuItems.length;
       this.updateSelectorPosition();
+      SoundManager.playUIChangeMenuSelectSFX();
     });
 
     downKey.on("down", () => {
       this.#selectedItemIndex =
         (this.#selectedItemIndex + 1) % this.#menuItems.length;
       this.updateSelectorPosition();
+      SoundManager.playUIChangeMenuSelectSFX();
     });
 
     enterKey.on("down", () => {
@@ -64,19 +79,37 @@ export class menuScene extends Phaser.Scene {
     this.#selectorIcon.setY(selected.y);
   }
 
+  private transitionToScene(targetScene: string, data?: any) {
+    // Para a música do menu
+    SoundManager.menuBackgroundSFX?.stop();
+
+    // Para todas as cenas ativas exceto a atual
+    this.scene.manager.scenes.forEach(scene => {
+      if (scene.scene.key !== this.scene.key && scene.scene.isActive()) {
+        this.scene.stop(scene.scene.key);
+      }
+    });
+
+    // Para a cena atual e inicia a nova
+    this.scene.stop();
+    this.scene.start(targetScene, data);
+  }
+
   handleSelection() {
+    SoundManager.playUIChangeMenuSelectSFX();
+
     switch (this.#selectedItemIndex) {
       case 0:
-        this.scene.start("CharacterSelectScene");
+        this.transitionToScene("CharacterSelectScene");
         break;
       case 1:
-        this.scene.start("StoreScene");
+        this.transitionToScene("StoreScene");
         break;
       case 2:
-        this.scene.start("CreditsScene");
+        this.transitionToScene("CreditsScene");
         break;
       case 3:
-        this.scene.start("titleScene");
+        this.transitionToScene("titleScene");
         break;
     }
   }
@@ -91,22 +124,30 @@ export class menuScene extends Phaser.Scene {
 
   public newGameButton() {
     const button = this.createMenuButton(202, 760, "Novo Jogo");
-    button.on("pointerup", () => this.scene.start("CharacterSelectScene"));
+    button.on("pointerup", () => {
+      this.transitionToScene("CharacterSelectScene");
+    });
   }
 
   public storeButton() {
     const button = this.createMenuButton(155, 820, "Loja");
-    button.on("pointerup", () => this.scene.start("StoreScene"));
+    button.on("pointerup", () => {
+      this.transitionToScene("StoreScene");
+    });
   }
 
   public configButton() {
     const button = this.createMenuButton(240, 880, "Configurações", 230);
-    button.on("pointerup", () => this.scene.start("configScene"));
+    button.on("pointerup", () => {
+      this.transitionToScene("configScene");
+    });
   }
 
   public exitButton() {
     const button = this.createMenuButton(155, 940, "Sair");
-    button.on("pointerup", () => this.scene.start("titleScene"));
+    button.on("pointerup", () => {
+      this.transitionToScene("titleScene");
+    });
   }
 
   private createMenuButton(

@@ -54,6 +54,19 @@ export class CharacterSelectScene extends Phaser.Scene {
     });
   }
 
+  private transitionToScene(targetScene: string, data?: any) {
+    // Para todas as cenas ativas exceto a atual
+    this.scene.manager.scenes.forEach(scene => {
+      if (scene.scene.key !== this.scene.key && scene.scene.isActive()) {
+        this.scene.stop(scene.scene.key);
+      }
+    });
+
+    // Para a cena atual e inicia a nova
+    this.scene.stop();
+    this.scene.start(targetScene, data);
+  }
+
   private createCharacterContainer(x: number, y: number, color: number, character: CharacterInfo, width: number, height: number) {
     const bgColor = character.id === "char1" ? color : 0x222222; 
     const itemBg = this.add
@@ -83,29 +96,30 @@ export class CharacterSelectScene extends Phaser.Scene {
       })
       .setOrigin(0.5);
 
- 
     const container = this.add.container(x, y, [itemBg, characterFrame, image, nameText]);
 
     if (character.id === "char1") {
-      
-        itemBg.setInteractive({ useHandCursor: true });
-        itemBg.on("pointerover", () => itemBg.setFillStyle(0x555555));
-        itemBg.on("pointerout", () => itemBg.setFillStyle(bgColor)); 
-        itemBg.on("pointerdown", () => {
-            console.log(`Personagem selecionado: ${character.name} (ID: ${character.id})`);
-            this.scene.start("gameScene", { selectedCharacterId: character.id });
-                  });
+      itemBg.setInteractive({ useHandCursor: true });
+      itemBg.on("pointerover", () => itemBg.setFillStyle(0x555555));
+      itemBg.on("pointerout", () => itemBg.setFillStyle(bgColor)); 
+      itemBg.on("pointerdown", () => {
+        console.log(`Personagem selecionado: ${character.name} (ID: ${character.id})`);
+        this.transitionToScene("gameScene", { 
+          selectedCharacterId: character.id,
+          waveKey: "Wave_1" // Sempre começa da primeira onda ao iniciar novo jogo
+        });
+      });
     } else {
-        itemBg.disableInteractive();
-        const lockedText = this.add
-            .text(0, 0, "Em Breve", {
-                ...this.textStyle,
-                align: "center",
-                fontSize: "50px",
-                color: "#aaaaaa", 
-            })
-            .setOrigin(0.5);
-        container.add(lockedText);
+      itemBg.disableInteractive();
+      const lockedText = this.add
+        .text(0, 0, "Em Breve", {
+          ...this.textStyle,
+          align: "center",
+          fontSize: "50px",
+          color: "#aaaaaa", 
+        })
+        .setOrigin(0.5);
+      container.add(lockedText);
     }
   }
 
@@ -120,8 +134,10 @@ export class CharacterSelectScene extends Phaser.Scene {
       .setAlign("center")
       .setOrigin(0.5);
 
-      backButton.on("pointerover", () => backButton.setFillStyle(0x555555));
-      backButton.on("pointerout", () => backButton.setFillStyle(0x333333));
-      backButton.on("pointerdown", () => this.scene.start("menuScene"));
+    backButton.on("pointerover", () => backButton.setFillStyle(0x555555));
+    backButton.on("pointerout", () => backButton.setFillStyle(0x333333));
+    backButton.on("pointerdown", () => { 
+      this.transitionToScene("menuScene");
+    });
   }
 }

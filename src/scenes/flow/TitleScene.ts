@@ -8,7 +8,27 @@ export class titleScene extends Phaser.Scene {
     super('titleScene');
   }
 
- 
+  private transitionToScene(targetScene: string) {
+    // Para todas as cenas ativas exceto a atual
+    this.scene.manager.scenes.forEach(scene => {
+      if (scene.scene.key !== this.scene.key && scene.scene.isActive()) {
+        this.scene.stop(scene.scene.key);
+      }
+    });
+
+    // Para a música
+    if (this.titleMusic) {
+      this.titleMusic.stop();
+    }
+
+    // Limpa eventos
+    this.events.removeAllListeners();
+    this.input.keyboard?.removeAllListeners();
+
+    // Para a cena atual e inicia a nova
+    this.scene.stop();
+    this.scene.start(targetScene);
+  }
 
   create() {
     this.add.nineslice(gameOptions.gameSize.width / 2, gameOptions.gameSize.height / 2, "molduraMenu",0, gameOptions.gameSize.width - 10, gameOptions.gameSize.height -10 , 16, 16, 16, 16)
@@ -39,7 +59,7 @@ export class titleScene extends Phaser.Scene {
     const enterKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 
     enterKey.on('down', () => {
-      this.scene.start('menuScene');
+      this.transitionToScene('menuScene');
     });
   }
 
@@ -47,5 +67,7 @@ export class titleScene extends Phaser.Scene {
     if (this.titleMusic) {
       this.titleMusic.stop();
     }
+    this.events.removeAllListeners();
+    this.input.keyboard?.removeAllListeners();
   }
 }

@@ -1,6 +1,7 @@
 import { HealthComponent } from "../../components/playerHealth/HealthComponent";
 import { currentEnemyStats } from "../../config/enemies/EnemiesContainer";
 import { Player } from "../player/Player";
+import { SoundManager } from "../../config/SoundManager";
 
 export class BossEnemy extends Phaser.Physics.Arcade.Sprite {
   #player: Player;
@@ -76,6 +77,7 @@ public updateEnemyBossMovement(scene:Phaser.Scene) {
 
   #die(): void {
     console.log('Juazeiro Derrotado!');
+    SoundManager.playBossDeathSFX();
     this.setActive(false);
     this.setVisible(false);
     this.destroy();

@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import { playerStats } from "../../config/player/PlayerConfig";
 import { storeSpecificItems } from "../../config/StoreItems";
 import { gameOptions } from "../../config/GameOptionsConfig";
+import { SoundManager } from "../../config/SoundManager";
 
 export class StoreScene extends Phaser.Scene {
    private apCoinText: Phaser.GameObjects.Text;
@@ -21,6 +22,10 @@ export class StoreScene extends Phaser.Scene {
     this.add.nineslice(gameOptions.gameSize.width / 2, gameOptions.gameSize.height / 2, "molduraLojaAp",0, 1916, 1076, 16, 16, 16, 16)
     this.cameras.main.setBackgroundColor("#222222");
     this.input.setDefaultCursor("default");
+    
+    // Inicializa o SoundManager
+    SoundManager.init(this);
+    SoundManager.playEnterStoreSFX();
 
     this.add
       .text(this.cameras.main.width / 2, 100, "Arretado Points", this.textStyle)
@@ -35,7 +40,6 @@ export class StoreScene extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.game.events.off("buyUpdatedCoin", this.updateApCoinHud, this);
     });
-    
   }
 
   private displayStoreItems() {
@@ -81,7 +85,7 @@ export class StoreScene extends Phaser.Scene {
     itemBg.on("pointerout", () => itemBg.setTint());
 
     itemBg.on("pointerdown", () => {
-
+      SoundManager.playOpenItemStoreSFX();
       const confirmBg = this.add.rectangle(x, y, 350, 300, 0x000000, 0.85).setOrigin(0.5);
       const confirmText = this.add
         .text(x, y - 60, "Deseja comprar este item?", {
@@ -103,7 +107,7 @@ export class StoreScene extends Phaser.Scene {
         .on("pointerdown", () => {
           item.effect();
           this.game.events.emit("buyUpdatedCoin", gameOptions.apCoin);
-          
+          SoundManager.playBuyItemAPSFX();
           const confirmation = this.add
             .text(x, y + 260, `Comprado!`, {
               ...this.textStyle,
@@ -166,9 +170,12 @@ export class StoreScene extends Phaser.Scene {
       .setAlign("center")
       .setOrigin(0.5);
 
-      backButton.on("pointerover", () => backButton.setFillStyle(0x555555));
-      backButton.on("pointerout", () => backButton.setFillStyle(0x333333));
-      backButton.on("pointerdown", () => this.scene.start("menuScene"));
+    backButton.on("pointerover", () => backButton.setFillStyle(0x555555));
+    backButton.on("pointerout", () => backButton.setFillStyle(0x333333));
+    backButton.on("pointerdown", () => {
+      SoundManager.playUIChangeMenuSelectSFX();
+      this.scene.start("menuScene");
+    });
   }
 
   private skinsButton(x: number, y: number) {
@@ -182,8 +189,17 @@ export class StoreScene extends Phaser.Scene {
       .setAlign("center")
       .setOrigin(0.5);
 
-      skinsButton.on("pointerover", () => skinsButton.setFillStyle(0x555555));
-      skinsButton.on("pointerout", () => skinsButton.setFillStyle(0x333333));
-      skinsButton.on("pointerdown", () => this.scene.start("SkinScene"));
+    skinsButton.on("pointerover", () => skinsButton.setFillStyle(0x555555));
+    skinsButton.on("pointerout", () => skinsButton.setFillStyle(0x333333));
+    skinsButton.on("pointerdown", () => {
+      SoundManager.playUIChangeMenuSelectSFX();
+      this.scene.start("SkinScene");
+    });
+  }
+
+  shutdown() {
+    // Limpa todos os recursos
+    this.events.removeAllListeners();
+    this.game.events.off("buyUpdatedCoin", this.updateApCoinHud, this);
   }
 }

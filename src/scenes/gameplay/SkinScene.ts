@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import { gameOptions } from "../../config/GameOptionsConfig";
 import { storeSkinItems } from "../../config/SkinItems";
+import { SoundManager } from "../../config/SoundManager";
 
 export class SkinScene extends Phaser.Scene {
   private currentPageIndex = 0;
@@ -29,8 +30,6 @@ export class SkinScene extends Phaser.Scene {
 
   init(data: { pageIndex?: number }) {
     this.currentPageIndex = data.pageIndex || 0;
-    //  const savedOwnedSkins = localStorage.getItem('ownedSkins');
-    // (savedOwnedSkins); this.ownedSkinIds = new Set(JSON.parse(savedOwnedSkins));
     this.setupPagination();
   }
 
@@ -38,6 +37,9 @@ export class SkinScene extends Phaser.Scene {
     this.add.nineslice(gameOptions.gameSize.width / 2, gameOptions.gameSize.height / 2, "molduraSkin2",0, 1916, 1076, 16, 16, 16, 16)
     this.cameras.main.setBackgroundColor("#222");
     this.input.setDefaultCursor("default");
+
+    // Inicializa o SoundManager
+    SoundManager.init(this);
 
     this.skinItemGroup = this.add.group();
 
@@ -244,8 +246,12 @@ export class SkinScene extends Phaser.Scene {
       gameOptions.apCoin -= price;
       this.ownedSkinIds.add(item.id);
 
-      // localStorage.setItem('ownedSkins', JSON.stringify(Array.from(this.ownedSkinIds)));
-      // localStorage.setItem('apCoin', gameOptions.apCoin.toString());
+      // Toca o som específico para a skin da Bahia
+      if (item.id === "bahia") {
+        SoundManager.playBahiaBuySFX();
+      } else {
+        SoundManager.playBuyItemAPSFX();
+      }
 
       this.game.events.emit("buyUpdatedCoin"); 
       if (this.confirmationDialogGroup) this.confirmationDialogGroup.destroy(true);
@@ -295,7 +301,10 @@ export class SkinScene extends Phaser.Scene {
 
     backButton.on("pointerover", () => backButton.setFillStyle(0x555555));
     backButton.on("pointerout", () => backButton.setFillStyle(0x333333));
-    backButton.on("pointerdown", () => this.scene.start("StoreScene"));
+    backButton.on("pointerdown", () => {   
+      SoundManager.playUIChangeMenuSelectSFX();
+      this.scene.start("StoreScene");
+    });
   }
 
   private createPreviousButton(x: number, y: number) {
@@ -305,7 +314,6 @@ export class SkinScene extends Phaser.Scene {
         .setStrokeStyle(2, 0xffffff)
         .setInteractive({ useHandCursor: true });
       this.add
-
         .text(x, y, "Anterior", this.textStyle)
         .setFontSize(38)
         .setAlign("center")
@@ -316,6 +324,7 @@ export class SkinScene extends Phaser.Scene {
       prevButton.on("pointerdown", () => {
         if (this.confirmationDialogGroup) this.confirmationDialogGroup.destroy(true);
         this.scene.start("SkinScene", { pageIndex: this.currentPageIndex - 1 });
+        SoundManager.playUIChangeMenuSelectSFX();
       });
     }
   }
@@ -329,7 +338,6 @@ export class SkinScene extends Phaser.Scene {
         .setStrokeStyle(2, 0xffffff)
         .setInteractive({ useHandCursor: true });
       this.add
-
         .text(x, y, "Seguinte", this.textStyle)
         .setFontSize(38)
         .setAlign("center")
@@ -340,7 +348,18 @@ export class SkinScene extends Phaser.Scene {
       nextButton.on("pointerdown", () => {
         if (this.confirmationDialogGroup) this.confirmationDialogGroup.destroy(true);
         this.scene.start("SkinScene", { pageIndex: this.currentPageIndex + 1 });
+        SoundManager.playUIChangeMenuSelectSFX();
       });
     }
+  }
+
+  shutdown() {
+    // Limpa todos os recursos
+    if (this.confirmationDialogGroup) {
+      this.confirmationDialogGroup.destroy(true);
+    }
+    this.skinItemGroup.clear(true, true);
+    this.events.removeAllListeners();
+    this.game.events.off("buyUpdatedCoin", this.updateApCoinHud, this);
   }
 }
