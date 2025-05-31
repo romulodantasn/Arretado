@@ -94,7 +94,7 @@ export class SoundManager {
   }
 
   static playRangedEnemyDeathSFX() {
-    this.rangedEnemyDeathSFX?.play({ volume: 0.20 });
+    this.rangedEnemyDeathSFX?.play({ volume: 0.10 });
     this.events.emit('ranged_enemy_death');
   }
 
