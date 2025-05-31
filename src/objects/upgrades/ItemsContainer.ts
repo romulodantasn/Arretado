@@ -4,7 +4,7 @@ import { playerStats } from '../../config/player/PlayerConfig';
 export interface itemsContainer {
   imageKey: string;
   name: string;
-  type: 'dano' | 'vida' | 'Velocidade' | 'sorte';
+  type: 'dano' | 'vida' | 'Velocidade' | 'Fire Rate';
   description: string;
   sentence: string;
   cost: number;
@@ -21,7 +21,7 @@ export const damageItems: itemsContainer[] = [
     cost: 10,
     effect: () => {
       console.log(`${name} Comprado, Dano aumentado`);
-      gun.gunDamage += 10;
+      gun.gunDamage += 3;
     },
   },
   {
@@ -33,19 +33,19 @@ export const damageItems: itemsContainer[] = [
     cost: 15,
     effect: () => {
       console.log(`${name} Comprado, Dano aumentado`);
-      gun.gunDamage += 20;
+      gun.gunDamage += 5;
     },
   },
   {
     imageKey: 'pitu',
     name: 'Pitu',
     type: 'dano',
-    description: '+ 20 de Dano no final de cada onda',
+    description: '+ 20 de Dano',
     sentence: '"Depois de uma dose de Pitú, ninguém segura o caba!"',
-    cost: 20,
+    cost: 18,
     effect: () => {
       console.log(`${name} Comprado, Dano aumentado`);
-      gun.gunDamage += 20;
+      gun.gunDamage += 8;
     },
   },
   {
@@ -54,10 +54,10 @@ export const damageItems: itemsContainer[] = [
     type: 'dano',
     description: '+10 de dano',
     sentence: '"Com uma espora dessas, até um djabo corre de medo!"',
-    cost: 20,
+    cost: 36,
     effect: () => {
       console.log(`${name} Comprado, Dano aumentado`);
-      gun.gunDamage += 10;
+      gun.gunDamage += 17;
     },
   },
   {
@@ -79,9 +79,9 @@ export const lifeItems: itemsContainer[] = [
     imageKey: 'bodega',
     name: 'Bodega',
     type: 'vida',
-    description: 'Restaura 50% de Vida ao final de cada onda',
+    description: '+50 de Vida',
     sentence: '"Mais forte que café coado em pano de chão"',
-    cost: 200,
+    cost: 400,
     effect: () => {
       console.log(`${name} Comprado, Vida aumentada`);
       playerStats.Health += 50;
@@ -93,7 +93,7 @@ export const lifeItems: itemsContainer[] = [
     type: 'vida',
     description: '+30 de Vida',
     sentence: '"Proteção de cabeça e alma, igual chapéu de cangaceiro"',
-    cost: 50,
+    cost: 150,
     effect: () => {
       console.log(`${name} Comprado, Vida aumentada`);
       playerStats.Health += 30;
@@ -103,9 +103,9 @@ export const lifeItems: itemsContainer[] = [
     imageKey: 'mandiga',
     name: 'Mandiga de velho',
     type: 'vida',
-    description: 'Chance de evitar a morte uma vez por onda',
+    description: '+20 de Vida',
     sentence: '"Só morre se quiser, com mandinga dessas até encosto foge"',
-    cost: 250,
+    cost: 120,
     effect: () => {
       console.log(`${name} Comprado, Vida aumentada`);
       playerStats.Health += 20;
@@ -142,123 +142,123 @@ export const moveSpeedItems: itemsContainer[] = [
     imageKey: 'peDePano',
     name: 'Pé de Pano',
     type: 'Velocidade',
-    description: '+30% de Velocidade de Movimento',
+    description: '+15% de Velocidade de Movimento',
     sentence: '"Foi por essa droga que você se apaixonou, Pé de Pano?"',
-    cost: 100,
+    cost: 25,
     effect: () => {
       console.log(`${name} Comprado, MoveSpeed aumentada`);
-      playerStats.MoveSpeed += 30;
+      playerStats.MoveSpeed += 15;
     },
   },
   {
     imageKey: 'sandaliaJesus',
-    name: 'sandaliaJesus',
+    name: 'Sandália de Jesus',
     type: 'Velocidade',
-    description: '+10% de Velocidade de Movimento',
+    description: '+25% de Velocidade de Movimento',
     sentence: '"Corre mais que notícia ruim no grupo do zap"',
-    cost: 50,
+    cost: 40,
     effect: () => {
       console.log(`${name} Comprado, MoveSpeed aumentada`);
-      playerStats.MoveSpeed += 300;
+      playerStats.MoveSpeed += 25;
     },
   },
   {
     imageKey: 'guaranaJesus',
-    name: 'guaranaJesus',
+    name: 'Guaraná Jesus',
     type: 'Velocidade',
-    description: '+25% de velocidade por 10s após beber, depois -10% de velocidade',
+    description: '+40% de Velocidade de Movimento',
     sentence: '"Igual promessa de político, primeiro adoça, depois derruba."',
-    cost: 50,
+    cost: 65,
     effect: () => {
       console.log(`${name} Comprado, MoveSpeed aumentada`);
-      playerStats.MoveSpeed += 20;
+      playerStats.MoveSpeed += 40;
     },
   },
   {
     imageKey: 'poeira',
-    name: 'poeira',
+    name: 'Poeira',
     type: 'Velocidade',
-    description: '+20 de MoveSpeed',
+    description: '+10% de Velocidade de Movimento',
     sentence: '"Oque que há velhinho?"',
-    cost: 100,
+    cost: 15,
     effect: () => {
       console.log(`${name} Comprado, MoveSpeed aumentada`);
-      playerStats.MoveSpeed += 20;
+      playerStats.MoveSpeed += 10;
     },
   },
   {
     imageKey: 'patuaSaoJorge',
-    name: 'patuaSaoJorge',
+    name: 'Patuá de São Jorge',
     type: 'Velocidade',
-    description: '+35 de MoveSpeed',
+    description: '+50% de Velocidade de Movimento',
     sentence: '"Para que meus inimigos tendo pés não me alcancem"',
-    cost: 200,
+    cost: 85,
     effect: () => {
       console.log(`${name} Comprado, MoveSpeed aumentada`);
-      playerStats.MoveSpeed += 35;
+      playerStats.MoveSpeed += 50;
     },
   },
 ];
 
-export const luckyItems: itemsContainer[] = [
+export const firerateItems: itemsContainer[] = [
   {
     imageKey: 'olhoDeCobra',
     name: 'Olho de Cobra',
-    type: 'sorte',
-    description: '+5% de Crítico',
-    sentence: '"Veneno bom é o da tua cobra"',
-    cost: 100,
+    type: 'Fire Rate',
+    description: '-15% no tempo entre tiros',
+    sentence: '"Ligeiro que nem bote de cobra!"',
+    cost: 30,
     effect: () => {
-      console.log(`${name} Comprado, Sorte aumentada`);
-      playerStats.Lucky += 30;
+      console.log(`${name} Comprado, Cadência aumentada`);
+      gun.fireRate *= 0.85; // Reduz o tempo entre tiros em 15%
     },
   },
   {
     imageKey: 'cordel',
-    name: 'cordel',
-    type: 'sorte',
-    description: '+10% de Crítico',
-    sentence: '"Cordel escrito à mão, destino traçado com emoção!"',
+    name: 'Cordel do Cangaço',
+    type: 'Fire Rate',
+    description: '-25% no tempo entre tiros',
+    sentence: '"Rápido nas rimas, rápido nos tiros!"',
     cost: 50,
     effect: () => {
-      console.log(`${name} Comprado, Sorte aumentada`);
-      playerStats.Lucky += 300;
+      console.log(`${name} Comprado, Cadência aumentada`);
+      gun.fireRate *= 0.75;
     },
   },
   {
     imageKey: 'dadoCangaceiro',
-    name: 'dadoCangaceiro',
-    type: 'sorte',
-    description: 'Críticos causam +50% de dano',
-    sentence: '"Dado de 6 lados, 1 lado é a morte"',
-    cost: 50,
+    name: 'Dado Cangaceiro',
+    type: 'Fire Rate',
+    description: '-40% no tempo entre tiros',
+    sentence: '"A sorte favorece os rápidos!"',
+    cost: 75,
     effect: () => {
-      console.log(`${name} Comprado, Sorte aumentada`);
-      playerStats.Lucky += 50;
+      console.log(`${name} Comprado, Cadência aumentada`);
+      gun.fireRate *= 0.6;
     },
   },
   {
     imageKey: 'ferradura',
-    name: 'ferradura',
-    type: 'sorte',
-    description: '+10% de chance de critico',
-    sentence: '"Dizem que dá sorte ou azar, depende de como cair"',
-    cost: 100,
+    name: 'Ferradura Enferrujada',
+    type: 'Fire Rate',
+    description: '-10% no tempo entre tiros',
+    sentence: '"Barato, mas vai que funciona..."',
+    cost: 15,
     effect: () => {
-      console.log(`${name} Comprado, Sorte aumentada`);
-      playerStats.Lucky += 20;
+      console.log(`${name} Comprado, Cadência aumentada`);
+      gun.fireRate *= 0.9;
     },
   },
   {
     imageKey: 'guine',
-    name: 'guine',
-    type: 'sorte',
-    description: '+15% de chance de critico apos ficar com pouca vida',
-    sentence: '"Fica fraco, mas vira bicho"',
-    cost: 200,
+    name: 'Pólvora de Guiné',
+    type: 'Fire Rate',
+    description: '-50% no tempo entre tiros',
+    sentence: '"Tão rápido que o cano fica vermelho!"',
+    cost: 100,
     effect: () => {
-      console.log(`${name} Comprado, Sorte aumentada`);
-      playerStats.Lucky += 15;
+      console.log(`${name} Comprado, Cadência aumentada`);
+      gun.fireRate *= 0.5;
     },
   },
 ];

@@ -81,17 +81,14 @@ export class menuScene extends Phaser.Scene {
   }
 
   private transitionToScene(targetScene: string, data?: any) {
-    // Para a música do menu
     SoundManager.menuBackgroundSFX?.stop();
 
-    // Para todas as cenas ativas exceto a atual
     this.scene.manager.scenes.forEach(scene => {
       if (scene.scene.key !== this.scene.key && scene.scene.isActive()) {
         this.scene.stop(scene.scene.key);
       }
     });
 
-    // Para a cena atual e inicia a nova
     this.scene.stop();
     this.scene.start(targetScene, data);
   }
@@ -126,7 +123,7 @@ export class menuScene extends Phaser.Scene {
   public newGameButton() {
     const button = this.createMenuButton(202, 760, "Novo Jogo");
     button.on("pointerup", () => {
-      this.transitionToScene("CharacterSelectScene");
+      this.transitionToScene("CutscenesScene", CUTSCENES.cutscene1);
     });
   }
 

@@ -9,7 +9,7 @@ import {
   damageItems,
   lifeItems,
   moveSpeedItems,
-  luckyItems,
+  firerateItems,
   itemsContainer,
 } from "../../objects/upgrades/ItemsContainer";
 
@@ -32,7 +32,7 @@ export class itemsDisplayUi extends Phaser.GameObjects.Container {
   #damageItems: itemsContainer[] = [...damageItems];
   #lifeItems: itemsContainer[] = [...lifeItems];
   #moveSpeedItems: itemsContainer[] = [...moveSpeedItems];
-  #luckyItems: itemsContainer[] = [...luckyItems];
+  #firerateItems: itemsContainer[] = [...firerateItems];
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y);
@@ -77,7 +77,7 @@ export class itemsDisplayUi extends Phaser.GameObjects.Container {
     shuffleItems(this.#damageItems);
     shuffleItems(this.#lifeItems);
     shuffleItems(this.#moveSpeedItems);
-    shuffleItems(this.#luckyItems);
+    shuffleItems(this.#firerateItems);
 
     if (this.#damageItems.length > 0) {
       this.createItemContainer(200, 600, 0x333333, this.#damageItems, "damage");
@@ -104,8 +104,8 @@ export class itemsDisplayUi extends Phaser.GameObjects.Container {
       console.warn("Não há itens de velocidade para exibir.");
     }
 
-    if (this.#luckyItems.length > 0) {
-      this.createItemContainer(1400, 600, 0x333333, this.#luckyItems, "lucky");
+    if (this.#firerateItems.length > 0) {
+      this.createItemContainer(1400, 600, 0x333333, this.#firerateItems, "lucky");
     } else {
       console.warn("Não há itens de sorte para exibir.");
     }
@@ -122,15 +122,13 @@ export class itemsDisplayUi extends Phaser.GameObjects.Container {
     const containerHeight = 580;
     const imageDisplayWidth = 134;
     const imageDisplayHeight = 134;
-    const imageFramePadding = 10; // Espaçamento entre a imagem e sua moldura
+    const imageFramePadding = 10;
 
     const itemBg = this.scene.add
       .rectangle(0, 0, containerWidth, containerHeight, color)
-      // .setStrokeStyle(2, 0xffffff) // A moldura do container pode substituir esta borda
       .setInteractive({ useHandCursor: true });
 
-    // Moldura para o contêiner do item (o card inteiro)
-    // Posição (0,0) relativa ao containerItem, tamanho igual ao itemBg
+    
     const containerFrame = this.scene.add.nineslice(0, 0, 'molduraContainerItems', 0, containerWidth, containerHeight, 16, 16, 16, 16);
     const containerItem = this.scene.add.container(x, y, [itemBg, containerFrame]);
 
@@ -150,15 +148,14 @@ export class itemsDisplayUi extends Phaser.GameObjects.Container {
     const imageX = 0;
     const imageY = -200;
 
-    // Moldura para a imagem do item
-    // Posicionada onde a imagem estará, um pouco maior que a imagem
+  
     const itemImageFrame = this.scene.add.nineslice(
       imageX,
       imageY,
       'molduraItems', 0,
       imageDisplayWidth + imageFramePadding * 2,
       imageDisplayHeight + imageFramePadding * 2,
-      10, 10, 10, 10 // Ajuste os cantos da moldura da imagem conforme necessário
+      6, 6, 6, 6 
     );
 
     const image = this.scene.add

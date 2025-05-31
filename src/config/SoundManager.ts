@@ -99,12 +99,12 @@ export class SoundManager {
   }
 
   static playDashEnemyDeathSFX() {
-    this.dashEnemyDeathSFX?.play({ volume: 0.15 });
+    this.dashEnemyDeathSFX?.play({ volume: 0.8 });
     this.events.emit('dash_enemy_death');
   }
 
   static playTankEnemyDeathSFX() {
-    this.tankEnemyDeathSFX?.play({ volume: 0.15 });
+    this.tankEnemyDeathSFX?.play({ volume: 0.25 });
     this.events.emit('tank_enemy_death');
   }
 

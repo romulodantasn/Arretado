@@ -283,20 +283,18 @@ export class Collider { // Class names are typically PascalCase
     }
   }
 
-  // Método auxiliar para lidar com a morte do jogador
   #handlePlayerDeath() {
     this.#scene.scene.stop("healthUi");
     this.#scene.scene.stop("PlayerHealthBar");
     this.#scene.scene.stop("gameHud");
     this.#scene.scene.stop("gameScene");
     this.#scene.scene.stop("PauseScene");
-    this.#scene.scene.start("GameOverScene");
+    this.#scene.scene.restart();
   }
 
   public destroy(): void {
     console.log('[ColliderComponent] Destroying colliders...');
 
-    // Destruir e limpar referências dos colliders individuais
     if (this.#playerBasicEnemyCollider) {
       this.#playerBasicEnemyCollider.destroy();
       this.#playerBasicEnemyCollider = undefined!;
