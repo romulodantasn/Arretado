@@ -14,45 +14,63 @@ export class BossEnemy extends Phaser.Physics.Arcade.Sprite {
     scene.add.existing(this);
     scene.physics.add.existing(this);
 
+    const body = this.body as Phaser.Physics.Arcade.Body;
+    body.setBounce(0, 0);
+    body.setImmovable(true);
+
     this.setScale(6);
     this.setSize(48, 48);
     this.setOffset(6, 6);
     this.setDepth(20);
     this.setCollideWorldBounds(true);
-    this.bulletGroup = this.scene.physics.add.group();
+    
+    this.bulletGroup = this.scene.physics.add.group({
+      bounceX: 0,
+      bounceY: 0,
+      collideWorldBounds: false
+    });
+    
     this.setupContinuousShooting(scene);
-  
 
     const bossId = `boss_${Date.now()}_${Math.random().toString(16).slice(2)}`;
     const bossHealth = new HealthComponent(currentEnemyStats.BossEnemy.Health, currentEnemyStats.BossEnemy.Health, bossId);
     this.setData('healthComponent', bossHealth);
-
   }
   
   private setupContinuousShooting(scene: Phaser.Scene) {
     scene.time.addEvent({
       delay: currentEnemyStats.BossEnemy.FireRate,
-      loop:true,
+      loop: true,
       callback: () => {
         if (this.active && this instanceof Phaser.Physics.Arcade.Sprite) {
           const bullet = this.scene.physics.add.sprite(this.x, this.y, 'bossBullet');
-          bullet.setOffset(0.5,0.5)
+          bullet.setOffset(0.5, 0.5);
+          
+          const bulletBody = bullet.body as Phaser.Physics.Arcade.Body;
+          bulletBody.setBounce(0, 0);
+          bulletBody.setAllowGravity(false);
+          
           this.bulletGroup.add(bullet);
           scene.physics.moveToObject(bullet, this.#player, currentEnemyStats.BossEnemy.BulletSpeed);
+          
+          scene.time.delayedCall(3000, () => {
+            if (bullet.active) {
+              bullet.destroy();
+            }
+          });
         }
       }
-    })
+    });
   }
 
-public updateEnemyBossMovement(scene:Phaser.Scene) {
-  this.scene.physics.moveToObject(this, this.#player, currentEnemyStats.BossEnemy.Speed);
-   if (this.x < this.x) {
-          this.setFlipX(false); // se estiver invertido
-        } else {
-          this.setFlipX(true);
-        }
-}
-
+  public updateEnemyBossMovement(scene: Phaser.Scene) {
+    this.scene.physics.moveToObject(this, this.#player, currentEnemyStats.BossEnemy.Speed);
+    if (this.x < this.#player.x) {
+      this.setFlipX(false);
+    } else {
+      this.setFlipX(true);
+    }
+  }
 
   public takeDamage(amount: number): void {
     if (!this.active) return;
@@ -78,9 +96,29 @@ public updateEnemyBossMovement(scene:Phaser.Scene) {
   #die(): void {
     console.log('Juazeiro Derrotado!');
     SoundManager.playBossDeathSFX();
+    
+    // Limpa os projéteis antes de destruir o boss
+    this.bulletGroup.clear(true, true);
+    
+    // Guarda referência da cena antes de desativar o boss
+    const currentScene = this.scene;
+    
     this.setActive(false);
     this.setVisible(false);
+    
+    // Certifica que a cena existe antes de fazer a transição
+    if (currentScene) {
+      // Para todas as cenas ativas antes de iniciar a cutscene
+      currentScene.scene.stop('gameHud');
+      currentScene.scene.stop('PlayerHealthBar');
+      currentScene.scene.stop('BossHealthBar');
+      currentScene.scene.stop('PlayerBoostCooldownUI');
+      currentScene.scene.stop('gameScene');
+      
+      // Inicia a cutscene4
+      currentScene.scene.start('cutscene4');
+    }
+    
     this.destroy();
   }
-
 }

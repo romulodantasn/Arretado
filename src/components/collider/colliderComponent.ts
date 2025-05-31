@@ -129,6 +129,7 @@ export class Collider { // Class names are typically PascalCase
 
   // BossEnemy
   if (this.#boss?.active) {
+    // Boss collision with player
     this.#playerBossCollider = this.#scene.physics.add.collider(
       this.#player,
       this.#boss,
@@ -141,6 +142,20 @@ export class Collider { // Class names are typically PascalCase
           );
         }
       }
+    );
+
+    // Boss collision with player bullets
+    const playerBullets = this.#scene.physics.add.group();
+    this.#scene.physics.add.overlap(
+      this.#boss,
+      playerBullets,
+      (boss, bullet) => {
+        if (bullet instanceof Phaser.Physics.Arcade.Sprite) {
+          bullet.destroy(); // Destroy the bullet on impact
+        }
+      },
+      undefined,
+      this
     );
   }
 

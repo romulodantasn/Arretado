@@ -42,9 +42,12 @@ export class shootingController {
     this.#boss = boss;
     this.#reticle = reticle!;
 
-    this.#bulletGroup = this.#scene.physics.add.group({ classType: Phaser.Physics.Arcade.Sprite, runChildUpdate: true });
+    this.#bulletGroup = this.#scene.physics.add.group({ 
+      classType: Phaser.Physics.Arcade.Sprite, 
+      runChildUpdate: true 
+    });
+    
     this.#keys = inputManager.getKeys();
-
     this.#setupColliders();
   }
 
@@ -79,12 +82,14 @@ export class shootingController {
       );
     }
 
-    if (this.#boss) {
+    if (this.#boss?.active) {
       this.#scene.physics.add.collider(
         this.#bulletGroup,
         this.#boss,
-        this.bossCollision.bind(this)
+        this.bulletBossCollision.bind(this)
       );
+    } else {
+      console.warn("Boss não inicializado, pulando colisão com balas.");
     }
   }
 
@@ -141,7 +146,6 @@ export class shootingController {
     this.#bulletGroup.add(bullet);
     bullet.setVelocity(Math.cos(angle) * speed, Math.sin(angle) * speed);
     bullet.setActive(true).setVisible(true);
-    
   }
 
   private showDamageText(x: number, y: number, damage: number) {
@@ -245,20 +249,26 @@ export class shootingController {
     bullet.destroy();
   }
 
-  private bossCollision(bullet: any, boss: any) {
-    if (!bullet.active || !boss.active) return;
+  private bulletBossCollision(obj1: any, obj2: any) {
+    const boss = obj1 instanceof BossEnemy ? obj1 : obj2 instanceof BossEnemy ? obj2 : null;
+    const bullet = obj1 instanceof Phaser.Physics.Arcade.Sprite && !(obj1 instanceof BossEnemy)
+      ? obj1 : obj2 instanceof Phaser.Physics.Arcade.Sprite && !(obj2 instanceof BossEnemy)
+      ? obj2 : null;
 
-    const bossHealth = boss.getData('healthComponent') as HealthComponent;
-    if (!bossHealth) return;
+    if (!boss || !bullet || !boss.active || !bullet.active) return;
+
+    const bossHealth = boss.getData('healthComponent') as HealthComponent | null;
+    if (!bossHealth) {
+      console.warn("Boss sem HealthComponent.");
+      return;
+    }
 
     const damage = gun.gunDamage;
     this.showDamageText(boss.x, boss.y - 50, damage);
-    bossHealth.loseHealth(damage);
+    boss.takeDamage(damage);
 
-    if (bossHealth.isDead()) {
-      SoundManager.playBossDeathSFX();
+    if (!boss.active) {
       coinOnKillEvent(this.#scene);
-      boss.destroy();
     }
 
     bullet.destroy();
