@@ -1,4 +1,3 @@
-
 import NinePatchPlugin from 'phaser3-rex-plugins/plugins/ninepatch-plugin.js';
 import { gameOptions } from './GameOptionsConfig';
 import { BootScene } from '../scenes/flow/BootScene';
@@ -15,6 +14,8 @@ import { StoreScene } from '../scenes/gameplay/StoreScene';
 import { SkinScene } from '../scenes/gameplay/SkinScene';
 import { CharacterSelectScene } from '../scenes/flow/CharacterSelectScene';
 import { PlayerBoostCooldownUI } from '../objects/player/PlayerBoostCooldownUI';
+import { CutscenesScene } from '../scenes/flow/CutscenesScene';
+import { BossHealthBar } from '../objects/enemies/BossHealthBar';
 
 
 export const scaleObject: Phaser.Types.Core.ScaleConfig = {
@@ -43,7 +44,9 @@ export const configObject: Phaser.Types.Core.GameConfig = {
     titleScene,
     menuScene,
     CharacterSelectScene,
-    PlayerBoostCooldownUI
+    PlayerBoostCooldownUI,
+    CutscenesScene,
+    BossHealthBar
   ],
   physics: {
     default: 'arcade',
