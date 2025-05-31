@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import { gameOptions } from "../../config/GameOptionsConfig";
+import { CUTSCENES } from "../../config/CutscenesContainer";
 
 interface CharacterInfo {
   id: string;
@@ -104,9 +105,9 @@ export class CharacterSelectScene extends Phaser.Scene {
       itemBg.on("pointerout", () => itemBg.setFillStyle(bgColor)); 
       itemBg.on("pointerdown", () => {
         console.log(`Personagem selecionado: ${character.name} (ID: ${character.id})`);
-        this.transitionToScene("gameScene", { 
+        this.transitionToScene("CutscenesScene", { 
+          ...CUTSCENES.cutscene2,
           selectedCharacterId: character.id,
-          waveKey: "Wave_1" // Sempre começa da primeira onda ao iniciar novo jogo
         });
       });
     } else {

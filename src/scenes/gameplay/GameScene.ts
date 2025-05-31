@@ -98,7 +98,12 @@ export class GameScene extends Phaser.Scene {
     }
     
     if(Waves[this.#currentWaveKey].enemies.includes('BossEnemy')) {
-      this.#boss = new BossEnemy(this,300, 300, this.#player) 
+      this.#boss = new BossEnemy(this,300, 300, this.#player);
+      this.scene.launch('BossHealthBar');
+      const bossBody = this.#boss.body as Phaser.Physics.Arcade.Body;
+      bossBody.setImmovable(true);
+      bossBody.setBounce(0, 0);
+      bossBody.onCollide = true;
     }
 
     this.#shootingController = new shootingController(this, this.#player, this.#basicEnemy,this.#rangedEnemy, this.#dashEnemy, this.#tankEnemy, this.#boss, this.#reticle);
@@ -168,7 +173,7 @@ export class GameScene extends Phaser.Scene {
     this.time.removeAllEvents();
     
     // Para e remove as cenas dependentes
-    ['gameHud', 'PlayerHealthBar', 'PlayerBoostCooldownUI'].forEach(sceneName => {
+    ['gameHud', 'PlayerHealthBar', 'PlayerBoostCooldownUI', 'BossHealthBar'].forEach(sceneName => {
       if (this.scene.isActive(sceneName)) {
         this.scene.stop(sceneName);
         this.scene.remove(sceneName);

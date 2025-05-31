@@ -456,6 +456,26 @@
       "url":"skins/sergipeSkin.png"
     },
     {
+      "type":"image",
+      "key": "cutscene1",
+      "url":"cutscenes/cutscene1.png"
+    },
+    {
+      "type":"image",
+      "key": "cutscene2",
+      "url":"cutscenes/cutscene2.png"
+    },
+    {
+      "type":"image",
+      "key": "cutscene3",
+      "url":"cutscenes/cutscene3.png"
+    },
+    {
+      "type":"image",
+      "key": "cutscene4",
+      "url":"cutscenes/cutscene4.png"
+    },
+    {
       "type":"spritesheet",
       "key": "bandeiraAlagoas",
       "url":"skins/skinFlag/bandeiraAlagoas.png",

@@ -1,6 +1,7 @@
 import { inputManager } from "../../components/input/InputManager";
 import { gameOptions } from "../../config/GameOptionsConfig";
 import { SoundManager } from "../../config/SoundManager";
+import { CUTSCENES } from "../../config/CutscenesContainer";
 
 export class menuScene extends Phaser.Scene {
   #menuItems: Phaser.GameObjects.Rectangle[] = [];
@@ -100,7 +101,7 @@ export class menuScene extends Phaser.Scene {
 
     switch (this.#selectedItemIndex) {
       case 0:
-        this.transitionToScene("CharacterSelectScene");
+        this.transitionToScene("CutscenesScene", CUTSCENES.cutscene1);
         break;
       case 1:
         this.transitionToScene("StoreScene");
