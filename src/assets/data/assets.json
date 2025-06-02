@@ -32,6 +32,16 @@
       "url": "icons/apCoinIcon.png"
     },
     {
+      "type": "image",
+      "key": "waveIcon",
+      "url": "icons/waveIcon.png"
+    },
+    {
+      "type": "image",
+      "key": "actIcon",
+      "url": "icons/actIcon.png"
+    },
+    {
       "type": "tilemapTiledJSON",
       "key": "tileset_wave_1",
       "url": "tilesets/tileset_wave_1.json"
