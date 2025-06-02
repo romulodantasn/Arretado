@@ -2,6 +2,12 @@
   "path": "assets/images",
   "files": [
     {
+      "type": "spritesheet",
+      "key": "loading",
+      "url": "loading.png",
+      "frameConfig": { "frameWidth": 64, "frameHeight": 42 }
+    },
+    {
       "type": "image",
       "key": "bullet",
       "url": "projectiles/bullet.png"
@@ -130,51 +136,6 @@
       "type": "image",
       "key": "betrayel_wave_9",
       "url": "/backgrounds/wave_9/betrayel_wave_9.png"
-    },
-    {
-      "type": "image",
-      "key": "wave_1_background",
-      "url": "backgrounds/wave_1_background.png"
-    },
-    {
-      "type": "image",
-      "key": "wave_2_background",
-      "url": "backgrounds/wave_2_background.jpg"
-    },
-    {
-      "type": "image",
-      "key": "wave_3_background",
-      "url": "backgrounds/wave_3_background.jpg"
-    },
-    {
-      "type": "image",
-      "key": "wave_4_background",
-      "url": "backgrounds/wave_4_background.jpg"
-    },
-    {
-      "type": "image",
-      "key": "wave_5_background",
-      "url": "backgrounds/wave_5_background.jpg"
-    },
-    {
-      "type": "image",
-      "key": "wave_6_background",
-      "url": "backgrounds/wave_6_background.jpg"
-    },
-    {
-      "type": "image",
-      "key": "wave_7_background",
-      "url": "backgrounds/wave_7_background.jpg"
-    },
-    {
-      "type": "image",
-      "key": "wave_8_background",
-      "url": "backgrounds/wave_8_background.jpg"
-    },
-    {
-      "type": "image",
-      "key": "wave_9_background",
-      "url": "backgrounds/wave_9_background.jpg"
     },
     {
       "type": "image",
