@@ -9,23 +9,19 @@ export class titleScene extends Phaser.Scene {
   }
 
   private transitionToScene(targetScene: string) {
-    // Para todas as cenas ativas exceto a atual
     this.scene.manager.scenes.forEach(scene => {
       if (scene.scene.key !== this.scene.key && scene.scene.isActive()) {
         this.scene.stop(scene.scene.key);
       }
     });
 
-    // Para a música
-    if (this.titleMusic) {
+    if (this.titleMusic && this.titleMusic.isPlaying) {
       this.titleMusic.stop();
     }
 
-    // Limpa eventos
     this.events.removeAllListeners();
     this.input.keyboard?.removeAllListeners();
 
-    // Para a cena atual e inicia a nova
     this.scene.stop();
     this.scene.start(targetScene);
   }
@@ -41,12 +37,14 @@ export class titleScene extends Phaser.Scene {
 
     this.titleMusic = this.sound.add('titleSceneAudio', { loop: true, volume: 0.15 });
 
-    if (this.sound.locked) {
-      this.sound.once('unlocked', () => {
+    if (!this.titleMusic.isPlaying) {
+      if (this.sound.locked) {
+        this.sound.once('unlocked', () => {
+          this.titleMusic.play();
+        });
+      } else {
         this.titleMusic.play();
-      });
-    } else {
-      this.titleMusic.play();
+      }
     }
 
     const gameName = ['ARRETADO'];
@@ -64,7 +62,7 @@ export class titleScene extends Phaser.Scene {
   }
 
   shutdown() {
-    if (this.titleMusic) {
+    if (this.titleMusic && this.titleMusic.isPlaying) {
       this.titleMusic.stop();
     }
     this.events.removeAllListeners();

@@ -8,7 +8,7 @@ export class PlayerBoostCooldownUI extends Phaser.Scene {
 
   private readonly textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
     fontFamily: 'Cordelina',
-    fontSize: '20px',
+    fontSize: '48px',
     color: '#ffffff',
     stroke: '#000000',
     strokeThickness: 3,
@@ -44,7 +44,7 @@ export class PlayerBoostCooldownUI extends Phaser.Scene {
       if (currentTime < this.cooldownEndTime) {
         const remainingTimeMs = this.cooldownEndTime - currentTime;
         const remainingTimeSec = Math.max(0, remainingTimeMs / 1000);
-        this.cooldownText.setText(`Boost CD: ${remainingTimeSec.toFixed(1)}s`);
+        this.cooldownText.setText(`Tempo da Carrera: ${remainingTimeSec.toFixed(1)}s`);
         if (!this.cooldownText.visible) this.cooldownText.setVisible(true);
       } else {
         if (this.cooldownText.visible) this.cooldownText.setVisible(false);

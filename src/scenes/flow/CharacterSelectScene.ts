@@ -17,12 +17,12 @@ export class CharacterSelectScene extends Phaser.Scene {
     fontFamily: "Cordelina",
     color: "#ffffff",
     stroke: "#000000",
-    strokeThickness: 4,
+    strokeThickness: 1,
   };
 
   create() {
     this.add.nineslice(gameOptions.gameSize.width / 2, gameOptions.gameSize.height / 2, "molduraMenu",0, 1916, 1076, 16, 16, 16, 16)   
-    this.cameras.main.setBackgroundColor("#222222");
+    this.cameras.main.setBackgroundColor("#c9bda1");
     this.input.setDefaultCursor("default");
 
     this.add
@@ -56,20 +56,17 @@ export class CharacterSelectScene extends Phaser.Scene {
   }
 
   private transitionToScene(targetScene: string, data?: any) {
-    // Para todas as cenas ativas exceto a atual
     this.scene.manager.scenes.forEach(scene => {
       if (scene.scene.key !== this.scene.key && scene.scene.isActive()) {
         this.scene.stop(scene.scene.key);
       }
     });
-
-    // Para a cena atual e inicia a nova
     this.scene.stop();
     this.scene.start(targetScene, data);
   }
 
   private createCharacterContainer(x: number, y: number, color: number, character: CharacterInfo, width: number, height: number) {
-    const bgColor = character.id === "char1" ? color : 0x222222; 
+    const bgColor = character.id === "char1" ? 0xc9bda1 : 0xb5ab91; 
     const itemBg = this.add
       .rectangle(0, 0, width, height, bgColor)
       .setInteractive({ useHandCursor: true });
@@ -101,7 +98,7 @@ export class CharacterSelectScene extends Phaser.Scene {
 
     if (character.id === "char1") {
       itemBg.setInteractive({ useHandCursor: true });
-      itemBg.on("pointerover", () => itemBg.setFillStyle(0x555555));
+      itemBg.on("pointerover", () => itemBg.setFillStyle(0xe1d3b1));
       itemBg.on("pointerout", () => itemBg.setFillStyle(bgColor)); 
       itemBg.on("pointerdown", () => {
         console.log(`Personagem selecionado: ${character.name} (ID: ${character.id})`);
@@ -117,7 +114,7 @@ export class CharacterSelectScene extends Phaser.Scene {
           ...this.textStyle,
           align: "center",
           fontSize: "50px",
-          color: "#aaaaaa", 
+          color: "#000000", 
         })
         .setOrigin(0.5);
       container.add(lockedText);
@@ -126,8 +123,8 @@ export class CharacterSelectScene extends Phaser.Scene {
 
   private createBackButton(x: number, y: number) {
     const backButton = this.add
-      .rectangle(x, y, 300, 80, 0x333333)
-      .setStrokeStyle(2, 0xffffff)
+      .rectangle(x, y, 300, 80, 0xc9bda1)
+      .setStrokeStyle(2, 0x000000)
       .setInteractive({ useHandCursor: true });
     const buttonText = this.add
       .text(x, y, "Voltar", this.textStyle)
@@ -135,8 +132,8 @@ export class CharacterSelectScene extends Phaser.Scene {
       .setAlign("center")
       .setOrigin(0.5);
 
-    backButton.on("pointerover", () => backButton.setFillStyle(0x555555));
-    backButton.on("pointerout", () => backButton.setFillStyle(0x333333));
+    backButton.on("pointerover", () => backButton.setFillStyle(0xe1d3b1));
+    backButton.on("pointerout", () => backButton.setFillStyle(0xc9bda1));
     backButton.on("pointerdown", () => { 
       this.transitionToScene("menuScene");
     });

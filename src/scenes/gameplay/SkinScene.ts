@@ -35,10 +35,9 @@ export class SkinScene extends Phaser.Scene {
 
   create() {
     this.add.nineslice(gameOptions.gameSize.width / 2, gameOptions.gameSize.height / 2, "molduraSkin2",0, 1916, 1076, 16, 16, 16, 16)
-    this.cameras.main.setBackgroundColor("#222");
+    this.cameras.main.setBackgroundColor(0xc9bda1);
     this.input.setDefaultCursor("default");
 
-    // Inicializa o SoundManager
     SoundManager.init(this);
 
     this.skinItemGroup = this.add.group();
@@ -212,17 +211,23 @@ export class SkinScene extends Phaser.Scene {
 
     const priceIcon = this.add.image(dialogX - priceText.width / 2 - 30, dialogY - 30, "apCoinIcon").setScale(0.1).setDepth(12);
 
-    const confirmButton = this.add.rectangle(dialogX - 100, dialogY + 80, 180, 60, 0x28a745)
-      .setStrokeStyle(2, 0xffffff)
+    const confirmButton = this.add.rectangle(dialogX - 100, dialogY + 80, 180, 60, 0xc9bda1)
+      .setStrokeStyle(2, 0x000000)
       .setInteractive({ useHandCursor: true })
       .setDepth(12);
     const confirmText = this.add.text(confirmButton.x, confirmButton.y, "Confirmar", { ...this.textStyle, fontSize: "28px" }).setOrigin(0.5).setDepth(12);
 
-    const cancelButton = this.add.rectangle(dialogX + 100, dialogY + 80, 180, 60, 0xdc3545)
-      .setStrokeStyle(2, 0xffffff)
+    const cancelButton = this.add.rectangle(dialogX + 100, dialogY + 80, 180, 60, 0xc9bda1)
+      .setStrokeStyle(2, 0x000000)
       .setInteractive({ useHandCursor: true })
       .setDepth(12);
     const cancelText = this.add.text(cancelButton.x, cancelButton.y, "Cancelar", { ...this.textStyle, fontSize: "28px" }).setOrigin(0.5).setDepth(12);
+
+    confirmButton.on("pointerover", () => confirmButton.setFillStyle(0xe1d3b1));
+    confirmButton.on("pointerout", () => confirmButton.setFillStyle(0xc9bda1));
+
+    cancelButton.on("pointerover", () => cancelButton.setFillStyle(0xe1d3b1));
+    cancelButton.on("pointerout", () => cancelButton.setFillStyle(0xc9bda1));
 
     this.confirmationDialogGroup.addMultiple([
       overlay, dialogBg, titleText, priceText, priceIcon, confirmButton, confirmText, cancelButton, cancelText
@@ -246,7 +251,6 @@ export class SkinScene extends Phaser.Scene {
       gameOptions.apCoin -= price;
       this.ownedSkinIds.add(item.id);
 
-      // Toca o som específico para a skin da Bahia
       if (item.id === "bahia") {
         SoundManager.playBahiaBuySFX();
       } else {
@@ -290,8 +294,8 @@ export class SkinScene extends Phaser.Scene {
 
   private createStoreReturnButton(x: number, y: number) {
     const backButton = this.add
-      .rectangle(x, y, 200, 60, 0x333333)
-      .setStrokeStyle(2, 0xffffff)
+      .rectangle(x, y, 200, 60, 0xc9bda1)
+      .setStrokeStyle(2, 0x000000)
       .setInteractive({ useHandCursor: true });
     this.add
       .text(x, y, "Loja", this.textStyle) 
@@ -299,8 +303,8 @@ export class SkinScene extends Phaser.Scene {
       .setAlign("center")
       .setOrigin(0.5);
 
-    backButton.on("pointerover", () => backButton.setFillStyle(0x555555));
-    backButton.on("pointerout", () => backButton.setFillStyle(0x333333));
+    backButton.on("pointerover", () => backButton.setFillStyle(0xe1d3b1));
+    backButton.on("pointerout", () => backButton.setFillStyle(0xc9bda1));
     backButton.on("pointerdown", () => {   
       SoundManager.playUIChangeMenuSelectSFX();
       this.scene.start("StoreScene");
@@ -310,8 +314,8 @@ export class SkinScene extends Phaser.Scene {
   private createPreviousButton(x: number, y: number) {
     if (this.currentPageIndex > 0 && this.effectiveSkinPages.length > 1) {
       const prevButton = this.add
-        .rectangle(x, y, 200, 60, 0x333333)
-        .setStrokeStyle(2, 0xffffff)
+        .rectangle(x, y, 200, 60, 0xc9bda1)
+        .setStrokeStyle(2, 0x000000)
         .setInteractive({ useHandCursor: true });
       this.add
         .text(x, y, "Anterior", this.textStyle)
@@ -319,8 +323,8 @@ export class SkinScene extends Phaser.Scene {
         .setAlign("center")
         .setOrigin(0.5);
 
-      prevButton.on("pointerover", () => prevButton.setFillStyle(0x555555));
-      prevButton.on("pointerout", () => prevButton.setFillStyle(0x333333));
+      prevButton.on("pointerover", () => prevButton.setFillStyle(0xe1d3b1));
+      prevButton.on("pointerout", () => prevButton.setFillStyle(0xc9bda1));
       prevButton.on("pointerdown", () => {
         if (this.confirmationDialogGroup) this.confirmationDialogGroup.destroy(true);
         this.scene.start("SkinScene", { pageIndex: this.currentPageIndex - 1 });
@@ -334,8 +338,8 @@ export class SkinScene extends Phaser.Scene {
 
     if (this.currentPageIndex < totalPages - 1 && totalPages > 1) {
       const nextButton = this.add
-        .rectangle(x, y, 200, 60, 0x333333)
-        .setStrokeStyle(2, 0xffffff)
+        .rectangle(x, y, 200, 60, 0xc9bda1)
+        .setStrokeStyle(2, 0x000000)
         .setInteractive({ useHandCursor: true });
       this.add
         .text(x, y, "Seguinte", this.textStyle)
@@ -343,8 +347,8 @@ export class SkinScene extends Phaser.Scene {
         .setAlign("center")
         .setOrigin(0.5);
 
-      nextButton.on("pointerover", () => nextButton.setFillStyle(0x555555));
-      nextButton.on("pointerout", () => nextButton.setFillStyle(0x333333));
+      nextButton.on("pointerover", () => nextButton.setFillStyle(0xe1d3b1));
+      nextButton.on("pointerout", () => nextButton.setFillStyle(0xc9bda1));
       nextButton.on("pointerdown", () => {
         if (this.confirmationDialogGroup) this.confirmationDialogGroup.destroy(true);
         this.scene.start("SkinScene", { pageIndex: this.currentPageIndex + 1 });
@@ -354,7 +358,6 @@ export class SkinScene extends Phaser.Scene {
   }
 
   shutdown() {
-    // Limpa todos os recursos
     if (this.confirmationDialogGroup) {
       this.confirmationDialogGroup.destroy(true);
     }

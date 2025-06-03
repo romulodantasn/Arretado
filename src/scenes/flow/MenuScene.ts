@@ -32,12 +32,14 @@ export class menuScene extends Phaser.Scene {
       16,
       16
     );
+    
+    this.cameras.main.setBackgroundColor("#c9bda1");
+    
     this.titleText();
     this.newGameButton();
     this.storeButton();
     this.configButton();
     this.exitButton();
-    this.cameras.main.setBackgroundColor("#222222");
     
     SoundManager.init(this);
     SoundManager.playMenuBackgroundSFX();
@@ -82,14 +84,6 @@ export class menuScene extends Phaser.Scene {
 
   private transitionToScene(targetScene: string, data?: any) {
     SoundManager.menuBackgroundSFX?.stop();
-
-    this.scene.manager.scenes.forEach(scene => {
-      if (scene.scene.key !== this.scene.key && scene.scene.isActive()) {
-        this.scene.stop(scene.scene.key);
-      }
-    });
-
-    this.scene.stop();
     this.scene.start(targetScene, data);
   }
 

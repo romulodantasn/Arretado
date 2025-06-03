@@ -20,10 +20,9 @@ export class StoreScene extends Phaser.Scene {
 
   create() {
     this.add.nineslice(gameOptions.gameSize.width / 2, gameOptions.gameSize.height / 2, "molduraLojaAp",0, 1916, 1076, 16, 16, 16, 16)
-    this.cameras.main.setBackgroundColor("#222222");
+    this.cameras.main.setBackgroundColor(0xc9bda1);
     this.input.setDefaultCursor("default");
     
-    // Inicializa o SoundManager
     SoundManager.init(this);
     SoundManager.playEnterStoreSFX();
 
@@ -64,7 +63,7 @@ export class StoreScene extends Phaser.Scene {
       .setDisplaySize(250, 250);
 
     const itemValueText = this.add
-      .text(0, -200, item.itemValue, {
+      .text(0, -300, item.itemValue, {
         ...this.textStyle,
         align: "center",
         fontSize: "36px",
@@ -161,8 +160,8 @@ export class StoreScene extends Phaser.Scene {
 
   private createBackButton(x: number, y: number) {
     const backButton = this.add
-      .rectangle(x, y, 300, 80, 0x333333)
-      .setStrokeStyle(2, 0xffffff)
+      .rectangle(x, y, 300, 80, 0xc9bda1)
+      .setStrokeStyle(2, 0x000000)
       .setInteractive({ useHandCursor: true });
     const buttonText = this.add
       .text(x, y, "Voltar", this.textStyle)
@@ -170,8 +169,8 @@ export class StoreScene extends Phaser.Scene {
       .setAlign("center")
       .setOrigin(0.5);
 
-    backButton.on("pointerover", () => backButton.setFillStyle(0x555555));
-    backButton.on("pointerout", () => backButton.setFillStyle(0x333333));
+    backButton.on("pointerover", () => backButton.setFillStyle(0xe1d3b1));
+    backButton.on("pointerout", () => backButton.setFillStyle(0xc9bda1));
     backButton.on("pointerdown", () => {
       SoundManager.playUIChangeMenuSelectSFX();
       this.scene.start("menuScene");
@@ -180,8 +179,8 @@ export class StoreScene extends Phaser.Scene {
 
   private skinsButton(x: number, y: number) {
     const skinsButton = this.add
-      .rectangle(x, y, 300, 80, 0x333333)
-      .setStrokeStyle(2, 0xffffff)
+      .rectangle(x, y, 300, 80, 0xc9bda1)
+      .setStrokeStyle(2, 0x000000)
       .setInteractive({ useHandCursor: true });
     const buttonSkinText = this.add
       .text(x, y, "SKINS", this.textStyle)
@@ -189,8 +188,8 @@ export class StoreScene extends Phaser.Scene {
       .setAlign("center")
       .setOrigin(0.5);
 
-    skinsButton.on("pointerover", () => skinsButton.setFillStyle(0x555555));
-    skinsButton.on("pointerout", () => skinsButton.setFillStyle(0x333333));
+    skinsButton.on("pointerover", () => skinsButton.setFillStyle(0xe1d3b1));
+    skinsButton.on("pointerout", () => skinsButton.setFillStyle(0xc9bda1));
     skinsButton.on("pointerdown", () => {
       SoundManager.playUIChangeMenuSelectSFX();
       this.scene.start("SkinScene");
@@ -198,7 +197,6 @@ export class StoreScene extends Phaser.Scene {
   }
 
   shutdown() {
-    // Limpa todos os recursos
     this.events.removeAllListeners();
     this.game.events.off("buyUpdatedCoin", this.updateApCoinHud, this);
   }
