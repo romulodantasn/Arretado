@@ -72,11 +72,6 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
         if (this.scene.time.now >= this.#nextBoostActivationTime) {
           this.#isCurrentlyBoosting = true;
           this.#nextBoostActivationTime = this.scene.time.now + this.#boostCooldownDuration;
-          console.log(
-            `Boost ativado! Tempo atual: ${this.scene.time.now}, Boost termina em: ${
-              this.#nextBoostActivationTime
-            }`
-          );
           globalEventEmitter.emit(playerEvents.boostActivated, this.#nextBoostActivationTime);
         }
       }

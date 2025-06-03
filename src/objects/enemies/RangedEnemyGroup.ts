@@ -45,7 +45,7 @@ export class RangedEnemyGroup extends Phaser.Physics.Arcade.Group {
           rangedEnemy.setDepth(10).
           setActive(true).setVisible(true).play('rangedEnemy', true);
           rangedEnemy.setDisplaySize(64,64);
-          // rangedEnemy.setOffset(3, 6);
+        
 
           const enemyId = `enemy_${Date.now()}_${Math.random().toString(16).slice(2)}`;
           const enemyHealthComponent = new HealthComponent(
@@ -63,7 +63,7 @@ export class RangedEnemyGroup extends Phaser.Physics.Arcade.Group {
 
   private setupContinuousShooting(scene: Phaser.Scene) {
     scene.time.addEvent({
-      delay: currentEnemyStats.RangedEnemy.FireRate || 1000, // Define uma taxa de disparo
+      delay: currentEnemyStats.RangedEnemy.FireRate || 1000, 
       loop: true,
       callback: () => {
         this.getChildren().forEach((enemy: Phaser.GameObjects.GameObject) => {

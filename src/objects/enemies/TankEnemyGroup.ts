@@ -52,8 +52,7 @@ export class TankEnemyGroup extends Phaser.Physics.Arcade.Group {
           TankEnemy.setData('healthComponent', enemyHealthComponent)
             this.spawnedTankEnemyCount++;
         }
-        if (TankEnemy) TankEnemy.play('tankEnemy', true); // Garante que basicEnemy não é nulo
-        
+        if (TankEnemy) TankEnemy.play('tankEnemy', true); 
       },
     });
   }

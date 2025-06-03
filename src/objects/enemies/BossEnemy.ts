@@ -97,25 +97,20 @@ export class BossEnemy extends Phaser.Physics.Arcade.Sprite {
     console.log('Juazeiro Derrotado!');
     SoundManager.playBossDeathSFX();
     
-    // Limpa os projéteis antes de destruir o boss
     this.bulletGroup.clear(true, true);
     
-    // Guarda referência da cena antes de desativar o boss
     const currentScene = this.scene;
     
     this.setActive(false);
     this.setVisible(false);
     
-    // Certifica que a cena existe antes de fazer a transição
     if (currentScene) {
-      // Para todas as cenas ativas antes de iniciar a cutscene
       currentScene.scene.stop('gameHud');
       currentScene.scene.stop('PlayerHealthBar');
       currentScene.scene.stop('BossHealthBar');
       currentScene.scene.stop('PlayerBoostCooldownUI');
       currentScene.scene.stop('gameScene');
       
-      // Inicia a cutscene4
       currentScene.scene.start('cutscene4');
     }
     

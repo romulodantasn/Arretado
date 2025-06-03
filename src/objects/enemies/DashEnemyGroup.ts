@@ -66,10 +66,10 @@ export class DashEnemyGroup extends Phaser.Physics.Arcade.Group {
     this.getChildren().forEach((dashEnemy: Phaser.GameObjects.GameObject) => {
       if (dashEnemy.active && dashEnemy instanceof Phaser.Physics.Arcade.Sprite) {
         const lastDash = dashEnemy.getData('lastDash') || 0;
-        const dashCooldown = dashEnemy.getData('dashCooldown') || 3000; // 3s 
+        const dashCooldown = dashEnemy.getData('dashCooldown') || 3000;
         const isDashing = dashEnemy.getData('isDashing') || false;
          if (this.player.x < dashEnemy.x) {
-          dashEnemy.setFlipX(false); // se estiver invertido
+          dashEnemy.setFlipX(false); 
         } else {
           dashEnemy.setFlipX(true);
         }
@@ -97,7 +97,4 @@ export class DashEnemyGroup extends Phaser.Physics.Arcade.Group {
         return enemy.getData('healthComponent') as HealthComponent || null;
       }
     }
-  // public setWave(wave: number) {
-  //   this.currentWave = wave;
-  // }
 }

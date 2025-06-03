@@ -62,7 +62,7 @@ export class BasicEnemyGroup extends Phaser.Physics.Arcade.Group {
           basicEnemy.setData("healthComponent", enemyHealthComponent);
           this.spawnedBasicEnemiesCount++;
         }
-        if (basicEnemy) basicEnemy.play("basicEnemy", true); // Garante que basicEnemy não é nulo
+        if (basicEnemy) basicEnemy.play("basicEnemy", true);
       },
     });
   }
