@@ -210,7 +210,7 @@ export const firerateItems: itemsContainer[] = [
     cost: 30,
     effect: () => {
       console.log(`${name} Comprado, Cadência aumentada`);
-      gun.fireRate *= 0.85; // Reduz o tempo entre tiros em 15%
+      gun.fireRate *= 0.85;
     },
   },
   {
@@ -239,7 +239,7 @@ export const firerateItems: itemsContainer[] = [
   },
   {
     imageKey: 'ferradura',
-    name: 'Ferradura Enferrujada',
+    name: 'Ferradura',
     type: 'Fire Rate',
     description: '-10% no tempo entre tiros',
     sentence: '"Barato, mas vai que funciona..."',
@@ -251,7 +251,7 @@ export const firerateItems: itemsContainer[] = [
   },
   {
     imageKey: 'guine',
-    name: 'Pólvora de Guiné',
+    name: 'Pólvora Guiné',
     type: 'Fire Rate',
     description: '-50% no tempo entre tiros',
     sentence: '"Tão rápido que o cano fica vermelho!"',

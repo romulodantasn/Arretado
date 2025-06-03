@@ -19,8 +19,8 @@ export const EnemyTemplates: Record<EnemyType, BaseEnemyStatsStructure> = {
   BasicEnemy: {
     name: 'BasicEnemy',
     Health: 12,
-    Speed: 50,
-    Rate: 1500,
+    Speed: 60,
+    Rate: 1000,
     Damage: 3,
   },
   RangedEnemy: {
@@ -34,15 +34,15 @@ export const EnemyTemplates: Record<EnemyType, BaseEnemyStatsStructure> = {
   },
   DashEnemy: {
     name: 'DashEnemy',
-    Health: 8,
+    Health: 22,
     Speed: 125,
     Rate: 1400,
     Damage: 5,
-    DashCooldown: 4000, //-> Milisegundos 
+    DashCooldown: 4000,
   },
   TankEnemy: {
     name: 'TankEnemy',
-    Health: 10,
+    Health: 30,
     Speed: 35,
     Rate: 1500,
     Damage: 7,
@@ -61,7 +61,6 @@ export const EnemyTemplates: Record<EnemyType, BaseEnemyStatsStructure> = {
 
 export const currentEnemyStats: Record<EnemyType, BaseEnemyStatsStructure> = 
   JSON.parse(JSON.stringify(EnemyTemplates));
-
 
 export type EnemyTypes = keyof typeof EnemyTemplates;
 export type EnemyStats = typeof EnemyTemplates[EnemyTypes];

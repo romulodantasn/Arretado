@@ -6,9 +6,9 @@ type EnemyBuffs = Partial<Pick<BaseEnemyStatsStructure, 'Health' | 'Speed' | 'Ra
 
 const enemyBuffsByWave: Record<EnemyType, (waveNumber: number) => EnemyBuffs> = {
   BasicEnemy: (wave) => ({
-    Health: 5 + wave,              // cresce com a onda
-    Speed: 2,                      // velocidade sempre +2
-    Rate: -30,                     // mais rápido
+    Health: 5 + wave,
+    Speed: 2,
+    Rate: -90,
   }),
   RangedEnemy: (wave) => ({
     Health: 3 + Math.floor(wave / 2),
@@ -19,11 +19,13 @@ const enemyBuffsByWave: Record<EnemyType, (waveNumber: number) => EnemyBuffs> = 
     Health: 2,
     Speed: 3,
     Damage: wave % 2 === 0 ? 1 : 0,
+    Rate: -20,
   }),
   TankEnemy: (wave) => ({
     Health: 10,
-    Damage: 1,
+    Damage: 3,
     Speed: 1,
+    Rate: -30,
   }),
   BossEnemy: (wave) => ({
     Health: 15 + wave * 2,
