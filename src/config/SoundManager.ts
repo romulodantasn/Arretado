@@ -1,6 +1,7 @@
 export class SoundManager {
   static events = new Phaser.Events.EventEmitter();
   private static currentWaveMusic?: Phaser.Sound.BaseSound;
+  private static isInGameScene: boolean = false;
 
   static titleSceneAudio: Phaser.Sound.BaseSound;
   static enterStoreSFX: Phaser.Sound.BaseSound;
@@ -37,6 +38,13 @@ export class SoundManager {
     8: 'wave8Music',
     9: 'wave9Music'
   } as const;
+
+  static setInGameScene(value: boolean) {
+    this.isInGameScene = value;
+    if (!value) {
+      this.stopCurrentWaveMusic();
+    }
+  }
 
   static playTitleSceneMusic() {
     this.titleSceneAudio?.play({ loop: true });
@@ -99,7 +107,7 @@ export class SoundManager {
   }
 
   static playDashEnemyDeathSFX() {
-    this.dashEnemyDeathSFX?.play({ volume: 0.8 });
+    this.dashEnemyDeathSFX?.play({ volume: 0.08 });
     this.events.emit('dash_enemy_death');
   }
 
@@ -116,6 +124,10 @@ export class SoundManager {
   }
 
   static playWaveMusic(waveNumber: number) {
+    if (!this.isInGameScene) {
+      return;
+    }
+
     this.stopCurrentWaveMusic();
     
     const musicKey = this.waveMusicKeys[waveNumber as keyof typeof this.waveMusicKeys];
@@ -129,10 +141,24 @@ export class SoundManager {
     }
   }
 
-  /**
-   * Método utilitário opcional para inicializar os sons a partir da cena
-   */
+  static pauseCurrentMusic() {
+    if (this.currentWaveMusic && this.currentWaveMusic.isPlaying) {
+      this.currentWaveMusic.pause();
+    }
+  }
+
+  static resumeCurrentMusic() {
+    if (this.currentWaveMusic && this.currentWaveMusic.isPaused) {
+      this.currentWaveMusic.resume();
+    }
+  }
+
+ 
   static init(scene: Phaser.Scene) {
+    if (scene.scene.key === 'gameScene') {
+      this.setInGameScene(true);
+    }
+
     this.titleSceneAudio = scene.sound.add('titleSceneAudio');
     this.enterStoreSFX = scene.sound.add('enter_store');
     this.openItemStoreSFX = scene.sound.add('openItemStore');
@@ -148,7 +174,6 @@ export class SoundManager {
     this.dashEnemyDeathSFX = scene.sound.add('dashEnemyDeath');
     this.tankEnemyDeathSFX = scene.sound.add('tankEnemyDeath');
 
-    // Inicializa as músicas das ondas
     this.wave1Music = scene.sound.add('wave_1_music');
     this.wave2Music = scene.sound.add('wave_2_music');
     this.wave3Music = scene.sound.add('wave_3_music');
@@ -158,5 +183,11 @@ export class SoundManager {
     this.wave7Music = scene.sound.add('wave_7_music');
     this.wave8Music = scene.sound.add('wave_8_music');
     this.wave9Music = scene.sound.add('wave_9_music');
+
+    scene.events.once('shutdown', () => {
+      if (scene.scene.key === 'gameScene') {
+        this.setInGameScene(false);
+      }
+    });
   }
 }

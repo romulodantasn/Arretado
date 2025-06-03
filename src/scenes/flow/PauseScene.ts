@@ -1,4 +1,8 @@
 import Phaser from 'phaser';
+import { SoundManager } from '../../config/SoundManager';
+import { completeGameReset } from '../../components/events/gameResetEvent';
+import { resetGameState } from '../../components/events/gameResetEvent';
+import { GameScene } from '../../scenes/gameplay/GameScene';
 
 export class PauseScene extends Phaser.Scene {
   private confirmDialogGroup: Phaser.GameObjects.Group | null = null;
@@ -10,6 +14,8 @@ export class PauseScene extends Phaser.Scene {
   }
 
   create(): void {
+    SoundManager.pauseCurrentMusic();
+
     this.add
       .rectangle(
         this.cameras.main.width / 2,
@@ -51,6 +57,7 @@ export class PauseScene extends Phaser.Scene {
     escKey.on('down', () => {
       if (!this.confirmDialogGroup || !this.confirmDialogGroup.active) {
         console.log('Jogo Retomado');
+        SoundManager.resumeCurrentMusic();
         this.scene.stop('PauseScene');
         this.input.setDefaultCursor('none'); 
         this.scene.resume('gameScene');
@@ -80,7 +87,6 @@ export class PauseScene extends Phaser.Scene {
   }
 
   private showConfirmationDialog(style: any) {
-    // Se o diálogo já estiver visível, não faz nada
     if (this.confirmDialogGroup && this.confirmDialogGroup.active) {
       return;
     }
@@ -103,18 +109,15 @@ export class PauseScene extends Phaser.Scene {
     this.confirmDialogGroup.addMultiple([dialogBg, confirmText, yesButton, yesText, noButton, noText]);
 
     yesButton.on('pointerdown', () => {
-      this.scene.stop('gameScene');
-      if (this.scene.isActive('gameHud')) this.scene.stop('gameHud');
-      if (this.scene.isActive('PlayerHealthBar')) this.scene.stop('PlayerHealthBar');
-      if (this.scene.isActive('PlayerBoostCooldownUI')) this.scene.stop('PlayerBoostCooldownUI');
-
+      SoundManager.stopCurrentWaveMusic();
+      
       if (this.confirmDialogGroup) {
         this.confirmDialogGroup.destroy(true);
         this.confirmDialogGroup = null;
       }
 
-      this.scene.stop('PauseScene');
-      this.scene.start('menuScene');
+      localStorage.clear();
+      window.location.reload();
     });
 
     noButton.on('pointerdown', () => {
