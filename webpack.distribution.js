@@ -35,7 +35,7 @@ module.exports = {
                 { 
                     // src/index.html
                     from: 'index.html',
-                    context: 'src/'
+                    context: 'core/'
                 },
                 {
                     // every file inside src/assets folder

@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
-import { gameOptions } from '../../config/gameOptionsConfig';
-import { currentEnemyStats } from '../../config/enemiesContainer';
-import { Player } from '../player/playerObject';
+import { gameOptions } from '../../config/GameOptionsConfig';
+import { currentEnemyStats } from '../../config/enemies/EnemiesContainer';
+import { Player } from '../player/Player';
 import { HealthComponent } from '../../components/playerHealth/HealthComponent';
 
 export class RangedEnemyGroup extends Phaser.Physics.Arcade.Group {
@@ -39,9 +39,13 @@ export class RangedEnemyGroup extends Phaser.Physics.Arcade.Group {
       callback: () => {
         const spawnPoint = Phaser.Geom.Rectangle.RandomOutside(outerRectangle, innerRectangle);
         const rangedEnemy = this.create(spawnPoint.x, spawnPoint.y, 'enemy') as Phaser.Physics.Arcade.Sprite;
+        
 
         if (rangedEnemy) {
-          rangedEnemy.setDepth(10).setActive(true).setVisible(true).play('rangedEnemy', true);
+          rangedEnemy.setDepth(10).
+          setActive(true).setVisible(true).play('rangedEnemy', true);
+          rangedEnemy.setDisplaySize(64,64);
+        
 
           const enemyId = `enemy_${Date.now()}_${Math.random().toString(16).slice(2)}`;
           const enemyHealthComponent = new HealthComponent(
@@ -59,7 +63,7 @@ export class RangedEnemyGroup extends Phaser.Physics.Arcade.Group {
 
   private setupContinuousShooting(scene: Phaser.Scene) {
     scene.time.addEvent({
-      delay: currentEnemyStats.RangedEnemy.FireRate || 1000, // Define uma taxa de disparo
+      delay: currentEnemyStats.RangedEnemy.FireRate || 1000, 
       loop: true,
       callback: () => {
         this.getChildren().forEach((enemy: Phaser.GameObjects.GameObject) => {

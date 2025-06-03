@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
-import { gameOptions } from '../../config/gameOptionsConfig';
-import { currentEnemyStats } from '../../config/enemiesContainer';
-import { Player } from '../player/playerObject';
+import { gameOptions } from '../../config/GameOptionsConfig';
+import { currentEnemyStats } from '../../config/enemies/EnemiesContainer';
+import { Player } from '../player/Player';
 import { HealthComponent } from '../../components/playerHealth/HealthComponent';
 export class TankEnemyGroup extends Phaser.Physics.Arcade.Group {
   private player: Player;
@@ -40,6 +40,8 @@ export class TankEnemyGroup extends Phaser.Physics.Arcade.Group {
         if(TankEnemy) {
             TankEnemy.setDepth(10)
             TankEnemy.setActive(true).setVisible(true);
+            TankEnemy.setScale(3);
+            TankEnemy.setOffset(14, 18);
           
           const enemyId = `enemy_${Date.now()}_${Math.random().toString(16).slice(2)}`; 
           const enemyHealthComponent = new HealthComponent(
@@ -50,8 +52,7 @@ export class TankEnemyGroup extends Phaser.Physics.Arcade.Group {
           TankEnemy.setData('healthComponent', enemyHealthComponent)
             this.spawnedTankEnemyCount++;
         }
-        if (TankEnemy) TankEnemy.play('tankEnemy', true); // Garante que basicEnemy não é nulo
-        
+        if (TankEnemy) TankEnemy.play('tankEnemy', true); 
       },
     });
   }
@@ -60,6 +61,11 @@ export class TankEnemyGroup extends Phaser.Physics.Arcade.Group {
     this.getChildren().forEach((enemy: Phaser.GameObjects.GameObject) => {
       if (enemy.active && enemy instanceof Phaser.Physics.Arcade.Sprite) {
         scene.physics.moveToObject(enemy, this.player, currentEnemyStats.TankEnemy.Speed);
+         if (this.player.x < enemy.x) {
+          enemy.setFlipX(true);
+        } else {
+          enemy.setFlipX(false);
+        }
       }
     });
   }

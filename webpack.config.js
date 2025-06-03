@@ -4,7 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  entry: './src/main.ts', // Arquivo principal do seu projeto
+  entry: './core/main.ts', // Arquivo principal do seu projeto
   output: {
     filename: 'bundle.js', // Arquivo de saída
     path: path.resolve(__dirname, 'docs'), // Pasta onde o arquivo será salvo
@@ -32,7 +32,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: 'src/index.html', // Caminho para o seu arquivo HTML de origem
+      template: 'core/index.html', // Caminho para o seu arquivo HTML de origem
       filename: 'index.html', // Nome do arquivo de saída na pasta docs
     }),
     new CopyPlugin({

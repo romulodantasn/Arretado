@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
-import { currentEnemyStats } from '../../config/enemiesContainer';
-import { gameOptions } from '../../config/gameOptionsConfig';
-import { Player } from '../player/playerObject';
+import { currentEnemyStats } from '../../config/enemies/EnemiesContainer';
+import { gameOptions } from '../../config/GameOptionsConfig';
+import { Player } from '../player/Player';
 import { HealthComponent } from '../../components/playerHealth/HealthComponent';
 
 
@@ -43,6 +43,8 @@ export class DashEnemyGroup extends Phaser.Physics.Arcade.Group {
             dashEnemy.setDepth(10)
             dashEnemy.setActive(true)
             dashEnemy.setVisible(true);
+            dashEnemy.setScale(3);
+            dashEnemy.setOffset(14, 18);
             
             const enemyId = `enemy_${Date.now()}_${Math.random().toString(16).slice(2)}`; 
             const enemyHealthComponent = new HealthComponent(
@@ -64,8 +66,13 @@ export class DashEnemyGroup extends Phaser.Physics.Arcade.Group {
     this.getChildren().forEach((dashEnemy: Phaser.GameObjects.GameObject) => {
       if (dashEnemy.active && dashEnemy instanceof Phaser.Physics.Arcade.Sprite) {
         const lastDash = dashEnemy.getData('lastDash') || 0;
-        const dashCooldown = dashEnemy.getData('dashCooldown') || 3000; // 3s 
+        const dashCooldown = dashEnemy.getData('dashCooldown') || 3000;
         const isDashing = dashEnemy.getData('isDashing') || false;
+         if (this.player.x < dashEnemy.x) {
+          dashEnemy.setFlipX(false); 
+        } else {
+          dashEnemy.setFlipX(true);
+        }
         const direction = new Phaser.Math.Vector2 (
           this.player.x - dashEnemy.x,
           this.player.y - dashEnemy.y
@@ -90,7 +97,4 @@ export class DashEnemyGroup extends Phaser.Physics.Arcade.Group {
         return enemy.getData('healthComponent') as HealthComponent || null;
       }
     }
-  // public setWave(wave: number) {
-  //   this.currentWave = wave;
-  // }
 }

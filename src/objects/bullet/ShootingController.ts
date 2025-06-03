@@ -1,6 +1,6 @@
-import { inputManager } from '../../components/input/inputManagerComponent';
-import { gun } from '../../config/gameOptionsConfig';
-import { Player } from '../player/playerObject';
+import { inputManager } from '../../components/input/InputManager';
+import { gameOptions, gun } from '../../config/GameOptionsConfig';
+import { Player } from '../player/Player';
 import { BasicEnemyGroup } from '../enemies/BasicEnemyGroup';
 import { DashEnemyGroup } from '../enemies/DashEnemyGroup'; 
 import { coinOnKillEvent } from '../../components/events/coinOnKillEvent';
@@ -8,6 +8,7 @@ import { HealthComponent } from '../../components/playerHealth/HealthComponent';
 import { BossEnemy } from '../enemies/BossEnemy';
 import { TankEnemyGroup } from '../enemies/TankEnemyGroup';
 import { RangedEnemyGroup } from '../enemies/RangedEnemyGroup';
+import { SoundManager } from '../../config/SoundManager';
 
 export class shootingController {
   #scene: Phaser.Scene;
@@ -20,6 +21,8 @@ export class shootingController {
   #bulletGroup!: Phaser.Physics.Arcade.Group;
   #reticle: Phaser.GameObjects.Sprite;
   #keys: any;
+  #canShoot: boolean = true;
+  #cooldownTimer?: Phaser.Time.TimerEvent;
 
   readonly textStyle = {
     fontFamily: "Cordelina",
@@ -39,35 +42,52 @@ export class shootingController {
     this.#boss = boss;
     this.#reticle = reticle!;
 
-    this.#bulletGroup = this.#scene.physics.add.group({ classType: Phaser.Physics.Arcade.Sprite, runChildUpdate: true });
+    this.#bulletGroup = this.#scene.physics.add.group({ 
+      classType: Phaser.Physics.Arcade.Sprite, 
+      runChildUpdate: true 
+    });
+    
     this.#keys = inputManager.getKeys();
-
     this.#setupColliders();
   }
 
   #setupColliders() {
-    this.#scene.physics.add.collider(this.#bulletGroup, this.#BasicEnemyGroup, this.basicEnemyCollision, undefined, this);
-
-    if (this.#DashEnemyGroup) {
-      this.#scene.physics.add.collider(this.#bulletGroup, this.#DashEnemyGroup, this.bulletDashEnemyCollision, undefined, this);
-    } else {
-      console.warn("DashEnemyGroup não inicializado, pulando colisão com balas.");
-    }
+    this.#scene.physics.add.collider(
+      this.#bulletGroup,
+      this.#BasicEnemyGroup,
+      this.basicEnemyCollision.bind(this)
+    );
 
     if (this.#RangedEnemyGroup) {
-      this.#scene.physics.add.collider(this.#bulletGroup, this.#RangedEnemyGroup, this.rangedEnemyCollision, undefined, this);
-    } else {
-      console.warn("RangedEnemyGroup não inicializado, pulando colisão com balas.");
+      this.#scene.physics.add.collider(
+        this.#bulletGroup,
+        this.#RangedEnemyGroup,
+        this.rangedEnemyCollision.bind(this)
+      );
+    }
+
+    if (this.#DashEnemyGroup) {
+      this.#scene.physics.add.collider(
+        this.#bulletGroup,
+        this.#DashEnemyGroup,
+        this.dashEnemyCollision.bind(this)
+      );
     }
 
     if (this.#TankEnemyGroup) {
-      this.#scene.physics.add.collider(this.#bulletGroup, this.#TankEnemyGroup, this.bulletTankEnemyCollision, undefined, this);
-    } else {
-      console.warn("TankEnemyGroup não inicializado, pulando colisão com balas.");
+      this.#scene.physics.add.collider(
+        this.#bulletGroup,
+        this.#TankEnemyGroup,
+        this.tankEnemyCollision.bind(this)
+      );
     }
 
     if (this.#boss?.active) {
-      this.#scene.physics.add.collider(this.#bulletGroup, this.#boss, this.bulletBossCollision, undefined, this);
+      this.#scene.physics.add.collider(
+        this.#bulletGroup,
+        this.#boss,
+        this.bulletBossCollision.bind(this)
+      );
     } else {
       console.warn("Boss não inicializado, pulando colisão com balas.");
     }
@@ -80,25 +100,39 @@ export class shootingController {
 
   setupReticle() {
     this.#reticle = this.#reticle || this.#scene.add.sprite(this.#player.x, this.#player.y - 50, 'reticle');
-    this.#reticle.setOrigin(0.5).setDisplaySize(40, 40).setActive(true).setVisible(true);
+    this.#reticle.setOrigin(0.5).setDisplaySize(40, 40).setActive(true).setVisible(true).setDepth(35)
     this.#scene.input.setDefaultCursor('none');
 
     this.#scene.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
       this.#reticle.setPosition(pointer.worldX, pointer.worldY);
     });
+
+    this.updateReticleColor(true);
+  }
+
+  private updateReticleColor(canShoot: boolean) {
+    if (this.#reticle) {
+      this.#reticle.setTint(canShoot ? 0xffffff : 0xff0000);
+    }
   }
 
   containReticle() {
     if (this.#reticle) {
-      this.#reticle.x = Phaser.Math.Clamp(this.#reticle.x, 0, this.#scene.scale.width);
-      this.#reticle.y = Phaser.Math.Clamp(this.#reticle.y, 0, this.#scene.scale.height);
+      this.#reticle.x = Phaser.Math.Clamp(this.#reticle.x, 0, gameOptions.gameSize.width);
+      this.#reticle.y = Phaser.Math.Clamp(this.#reticle.y, 0, gameOptions.gameSize.height);
     }
   }
 
   setupShooting() {
     inputManager.setupClicks(this.#scene, {
       onFire: () => {
-        this.fireBullet(this.#player, this.#reticle);
+        if (this.#canShoot) {
+          this.fireBullet(this.#player, this.#reticle);
+          this.#scene.cameras.main.shake(200, 0.0005);
+          this.startCooldown();
+          const fireBulletSFX = this.#scene.sound.add('gun_shoot', {volume: 0.20});
+          fireBulletSFX.play();
+        }
       },
     });
   }
@@ -106,7 +140,7 @@ export class shootingController {
   fireBullet(shooter: Player, target: Phaser.GameObjects.Sprite) {
     const bullet = this.#bulletGroup.get(shooter.x, shooter.y, 'bullet') as Phaser.Physics.Arcade.Sprite;
     const angle = Phaser.Math.Angle.Between(shooter.x, shooter.y, target.x, target.y);
-    const speed = gun.bulletSpeed;
+    const speed = gun.bulletSpeed; 
 
     this.#bulletGroup.add(bullet);
     bullet.setVelocity(Math.cos(angle) * speed, Math.sin(angle) * speed);
@@ -147,6 +181,7 @@ export class shootingController {
     enemyHealth.loseHealth(damage);
 
     if (enemyHealth.isDead()) {
+      SoundManager.playBasicEnemyDeathSFX();
       coinOnKillEvent(this.#scene);
       enemy.destroy();
     }
@@ -165,6 +200,7 @@ export class shootingController {
     enemyHealth.loseHealth(damage);
 
     if (enemyHealth.isDead()) {
+      SoundManager.playRangedEnemyDeathSFX();
       coinOnKillEvent(this.#scene);
       enemy.destroy();
     }
@@ -172,7 +208,7 @@ export class shootingController {
     bullet.destroy();
   }
 
-  private bulletDashEnemyCollision(bullet: any, dashEnemy: any) {
+  private dashEnemyCollision(bullet: any, dashEnemy: any) {
     if (!bullet.active || !dashEnemy.active) return;
 
    const enemyHealth = DashEnemyGroup.getHealthComponent(dashEnemy);
@@ -184,6 +220,7 @@ export class shootingController {
     enemyHealth.loseHealth(damage);
 
     if (enemyHealth.isDead()) {
+      SoundManager.playDashEnemyDeathSFX();
       coinOnKillEvent(this.#scene);
       dashEnemy.destroy();
     }
@@ -191,7 +228,7 @@ export class shootingController {
     bullet.destroy();
   }
 
-  private bulletTankEnemyCollision(bullet: any, tankEnemy: any) {
+  private tankEnemyCollision(bullet: any, tankEnemy: any) {
     if (!bullet.active || !tankEnemy.active) return;
 
    const enemyHealth = TankEnemyGroup.getHealthComponent(tankEnemy);
@@ -203,14 +240,13 @@ export class shootingController {
     enemyHealth.loseHealth(damage);
 
     if (enemyHealth.isDead()) {
+      SoundManager.playTankEnemyDeathSFX();
       coinOnKillEvent(this.#scene);
       tankEnemy.destroy();
     }
 
     bullet.destroy();
   }
-
-
 
   private bulletBossCollision(obj1: any, obj2: any) {
     const boss = obj1 instanceof BossEnemy ? obj1 : obj2 instanceof BossEnemy ? obj2 : null;
@@ -235,5 +271,64 @@ export class shootingController {
     }
 
     bullet.destroy();
+  }
+
+  private startCooldown() {
+    this.#canShoot = false;
+    this.updateReticleColor(false);
+    
+    if (this.#cooldownTimer) {
+      this.#cooldownTimer.destroy();
+    }
+    
+    this.#cooldownTimer = this.#scene.time.delayedCall(gun.fireRate, () => {
+      this.#canShoot = true;
+      this.updateReticleColor(true);
+    });
+  }
+
+  destroy() {
+    if (this.#scene && this.#scene.physics) {
+      const world = this.#scene.physics.world;
+      world.colliders.getActive().forEach((collider) => {
+        if (collider.object1 === this.#bulletGroup || collider.object2 === this.#bulletGroup) {
+          collider.destroy();
+        }
+      });
+    }
+
+    if (this.#bulletGroup) {
+      this.#bulletGroup.getChildren().forEach((bullet) => {
+        bullet.destroy();
+      });
+      this.#bulletGroup.clear(true, true);
+      this.#bulletGroup.destroy();
+    }
+    
+    if (this.#reticle) {
+      this.#reticle.destroy();
+    }
+    
+    if (this.#scene) {
+      this.#scene.input.off('pointermove');
+      this.#scene.input.off('pointerdown');
+      this.#scene.input.off('pointerup');
+      this.#scene.input.off('pointerout');
+    }
+    
+    if (this.#cooldownTimer) {
+      this.#cooldownTimer.destroy();
+    }
+    
+    this.#scene = undefined!;
+    this.#player = undefined!;
+    this.#BasicEnemyGroup = undefined!;
+    this.#RangedEnemyGroup = undefined;
+    this.#DashEnemyGroup = undefined;
+    this.#TankEnemyGroup = undefined;
+    this.#boss = undefined;
+    this.#bulletGroup = undefined!;
+    this.#reticle = undefined!;
+    this.#keys = undefined;
   }
 }

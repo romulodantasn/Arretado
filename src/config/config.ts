@@ -1,13 +1,22 @@
-import { gameOptions } from './gameOptionsConfig';
-import { BootScene } from '../scenes/BootScene';
-import { preloadAssets } from '../scenes/preloadAssets';
-import { titleScene } from '../scenes/titleScene';
-import { gameScene } from '../scenes/gameScene';
-import { PauseScene } from '../scenes/PauseScene';
-import { nextPhaseScene } from '../scenes/nextPhaseScene';
-import { GameOverScene } from '../scenes/GameOverScene';
+import NinePatchPlugin from 'phaser3-rex-plugins/plugins/ninepatch-plugin.js';
+import { gameOptions } from './GameOptionsConfig';
+import { BootScene } from '../scenes/flow/BootScene';
+import { preloadAssets } from '../scenes/base/preloadAssets';
+import { titleScene } from '../scenes/flow/TitleScene';
+import { GameScene } from '../scenes/gameplay/GameScene';
+import { PauseScene } from '../scenes/flow/PauseScene';
+import { nextPhaseScene } from '../scenes/flow/NextPhaseScene';
+import { GameOverScene } from '../scenes/flow/GameOverScene';
 import { PlayerHealthBar } from '../objects/player/PlayerHealthBar';
-import { itemScene } from '../scenes/itemScene';
+import { itemScene } from '../scenes/gameplay/itemScene';
+import { menuScene } from '../scenes/flow/MenuScene';
+import { StoreScene } from '../scenes/gameplay/StoreScene';
+import { SkinScene } from '../scenes/gameplay/SkinScene';
+import { CharacterSelectScene } from '../scenes/flow/CharacterSelectScene';
+import { PlayerBoostCooldownUI } from '../objects/player/PlayerBoostCooldownUI';
+import { CutscenesScene } from '../scenes/flow/CutscenesScene';
+import { BossHealthBar } from '../objects/enemies/BossHealthBar';
+
 
 export const scaleObject: Phaser.Types.Core.ScaleConfig = {
   mode: Phaser.Scale.FIT,
@@ -20,16 +29,24 @@ export const scaleObject: Phaser.Types.Core.ScaleConfig = {
 export const configObject: Phaser.Types.Core.GameConfig = {
   type: Phaser.WEBGL,
   scale: scaleObject,
+  pixelArt: true,
   scene: [
     BootScene,
     preloadAssets,
-    gameScene,
+    GameScene,
     PlayerHealthBar,
     GameOverScene,
     nextPhaseScene,
     PauseScene,
+    StoreScene,
+    SkinScene,
     itemScene,
     titleScene,
+    menuScene,
+    CharacterSelectScene,
+    PlayerBoostCooldownUI,
+    CutscenesScene,
+    BossHealthBar
   ],
   physics: {
     default: 'arcade',
@@ -37,5 +54,14 @@ export const configObject: Phaser.Types.Core.GameConfig = {
       debug: false,
       gravity: { y: 0, x: 0 },
     },
+  },
+  plugins: {
+    global: [
+      {
+        key: 'rexNinePatchPlugin',
+        plugin: NinePatchPlugin,
+        start: true
+      },
+    ],
   },
 };

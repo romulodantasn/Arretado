@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 import { globalEventEmitter } from "../../components/events/globalEventEmitter";
 import { healthEvents } from "../../components/events/healthEvent";
-import { playerStats } from "../../config/playerConfig";
+import { playerStats } from "../../config/player/PlayerConfig";
   
   export class PlayerHealthBar extends Phaser.Scene {
     #healthBar!: Phaser.GameObjects.Image;

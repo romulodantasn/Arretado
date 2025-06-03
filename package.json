@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack serve --open --config webpack.development.js",
     "distribution": "webpack --config webpack.distribution.js",
-    "build": "webpack --output-path=dist",
+    "build": "webpack --output-path=docs",
     "commit": "cz"
   },
   "keywords": [],
@@ -26,7 +26,8 @@
   },
   "dependencies": {
     "cz": "^1.8.2",
-    "phaser": "^3.87.0"
+    "phaser": "^3.87.0",
+    "phaser3-rex-plugins": "^1.80.15"
   },
   "config": {
     "commitizen": {
