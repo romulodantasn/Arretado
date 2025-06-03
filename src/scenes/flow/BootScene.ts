@@ -11,8 +11,8 @@ export class BootScene extends Phaser.Scene {
 
   preload() {
     this.load.spritesheet('loading', 'assets/images/loading.png', {
-      frameWidth: 35,
-      frameHeight: 128
+      frameWidth: 40,
+      frameHeight: 63   
     });
     this.load.json('animations_json', 'assets/data/animations.json');
   }
@@ -22,8 +22,8 @@ export class BootScene extends Phaser.Scene {
 
     this.anims.create({
       key: 'loading_anim',
-      frames: this.anims.generateFrameNumbers('loading', { start: 0, end: 7 }),
-      frameRate: 6,
+      frames: this.anims.generateFrameNumbers('loading', { start: 0, end: 4  }),
+      frameRate: 12,
       repeat: -1
     });
 
@@ -32,7 +32,9 @@ export class BootScene extends Phaser.Scene {
       this.cameras.main.height / 2 - 50,
       'loading'
     );
-    
+this.loadingSprite.setTint(0xffffff);
+this.loadingSprite.play('loading_anim');
+
     this.loadingSprite.play('loading_anim');
 
     this.loadingText = this.add.text(
