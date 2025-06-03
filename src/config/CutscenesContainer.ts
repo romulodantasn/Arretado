@@ -16,7 +16,8 @@ export const CUTSCENES = {
       backgroundKey: 'cutscene3',
       texto: 'O PRIMEIRO PASSO DA JORNADA SERÁ ATRAVESSAR O INFERNO.',
       duracao: 6000,
-      proximaCena: 'gameScene'
+      proximaCena: 'gameScene',
+      waveKey: 'Wave_1'
     },
     cutscene4: {
       backgroundKey: 'cutscene4',
