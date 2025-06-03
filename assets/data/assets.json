@@ -1,0 +1,505 @@
+{
+  "path": "assets/images",
+  "files": [
+    {
+      "type": "spritesheet",
+      "key": "loading",
+      "url": "loading.png",
+      "frameConfig": { "frameWidth": 40, "frameHeight": 63 }
+    },
+    {
+      "type": "image",
+      "key": "bullet",
+      "url": "projectiles/bullet.png"
+    },
+    {
+      "type": "image",
+      "key": "coin",
+      "url": "icons/coin.png"
+    },
+    {
+      "type": "image",
+      "key": "gun",
+      "url": "icons/gun.png"
+    },
+    {
+      "type": "image",
+      "key": "triangle",
+      "url": "icons/triangle.png"
+    },
+    {
+      "type": "image",
+      "key": "reticle",
+      "url": "icons/reticle.png"
+    },
+    {
+      "type": "image",
+      "key": "apCoinIcon",
+      "url": "icons/apCoinIcon.png"
+    },
+    {
+      "type": "image",
+      "key": "waveIcon",
+      "url": "icons/waveIcon.png"
+    },
+    {
+      "type": "image",
+      "key": "actIcon",
+      "url": "icons/actIcon.png"
+    },
+    {
+      "type": "tilemapTiledJSON",
+      "key": "tileset_wave_1",
+      "url": "tilesets/tileset_wave_1.json"
+    },
+    {
+      "type": "tilemapTiledJSON",
+      "key": "tileset_wave_2",
+      "url": "tilesets/tileset_wave_2.json"
+    },
+    {
+      "type": "tilemapTiledJSON",
+      "key": "tileset_wave_3",
+      "url": "tilesets/tileset_wave_3.json"
+    },
+    {
+      "type": "tilemapTiledJSON",
+      "key": "tileset_wave_4",
+      "url": "tilesets/tileset_wave_4.json"
+    },
+    {
+      "type": "tilemapTiledJSON",
+      "key": "tileset_wave_5",
+      "url": "tilesets/tileset_wave_5.json"
+    },
+    {
+      "type": "tilemapTiledJSON",
+      "key": "tileset_wave_6",
+      "url": "tilesets/tileset_wave_6.json"
+    },
+    {
+      "type": "tilemapTiledJSON",
+      "key": "tileset_wave_7",
+      "url": "tilesets/tileset_wave_7.json"
+    },
+    {
+      "type": "tilemapTiledJSON",
+      "key": "tileset_wave_8",
+      "url": "tilesets/tileset_wave_8.json"
+    },
+    {
+      "type": "tilemapTiledJSON",
+      "key": "tileset_wave_9",
+      "url": "tilesets/tileset_wave_9.json"
+    },
+    {
+      "type": "image",
+      "key": "limbo_wave_1",
+      "url": "/backgrounds/wave_1/limbo_wave_1.png"
+    },
+    {
+      "type": "image",
+      "key": "luxury_wave_2",
+      "url": "/backgrounds/wave_2/luxury_wave_2.png"
+    },
+    {
+      "type": "image",
+      "key": "gluttony_wave_3",
+      "url": "/backgrounds/wave_3/gluttony_wave_3.png"
+    },
+    {
+      "type": "image",
+      "key": "greed_wave_4",
+      "url": "/backgrounds/wave_4/greed_wave_4.png"
+    },
+    {
+      "type": "image",
+      "key": "rage_wave_5",
+      "url": "/backgrounds/wave_5/rage_wave_5.png"
+    },
+    {
+      "type": "image",
+      "key": "heresy_wave_6",
+      "url": "/backgrounds/wave_6/heresy_wave_6.png"
+    },
+    {
+      "type": "image",
+      "key": "violence_wave_7",
+      "url": "/backgrounds/wave_7/violence_wave_7.png"
+    },
+    {
+      "type": "image",
+      "key": "fraud_wave_8",
+      "url": "/backgrounds/wave_8/fraud_wave_8.png"
+    },
+    {
+      "type": "image",
+      "key": "betrayel_wave_9",
+      "url": "/backgrounds/wave_9/betrayel_wave_9.png"
+    },
+    {
+      "type": "image",
+      "key": "cordel",
+      "url": "items/cordel.png"
+    },
+    {
+      "type": "image",
+      "key": "bodega",
+      "url": "items/bodega.png"
+    },
+    {
+      "type": "image",
+      "key": "chapeu",
+      "url": "items/chapeu.png"
+    },
+    {
+      "type": "image",
+      "key": "dadoCangaceiro",
+      "url": "items/dadoCangaceiro.png"
+    },
+    {
+      "type": "image",
+      "key": "esporaDeAco",
+      "url": "items/esporaDeAço.png"
+    },
+    {
+      "type": "image",
+      "key": "ferradura",
+      "url": "items/ferradura.png"
+    },
+    {
+      "type": "image",
+      "key": "guaranaJesus",
+      "url": "items/guaranaJesus.png"
+    },
+    {
+      "type": "image",
+      "key": "guine",
+      "url": "items/guine.png"
+    },
+    {
+      "type": "image",
+      "key": "mandiga",
+      "url": "items/mandiga.png"
+    },
+    {
+      "type": "image",
+      "key": "mocoto",
+      "url": "items/mocoto.png"
+    },
+    {
+      "type": "image",
+      "key": "munguza",
+      "url": "items/munguza.png"
+    },
+    {
+      "type": "image",
+      "key": "olhoDeCobra",
+      "url": "items/olhoDeCobra.png"
+    },
+    {
+      "type": "image",
+      "key": "chifre",
+      "url": "items/chifre.png"
+    },
+    {
+      "type": "image",
+      "key": "patuaSaoJorge",
+      "url": "items/patuaSaoJorge.png"
+    },
+    {
+      "type": "image",
+      "key": "peDePano",
+      "url": "items/peDePano.png"
+    },
+    {
+      "type": "image",
+      "key": "titleSceneBackground",
+      "url": "backgrounds/titleSceneBackground.png"
+    },
+    {
+      "type": "image",
+      "key": "pimenta",
+      "url": "items/pimenta.png"
+    },
+    {
+      "type": "image",
+      "key": "pitu",
+      "url": "items/pitu.png"
+    },
+    {
+      "type": "image",
+      "key": "poeira",
+      "url": "items/poeira.png"
+    },
+    {
+      "type": "image",
+      "key": "manga",
+      "url": "items/manga.png"
+    },
+    {
+      "type": "image",
+      "key": "sandaliaJesus",
+      "url": "items/sandaliaJesus.png"
+    },
+    {
+      "type": "image",
+      "key": "lampiao",
+      "url": "spritesheet/lampiao.png"
+    },
+     {
+      "type": "image",
+      "key": "mariaBonita",
+      "url": "spritesheet/mariaBonita.png"
+    },
+    { 
+      "type": "spritesheet",
+      "key": "lampiaoIdle",
+      "url": "spritesheet/lampiaoIdle.png",
+      "frameConfig": { "frameWidth": 64, "frameHeight": 64 }
+    },
+    {
+      "type": "spritesheet",
+      "key": "lampiaoRun",
+      "url": "spritesheet/lampiaoRun.png",
+      "frameConfig": { "frameWidth": 64, "frameHeight": 64 }
+    },
+    {
+      "type": "spritesheet",
+      "key": "basicEnemy",
+      "url": "spritesheet/basicEnemy.png",
+      "frameConfig": { "frameWidth": 64, "frameHeight": 64 }
+    },
+    {
+      "type": "spritesheet",
+      "key": "dashEnemy",
+      "url": "spritesheet/dashEnemy.png",
+      "frameConfig": { "frameWidth": 64, "frameHeight": 64 }
+    },
+    {
+      "type": "spritesheet",
+      "key": "rangedEnemy",
+      "url": "spritesheet/rangedEnemy.png",
+      "frameConfig": { "frameWidth": 16, "frameHeight": 16 }
+    },
+    {
+      "type": "spritesheet",
+      "key": "enemyBullet",
+      "url": "projectiles/enemyBullet.png",
+      "frameConfig": { "frameWidth": 54, "frameHeight": 50 }
+    },
+    {
+      "type": "spritesheet",
+      "key": "tankEnemy",
+      "url": "spritesheet/tankEnemy.png",
+      "frameConfig": { "frameWidth": 64, "frameHeight": 64 }
+    },
+
+    {
+      "type": "spritesheet",
+      "key": "boss",
+      "url": "boss/boss.png",
+      "frameConfig": { "frameWidth": 64, "frameHeight": 64 }
+    },
+    {
+      "type": "image",
+      "key": "health-bar",
+      "url": "ui/health-bar.png"
+    },
+    {
+      "type": "image",
+      "key": "health-frame",
+      "url": "ui/health-frame.png"
+    },
+    {
+      "type": "image",
+      "key": "moldura",
+      "url": "ui/moldura.png"
+    },
+    {
+      "type": "image",
+      "key": "moldura2",
+      "url": "ui/moldura2.png"
+    },
+    {
+      "type": "image",
+      "key": "molduraSkin",
+      "url": "ui/molduraSkin.png"
+    },
+    {
+      "type": "image",
+      "key": "molduraSkin2",
+      "url": "ui/molduraSkin2.png"
+    },
+    {
+      "type": "image",
+      "key": "molduraPersonagem",
+      "url": "ui/molduraPersonagem.png"
+    },
+    {
+      "type": "image",
+      "key": "molduraContainerItems",
+      "url": "ui/molduraContainerItems.png"
+    },
+    {
+      "type": "image",
+      "key": "molduraItems",
+      "url": "ui/molduraItems.png"
+    },
+    {
+      "type": "image",
+      "key": "molduraLojaAp",
+      "url": "ui/molduraLojaAp.png"
+    },
+    {
+      "type": "image",
+      "key": "molduraMenu",
+      "url": "ui/molduraMenu.png"
+    },
+    {
+      "type": "image",
+      "key": "bossBullet",
+      "url": "projectiles/bossBullet.png"
+    },
+    {
+      "type": "image",
+      "key": "100moedas",
+      "url": "coins/100moedas.png"
+    },
+    {
+      "type": "image",
+      "key": "500moedas",
+      "url": "coins/500moedas.png"
+    },
+    {
+      "type": "image",
+      "key": "1000moedas",
+      "url": "coins/1000moedas.png"
+    },
+    {
+      "type": "image",
+      "key": "2000moedas",
+      "url": "coins/2000moedas.png"
+    },
+    {
+      "type":"image",
+      "key": "alagoasSkin",
+      "url":"skins/alagoasSkin.png"
+    },
+    {
+      "type":"image",
+      "key": "bahiaSkin",
+      "url":"skins/bahiaSkin.jpg"
+    },
+    {
+      "type":"image",
+      "key": "cearaSkin",
+      "url":"skins/cearaSkin.jpg"
+    },
+    {
+      "type":"image",
+      "key": "maranhaoSkin",
+      "url":"skins/maranhaoSkin.png"
+    },
+    {
+      "type":"image",
+      "key": "paraibaSkin",
+      "url":"skins/paraibaSkin.png"
+    },
+    {
+      "type":"image",
+      "key": "pernambucoSkin",
+      "url":"skins/pernambucoSkin.jpg"
+    },
+    {
+      "type":"image",
+      "key": "piauiSkin",
+      "url":"skins/piauiSkin.png"
+    },
+    {
+      "type":"image",
+      "key": "rnSkin",
+      "url":"skins/rnSkin.png"
+    },
+    {
+      "type":"image",
+      "key": "sergipeSkin",
+      "url":"skins/sergipeSkin.png"
+    },
+    {
+      "type":"image",
+      "key": "cutscene1",
+      "url":"cutscenes/cutscene1.png"
+    },
+    {
+      "type":"image",
+      "key": "cutscene2",
+      "url":"cutscenes/cutscene2.png"
+    },
+    {
+      "type":"image",
+      "key": "cutscene3",
+      "url":"cutscenes/cutscene3.png"
+    },
+    {
+      "type":"image",
+      "key": "cutscene4",
+      "url":"cutscenes/cutscene4.png"
+    },
+    {
+      "type":"spritesheet",
+      "key": "bandeiraAlagoas",
+      "url":"skins/skinFlag/bandeiraAlagoas.png",
+      "frameConfig": { "frameWidth": 200, "frameHeight": 131 }
+    },
+    {
+      "type":"spritesheet",
+      "key": "bandeiraBahia",
+      "url":"skins/skinFlag/bandeiraBahia.png",
+      "frameConfig": { "frameWidth": 200, "frameHeight": 133 }
+    },
+    {
+      "type":"spritesheet",
+      "key": "bandeiraCeara",
+      "url":"skins/skinFlag/bandeiraCeara.png",
+      "frameConfig": { "frameWidth": 200, "frameHeight": 139 }
+    },
+    {
+      "type":"spritesheet",
+      "key": "bandeiraMaranhao",
+      "url":"skins/skinFlag/bandeiraMaranhao.png",
+      "frameConfig": { "frameWidth": 200, "frameHeight": 133 }
+    },
+    {
+      "type":"spritesheet",
+      "key": "bandeiraParaiba",
+      "url":"skins/skinFlag/bandeiraParaiba.png",
+      "frameConfig": { "frameWidth": 200, "frameHeight": 163 }
+    },
+    {
+      "type":"spritesheet",
+      "key": "bandeiraPernambuco",
+      "url":"skins/skinFlag/bandeiraPernambuco.png",
+      "frameConfig": { "frameWidth": 200, "frameHeight": 139 }
+    },
+    
+    {
+      "type":"spritesheet",
+      "key": "bandeiraPiaui",
+      "url":"skins/skinFlag/bandeiraPiaui.png",
+      "frameConfig": { "frameWidth": 200, "frameHeight": 133 }
+    },
+    {
+      "type":"spritesheet",
+      "key": "bandeiraRn",
+      "url":"skins/skinFlag/bandeiraRn.png",
+      "frameConfig": { "frameWidth": 200, "frameHeight": 133 }
+    },
+    {
+      "type":"spritesheet",
+      "key": "bandeiraSergipe",
+      "url":"skins/skinFlag/bandeiraSergipe.png",
+      "frameConfig": { "frameWidth": 200, "frameHeight": 139 }
+    }
+  ]
+}
