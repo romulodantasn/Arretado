@@ -10,8 +10,9 @@ import { BossEnemy } from "../../objects/enemies/BossEnemy";
 import { currentEnemyStats } from "../../config/enemies/EnemiesContainer";
 import { TankEnemyGroup } from "../../objects/enemies/TankEnemyGroup";
 import { RangedEnemyGroup } from "../../objects/enemies/RangedEnemyGroup";
+import { completeGameReset } from "../events/gameResetEvent";
 
-export class Collider { // Class names are typically PascalCase
+export class Collider { 
   #scene: GameScene;
   #player: Player;
   #basicEnemyGroup: BasicEnemyGroup; 
@@ -52,12 +53,9 @@ export class Collider { // Class names are typically PascalCase
   create() {
     this.createColliders();
     this.#createTilemapColliders();
-    console.log("basicEnemy", this.#basicEnemyGroup);
-    console.log("group children:", this.#basicEnemyGroup.getChildren());
   }
 
  public createColliders() {
-  // BasicEnemy
   this.#playerBasicEnemyCollider = this.#scene.physics.add.collider(
     this.#player,
     this.#basicEnemyGroup,
@@ -72,7 +70,6 @@ export class Collider { // Class names are typically PascalCase
     }
   );
 
-  // RangedEnemy - Bullets
   const rangedBullets = this.#rangedEnemyGroup?.bulletGroup;
   if (rangedBullets) {
     this.#playerRangedBulletCollider = this.#scene.physics.add.collider(
@@ -93,7 +90,6 @@ export class Collider { // Class names are typically PascalCase
     );
   }
 
-  // DashEnemy
   if (this.#dashEnemyGroup) {
     this.#playerDashEnemyCollider = this.#scene.physics.add.collider(
       this.#player,
@@ -110,7 +106,6 @@ export class Collider { // Class names are typically PascalCase
     );
   }
 
-  // TankEnemy
   if (this.#tankEnemyGroup) {
     this.#playerTankEnemyCollider = this.#scene.physics.add.collider(
       this.#player,
@@ -127,9 +122,7 @@ export class Collider { // Class names are typically PascalCase
     );
   }
 
-  // BossEnemy
   if (this.#boss?.active) {
-    // Boss collision with player
     this.#playerBossCollider = this.#scene.physics.add.collider(
       this.#player,
       this.#boss,
@@ -144,14 +137,13 @@ export class Collider { // Class names are typically PascalCase
       }
     );
 
-    // Boss collision with player bullets
     const playerBullets = this.#scene.physics.add.group();
     this.#scene.physics.add.overlap(
       this.#boss,
       playerBullets,
       (boss, bullet) => {
         if (bullet instanceof Phaser.Physics.Arcade.Sprite) {
-          bullet.destroy(); // Destroy the bullet on impact
+          bullet.destroy(); 
         }
       },
       undefined,
@@ -159,7 +151,6 @@ export class Collider { // Class names are typically PascalCase
     );
   }
 
-  // Boss Bullets
   const bossBullets = this.#boss?.bulletGroup;
   if (bossBullets) {
     this.#playerBossBulletCollider = this.#scene.physics.add.collider(
@@ -193,9 +184,7 @@ export class Collider { // Class names are typically PascalCase
     this.#scene.time.delayedCall(200, () => {
       this.#player.clearTint();
     });
-    console.log(
-      `[ColliderComponent] Colisão com ${sourceType} detectada! Jogador perde ${damage} de vida. Dano: ${damage}`
-    );
+   
 
     this.#playerHealth.loseHealth(damage);
     this.#scene.events.emit(
@@ -236,9 +225,6 @@ export class Collider { // Class names are typically PascalCase
   #createTilemapColliders() {
     const tilemap = gameOptions.tilemap;
     if (!tilemap) {
-      console.warn(
-        "[ColliderComponent] Tilemap não está definido em gameOptions. Nenhum colisor de tilemap será criado."
-      );
       return;
     }
 
@@ -267,33 +253,63 @@ export class Collider { // Class names are typically PascalCase
     if (tile && tile.properties) {
       const damage = tile.properties.damage;
       if (damage !== undefined && damage > 0 && !this.#isInvulnerable) {
-        console.log(
-          `[ColliderComponent] Colisao com tile danoso( ID: ${tile.index}, Dano: ${damage})`
-        );
+        
         this.#handlePlayerHit(
           damage,
           `Tilemap (${tile.layer.name})`,
           colliderInstance
         );
       } else if (tile.properties.collides === true) {
-        console.log(
-          `[ColliderComponent] colisao com tile colidivel (ID: ${tile.index}) na camada ${tile.layer.name}.`
-        );
       }
     }
   }
 
   #handlePlayerDeath() {
-    this.#scene.scene.stop("healthUi");
-    this.#scene.scene.stop("PlayerHealthBar");
-    this.#scene.scene.stop("gameHud");
-    this.#scene.scene.stop("gameScene");
-    this.#scene.scene.stop("PauseScene");
-    this.#scene.scene.restart();
+    // Ensure proper cleanup of physics groups
+    if (this.#scene.physics && this.#scene.physics.world) {
+      this.#scene.physics.world.colliders.destroy();
+      this.#scene.physics.world.bodies.clear();
+      this.#scene.physics.world.staticBodies.clear();
+    }
+
+    // Destroy all active colliders
+    if (this.#playerBasicEnemyCollider) {
+      this.#playerBasicEnemyCollider.destroy();
+      this.#playerBasicEnemyCollider = undefined!;
+    }
+    if (this.#playerRangedBulletCollider) {
+      this.#playerRangedBulletCollider.destroy();
+      this.#playerRangedBulletCollider = undefined;
+    }
+    if (this.#playerDashEnemyCollider) {
+      this.#playerDashEnemyCollider.destroy();
+      this.#playerDashEnemyCollider = undefined;
+    }
+    if (this.#playerTankEnemyCollider) {
+      this.#playerTankEnemyCollider.destroy();
+      this.#playerTankEnemyCollider = undefined;
+    }
+    if (this.#playerBossCollider) {
+      this.#playerBossCollider.destroy();
+      this.#playerBossCollider = undefined;
+    }
+    if (this.#playerBossBulletCollider) {
+      this.#playerBossBulletCollider.destroy();
+      this.#playerBossBulletCollider = undefined;
+    }
+
+    // Stop all active scenes in the correct order
+    ['gameHud', 'PlayerHealthBar', 'PlayerBoostCooldownUI'].forEach(sceneName => {
+      if (this.#scene.scene.isActive(sceneName)) {
+        this.#scene.scene.stop(sceneName);
+      }
+    });
+
+    // Start GameOverScene
+    this.#scene.scene.start('GameOverScene');
   }
 
   public destroy(): void {
-    console.log('[ColliderComponent] Destroying colliders...');
 
     if (this.#playerBasicEnemyCollider) {
       this.#playerBasicEnemyCollider.destroy();

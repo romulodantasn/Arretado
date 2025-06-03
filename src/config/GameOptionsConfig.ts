@@ -20,8 +20,6 @@ export const gameOptions : {
   apCoin: 0,
   };
 
- 
-
 export const waveIndicator ={
   currentWave: 1,
   currentAct: 1,
@@ -29,10 +27,9 @@ export const waveIndicator ={
 
 export const gun = {
   gunDamage: 10,
-  bulletSpeed: 600, // velocidade da bala, em pixels por segundo
+  bulletSpeed: 600,
   fireRate: 250,
 }
-
 
 export function setupTilemap(
   scene: Phaser.Scene,
@@ -54,7 +51,6 @@ export function setupTilemap(
   else console.error(`Falha ao adicionar tileset "${name}" com imagem "${imageKey}"`);
   return acc;
 }, [] as Phaser.Tilemaps.Tileset[]);
-
 
   const createdLayers: Record<string, Phaser.Tilemaps.TilemapLayer> = {};
   for (const layerName of layers) {

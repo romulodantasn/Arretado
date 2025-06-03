@@ -45,7 +45,6 @@ export class GameScene extends Phaser.Scene {
   create() {
     console.log('gameScene carregado');
 
-    // Limpa o mundo da física antes de começar
     if (this.physics && this.physics.world) {
       this.physics.world.colliders.destroy();
       this.physics.world.bodies.clear();
@@ -59,7 +58,6 @@ export class GameScene extends Phaser.Scene {
     const currentWaveConfig = Waves[this.#currentWaveKey];
     gameOptions.waveDuration = currentWaveConfig.duration;
 
-    // Inicializa o SoundManager e toca a música da onda atual
     SoundManager.init(this);
     SoundManager.playWaveMusic(currentWaveConfig.waveNumber);
 
@@ -164,15 +162,12 @@ export class GameScene extends Phaser.Scene {
   shutdown() {
     console.log('GameScene shutdown');
     
-    // Para a música da onda atual
     SoundManager.stopCurrentWaveMusic();
 
-    // Remove todos os eventos
     this.events.removeAllListeners();
     this.input.keyboard?.removeAllListeners();
     this.time.removeAllEvents();
     
-    // Para e remove as cenas dependentes
     ['gameHud', 'PlayerHealthBar', 'PlayerBoostCooldownUI', 'BossHealthBar'].forEach(sceneName => {
       if (this.scene.isActive(sceneName)) {
         this.scene.stop(sceneName);
@@ -180,12 +175,10 @@ export class GameScene extends Phaser.Scene {
       }
     });
 
-    // Destrói os controladores
     if (this.#shootingController) {
       this.#shootingController.destroy();
     }
 
-    // Limpa e destrói grupos de inimigos
     if (this.#basicEnemy) {
       this.#basicEnemy.clear(true, true);
       this.#basicEnemy.destroy(true);
@@ -206,7 +199,6 @@ export class GameScene extends Phaser.Scene {
       this.#boss.destroy();
     }
 
-    // Destrói o jogador e o colisor
     if (this.#player) {
       this.#player.destroy();
     }
@@ -214,14 +206,12 @@ export class GameScene extends Phaser.Scene {
       this.#collider.destroy();
     }
 
-    // Limpa o mundo da física
     if (this.physics && this.physics.world) {
       this.physics.world.colliders.destroy();
       this.physics.world.bodies.clear();
       this.physics.world.staticBodies.clear();
     }
 
-    // Limpa todas as referências
     this.#player = undefined!;
     this.#basicEnemy = undefined!;
     this.#rangedEnemy = undefined;
@@ -234,7 +224,6 @@ export class GameScene extends Phaser.Scene {
     this.#keys = undefined;
     this.#waveData = undefined;
 
-    // Remove a cena
     this.scene.remove();
   }
 }

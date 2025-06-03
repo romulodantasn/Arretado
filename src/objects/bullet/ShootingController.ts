@@ -107,7 +107,6 @@ export class shootingController {
       this.#reticle.setPosition(pointer.worldX, pointer.worldY);
     });
 
-    // Define a cor inicial do reticle
     this.updateReticleColor(true);
   }
 
@@ -278,7 +277,6 @@ export class shootingController {
     this.#canShoot = false;
     this.updateReticleColor(false);
     
-    // Cancela o timer anterior se existir
     if (this.#cooldownTimer) {
       this.#cooldownTimer.destroy();
     }
