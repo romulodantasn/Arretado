@@ -72,6 +72,30 @@ export const damageItems: itemsContainer[] = [
       gun.gunDamage += 10;
     },
   },
+  {
+    imageKey: 'cacto',
+    name: 'Cacto Espinhoso',
+    type: 'dano',
+    description: '+15 de Dano',
+    sentence: '"Espeta mais que fofoca de comadre."',
+    cost: 25,
+    effect: () => {
+      console.log(`${name} Comprado, Dano aumentado`);
+      gun.gunDamage += 15;
+    },
+  },
+  {
+    imageKey: 'machadoDeLampião',
+    name: 'Machado de Lampião',
+    type: 'dano',
+    description: '+25 de Dano',
+    sentence: '"Corta mais que faca de umbanda."',
+    cost: 45,
+    effect: () => {
+      console.log(`${name} Comprado, Dano aumentado`);
+      gun.gunDamage += 25;
+    },
+  },
 ];
 
 export const lifeItems: itemsContainer[] = [
@@ -133,6 +157,30 @@ export const lifeItems: itemsContainer[] = [
     effect: () => {
       console.log(`${name} Comprado, Vida aumentada`);
       playerStats.Health += 35;
+    },
+  },
+  {
+    imageKey: 'rapadura',
+    name: 'Rapadura',
+    type: 'vida',
+    description: '+15 de Vida',
+    sentence: '"Doce que dá força, igual abraço de mainha."',
+    cost: 80,
+    effect: () => {
+      console.log(`${name} Comprado, Vida aumentada`);
+      playerStats.Health += 15;
+    },
+  },
+  {
+    imageKey: 'buchada',
+    name: 'Buchada de Bode',
+    type: 'vida',
+    description: '+40 de Vida',
+    sentence: '"Pra aguentar o tranco, só com uma buchada bem feita."',
+    cost: 250,
+    effect: () => {
+      console.log(`${name} Comprado, Vida aumentada`);
+      playerStats.Health += 40;
     },
   },
 ];
@@ -198,6 +246,30 @@ export const moveSpeedItems: itemsContainer[] = [
       playerStats.MoveSpeed += 50;
     },
   },
+  {
+    imageKey: 'carroDeMao',
+    name: 'Carro de Mão Turbinado',
+    type: 'Velocidade',
+    description: '+20% de Velocidade de Movimento',
+    sentence: '"Mais rápido que fofoca em feira livre."',
+    cost: 30,
+    effect: () => {
+      console.log(`${name} Comprado, MoveSpeed aumentada`);
+      playerStats.MoveSpeed += 20;
+    },
+  },
+  {
+    imageKey: 'ventoDoAgreste',
+    name: 'Vento do Agreste',
+    type: 'Velocidade',
+    description: '+35% de Velocidade de Movimento',
+    sentence: '"Ligeiro que nem vento no sertão."',
+    cost: 55,
+    effect: () => {
+      console.log(`${name} Comprado, MoveSpeed aumentada`);
+      playerStats.MoveSpeed += 35;
+    },
+  },
 ];
 
 export const firerateItems: itemsContainer[] = [
@@ -261,4 +333,30 @@ export const firerateItems: itemsContainer[] = [
       gun.fireRate *= 0.5;
     },
   },
+  {
+    imageKey: 'foleDeOitoBaixos',
+    name: 'Fole de Oito Baixos',
+    type: 'Fire Rate',
+    description: '-20% no tempo entre tiros',
+    sentence: '"Ritmo acelerado, bala voando!"',
+    cost: 40,
+    effect: () => {
+      console.log(`${name} Comprado, Cadência aumentada`);
+      gun.fireRate *= 0.8;
+    },
+  },
+  {
+    imageKey: 'xilofoneDeCabaça',
+    name: 'Xilofone de Cabaça',
+    type: 'Fire Rate',
+    description: '-30% no tempo entre tiros',
+    sentence: '"Toca uma melodia de destruição."',
+    cost: 60,
+    effect: () => {
+      console.log(`${name} Comprado, Cadência aumentada`);
+      gun.fireRate *= 0.7;
+    },
+  },
 ];
+
+

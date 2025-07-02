@@ -1,10 +1,10 @@
 import Phaser from "phaser";
-import { onWaveComplete } from "../../config/waves/waveManager";
+import { onWaveComplete, getNextWaveKey } from "../../config/waves/waveManager";
 import { currentEnemyStats } from "../../config/enemies/EnemiesContainer";
 import { playerStats } from "../../config/player/PlayerConfig";
 import { WaveManager } from "../../config/waves/waveManager";
 import { WaveNumbers, Waves } from "../../config/waves/wavesContainer";
-import { gameOptions } from "../../config/GameOptionsConfig";
+import { gameOptions, waveIndicator } from "../../config/GameOptionsConfig";
 
 import {
   damageItems,
@@ -256,15 +256,14 @@ export class itemsDisplayUi extends Phaser.GameObjects.Container {
         buttonText.setColor("#ffffff");
       });
       
-      if (this.scene.scene.isActive('gameHud')) {
-        this.scene.scene.stop('gameHud');
-      }
+      // The waveIndicator already holds the *next* wave/act due to onWaveComplete being called
+      // in waveManager.ts when the previous wave ends (either by time or boss kill).
+      // So, we just need to pass the current state of waveIndicator to GameScene.
+      const nextWaveKey = WaveManager.getWaveKey(waveIndicator.currentWave, waveIndicator.currentAct);
+      this.scene.scene.start("gameScene", {waveKey: nextWaveKey});
       
-      this.scene.scene.start("gameScene", {waveKey: `Wave_${WaveManager.getCurrentWave() + 1}` as WaveNumbers});
-      this.scene.scene.start("gameHud", {
-        elementsToShow: ["coins", "wave", "act", "timer", "gun"],
-      });
-      onWaveComplete();
+      // No need to call onWaveComplete here, it's already handled when the previous wave ended.
+      // onWaveComplete();
     });
   }
 
@@ -334,3 +333,5 @@ export class itemsDisplayUi extends Phaser.GameObjects.Container {
     container.add([healthText, damageText, moveSpeedText, luckyText]);
   }
 }
+
+

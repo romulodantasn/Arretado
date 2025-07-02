@@ -16,7 +16,9 @@ export interface WaveConfig {
     belongToAct: number;
 }
 
-export type WaveNumbers = 'Wave_1' | 'Wave_2' | 'Wave_3' | 'Wave_4' | 'Wave_5' | 'Wave_6' | 'Wave_7' | 'Wave_8' | 'Wave_9';
+export type WaveNumbers = 'Wave_1' | 'Wave_2' | 'Wave_3' | 'Wave_4' | 'Wave_5' | 'Wave_6' | 'Wave_7' | 'Wave_8' | 'Wave_9' |
+    'Wave_1_Act2' | 'Wave_2_Act2' | 'Wave_3_Act2' |
+    'Wave_1_Act3';
 
 export const Waves : Record <WaveNumbers, WaveConfig> = {
     Wave_1: {
@@ -69,7 +71,7 @@ export const Waves : Record <WaveNumbers, WaveConfig> = {
         music: 'wave_4_music',
         tilemapKey: 'tileset_wave_4',
         tileset: [
-            {name: 'greed_wave_4', imageKey: 'greed_wave_4'},
+            {name: 'greed_wave_4', imageKey: 'greed_4'},
         ],
         layers: ['Tile Layer 1'],
         collisionLayers: ['Tile Layer 1'],
@@ -145,4 +147,62 @@ export const Waves : Record <WaveNumbers, WaveConfig> = {
         collisionLayers: ['Tile Layer 1'],
         belongToAct: 1,
     },
+    Wave_1_Act2: {
+        waveNumber: 1,
+        enemies: ['BasicEnemy', 'RangedEnemy', 'DashEnemy'],
+        duration: 25,
+        background: 'wave_1_act2_background',
+        music: 'wave_1_act2_music',
+        tilemapKey: 'tileset_wave_1_act2',
+        tileset: [
+            {name: 'purgatory_wave_1', imageKey: 'purgatory_wave_1'},
+        ],
+        layers: ['Tile Layer 1'],
+        collisionLayers: ['Tile Layer 1'],
+        belongToAct: 2,
+    },
+    Wave_2_Act2: {
+        waveNumber: 2,
+        enemies: ['BasicEnemy', 'RangedEnemy', 'DashEnemy', 'TankEnemy'],
+        duration: 30,
+        background: 'wave_2_act2_background',
+        music: 'wave_2_act2_music',
+        tilemapKey: 'tileset_wave_2_act2',
+        tileset: [
+            {name: 'purgatory_wave_2', imageKey: 'purgatory_wave_2'},
+        ],
+        layers: ['Tile Layer 1'],
+        collisionLayers: ['Tile Layer 1'],
+        belongToAct: 2,
+    },
+    Wave_3_Act2: {
+        waveNumber: 3,
+        enemies: ['BasicEnemy', 'RangedEnemy', 'DashEnemy', 'TankEnemy', 'BossEnemy'],
+        duration: 35,
+        background: 'wave_3_act2_background',
+        music: 'wave_3_act2_music',
+        tilemapKey: 'tileset_wave_3_act2',
+        tileset: [
+            {name: 'purgatory_wave_3', imageKey: 'purgatory_wave_3'},
+        ],
+        layers: ['Tile Layer 1'],
+        collisionLayers: ['Tile Layer 1'],
+        belongToAct: 2,
+    },
+    Wave_1_Act3: {
+        waveNumber: 1,
+        enemies: ['BasicEnemy', 'RangedEnemy', 'DashEnemy', 'TankEnemy', 'BossEnemy'],
+        duration: 40,
+        background: 'wave_1_act3_background',
+        music: 'wave_1_act3_music',
+        tilemapKey: 'tileset_wave_1_act3',
+        tileset: [
+            {name: 'paradise_wave_1', imageKey: 'paradise_wave_1'},
+        ],
+        layers: ['Tile Layer 1'],
+        collisionLayers: ['Tile Layer 1'],
+        belongToAct: 3,
+    },
 }
+
+

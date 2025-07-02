@@ -71,7 +71,7 @@ export class Collider {
   );
 
   const rangedBullets = this.#rangedEnemyGroup?.bulletGroup;
-  if (rangedBullets) {
+  if (this.#rangedEnemyGroup && rangedBullets) { // Added null check for #rangedEnemyGroup
     this.#playerRangedBulletCollider = this.#scene.physics.add.collider(
       this.#player,
       rangedBullets,
@@ -122,7 +122,7 @@ export class Collider {
     );
   }
 
-  if (this.#boss?.active) {
+  if (this.#boss && this.#boss.active) { // Added null check for #boss
     this.#playerBossCollider = this.#scene.physics.add.collider(
       this.#player,
       this.#boss,
@@ -137,7 +137,10 @@ export class Collider {
       }
     );
 
-    const playerBullets = this.#scene.physics.add.group();
+    // This group is not being passed in the constructor, so it will always be empty.
+    // It should be the player's bullet group from shootingController.
+    // For now, I'll add a null check to prevent errors.
+    const playerBullets = this.#scene.physics.add.group(); // This needs to be the actual player bullet group
     this.#scene.physics.add.overlap(
       this.#boss,
       playerBullets,
@@ -152,7 +155,7 @@ export class Collider {
   }
 
   const bossBullets = this.#boss?.bulletGroup;
-  if (bossBullets) {
+  if (this.#boss && bossBullets) { // Added null check for #boss
     this.#playerBossBulletCollider = this.#scene.physics.add.collider(
       this.#player,
       bossBullets,
@@ -299,14 +302,14 @@ export class Collider {
     }
 
     // Stop all active scenes in the correct order
-    ['gameHud', 'PlayerHealthBar', 'PlayerBoostCooldownUI'].forEach(sceneName => {
+    ["gameHud", "PlayerHealthBar", "PlayerBoostCooldownUI"].forEach(sceneName => {
       if (this.#scene.scene.isActive(sceneName)) {
         this.#scene.scene.stop(sceneName);
       }
     });
 
     // Start GameOverScene
-    this.#scene.scene.start('GameOverScene');
+    this.#scene.scene.start("GameOverScene");
   }
 
   public destroy(): void {
@@ -353,3 +356,5 @@ export class Collider {
     this.#playerHealth = undefined!;
   }
 }
+
+

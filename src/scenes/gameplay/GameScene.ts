@@ -1,21 +1,22 @@
-import Phaser from 'phaser';
-import { gameOptions } from '../../config/GameOptionsConfig';
-import { playerStats } from '../../config/player/PlayerConfig';
-import { inputManager } from '../../components/input/InputManager';
-import { Player } from '../../objects/player/Player';
-import { BasicEnemyGroup } from '../../objects/enemies/BasicEnemyGroup';
-import { Collider } from '../../components/collider/colliderComponent';
-import { shootingController } from '../../objects/bullet/ShootingController';
-import { HealthComponent } from '../../components/playerHealth/HealthComponent';
-import { globalEventEmitter } from '../../components/events/globalEventEmitter';
-import { BossEnemy } from '../../objects/enemies/BossEnemy';
-import { WaveManager } from '../../config/waves/waveManager';
-import { WaveNumbers, Waves } from '../../config/waves/wavesContainer';
-import { DashEnemyGroup } from '../../objects/enemies/DashEnemyGroup';
-import { TankEnemyGroup } from '../../objects/enemies/TankEnemyGroup';
-import { RangedEnemyGroup } from '../../objects/enemies/RangedEnemyGroup';
-import { setupTilemap } from '../../config/GameOptionsConfig';
-import { SoundManager } from '../../config/SoundManager';
+import Phaser from "phaser";
+import { gameOptions, waveIndicator } from "../../config/GameOptionsConfig";
+import { playerStats } from "../../config/player/PlayerConfig";
+import { inputManager } from "../../components/input/InputManager";
+import { Player } from "../../objects/player/Player";
+import { BasicEnemyGroup } from "../../objects/enemies/BasicEnemyGroup";
+import { Collider } from "../../components/collider/colliderComponent";
+import { shootingController } from "../../objects/bullet/ShootingController";
+import { HealthComponent } from "../../components/playerHealth/HealthComponent";
+import { globalEventEmitter } from "../../components/events/globalEventEmitter";
+import { BossEnemy } from "../../objects/enemies/BossEnemy";
+import { WaveManager } from "../../config/waves/waveManager";
+import { WaveNumbers, Waves } from "../../config/waves/wavesContainer";
+import { DashEnemyGroup } from "../../objects/enemies/DashEnemyGroup";
+import { TankEnemyGroup } from "../../objects/enemies/TankEnemyGroup";
+import { RangedEnemyGroup } from "../../objects/enemies/RangedEnemyGroup";
+import { setupTilemap } from "../../config/GameOptionsConfig";
+import { SoundManager } from "../../config/SoundManager";
+import { CUTSCENES } from "../../config/CutscenesContainer";
 
 
 export class GameScene extends Phaser.Scene {
@@ -34,16 +35,20 @@ export class GameScene extends Phaser.Scene {
   #waveData: any;
 
   constructor() {
-    super({ key: 'gameScene' });
+    super({ key: "gameScene" });
   }
   
   init(data: { waveKey?: WaveNumbers }) {
-    this.#waveData = WaveManager.getWaveData(data.waveKey);
-    this.#currentWaveKey = `Wave_${this.#waveData.waveNumber}` as WaveNumbers;
+    this.#currentWaveKey = data.waveKey || "Wave_1";
+    this.#waveData = WaveManager.getWaveData(this.#currentWaveKey);
+    waveIndicator.currentWave = this.#waveData.waveNumber;
+    waveIndicator.currentAct = this.#waveData.belongToAct;
+    console.log(`GameScene init: waveIndicator.currentWave = ${waveIndicator.currentWave}, waveIndicator.currentAct = ${waveIndicator.currentAct}`);
   }
 
   create() {
-    console.log('gameScene carregado');
+    console.log("gameScene carregado");
+    console.log(`GameScene create: waveIndicator.currentWave = ${waveIndicator.currentWave}, waveIndicator.currentAct = ${waveIndicator.currentAct}`);
 
     if (this.physics && this.physics.world) {
       this.physics.world.colliders.destroy();
@@ -51,10 +56,10 @@ export class GameScene extends Phaser.Scene {
       this.physics.world.staticBodies.clear();
     }
 
-    this.#health = new HealthComponent(playerStats.Health, playerStats.Health, 'player');
+    this.#health = new HealthComponent(playerStats.Health, playerStats.Health, "player");
 
-    this.scene.launch('gameHud');
-    this.scene.launch('PlayerBoostCooldownUI');
+    this.scene.launch("gameHud", { waveKey: this.#currentWaveKey });    
+    this.scene.launch("PlayerBoostCooldownUI");
     const currentWaveConfig = Waves[this.#currentWaveKey];
     gameOptions.waveDuration = currentWaveConfig.duration;
 
@@ -83,21 +88,25 @@ export class GameScene extends Phaser.Scene {
     this.#player = new Player(this, gameOptions.gameSize.width / 2, gameOptions.gameSize.height / 2);    
     this.#basicEnemy = new BasicEnemyGroup(this, this.#player);
 
-    if(Waves[this.#currentWaveKey].enemies.includes('RangedEnemy')) {
-      this.#rangedEnemy = new RangedEnemyGroup(this, this.#player);
-    }
+    // Initialize optional enemy groups to empty groups if they are not present in the current wave
+    this.#rangedEnemy = Waves[this.#currentWaveKey].enemies.includes("RangedEnemy") 
+      ? new RangedEnemyGroup(this, this.#player) 
+      : undefined;
  
-    if(Waves[this.#currentWaveKey].enemies.includes('DashEnemy')) {
-      this.#dashEnemy = new DashEnemyGroup(this, this.#player);
-    }
+    this.#dashEnemy = Waves[this.#currentWaveKey].enemies.includes("DashEnemy") 
+      ? new DashEnemyGroup(this, this.#player) 
+      : undefined;
    
-    if(Waves[this.#currentWaveKey].enemies.includes('TankEnemy')) {
-      this.#tankEnemy = new TankEnemyGroup(this, this.#player);
-    }
+    this.#tankEnemy = Waves[this.#currentWaveKey].enemies.includes("TankEnemy") 
+      ? new TankEnemyGroup(this, this.#player) 
+      : undefined;
     
-    if(Waves[this.#currentWaveKey].enemies.includes('BossEnemy')) {
-      this.#boss = new BossEnemy(this,300, 300, this.#player);
-      this.scene.launch('BossHealthBar');
+    this.#boss = Waves[this.#currentWaveKey].enemies.includes("BossEnemy") 
+      ? new BossEnemy(this, 300, 300, this.#player) 
+      : undefined;
+
+    if(this.#boss) {
+      this.scene.launch("BossHealthBar");
       const bossBody = this.#boss.body as Phaser.Physics.Arcade.Body;
       bossBody.setImmovable(true);
       bossBody.setBounce(0, 0);
@@ -112,16 +121,22 @@ export class GameScene extends Phaser.Scene {
     this.#keys = inputManager.getKeys();
 
     this.time.delayedCall(100, () => {
-      if (!this.scene.isActive('PlayerHealthBar')) {
-        this.scene.launch('PlayerHealthBar', { emitter: globalEventEmitter, health: this.#health });
-        this.scene.bringToTop('PlayerHealthBar');
-        this.scene.bringToTop('PlayerBoostCooldownUI'); 
+      if (!this.scene.isActive("PlayerHealthBar")) {
+        this.scene.launch("PlayerHealthBar", { emitter: globalEventEmitter, health: this.#health });
+        this.scene.bringToTop("PlayerHealthBar");
+        this.scene.bringToTop("PlayerBoostCooldownUI"); 
       }
     });
 
     this.physics.world.setBounds(0,0, gameOptions.gameSize.width, gameOptions.gameSize.height)
     this.cameras.main.setBounds(0, 0, gameOptions.gameSize.width, gameOptions.gameSize.height);
     this.cameras.main.startFollow(this.#player)
+
+    globalEventEmitter.on("waveCompletedAndAdvance", () => {
+      console.log(`waveCompletedAndAdvance event received. Current waveIndicator: ${waveIndicator.currentWave}, ${waveIndicator.currentAct}`);
+      this.scene.stop("gameScene");
+      this.scene.start("nextPhaseScene");
+    });
   }
 
   update() {
@@ -137,30 +152,30 @@ export class GameScene extends Phaser.Scene {
 
   public handlePause() {
     if (!Phaser.Input.Keyboard.JustDown(this.#keys.pause)) return;
-    const gameScene = 'gameScene';
-    const gameHud = 'gameHud';
-    const PauseScene = 'PauseScene';
+    const gameScene = "gameScene";
+    const gameHud = "gameHud";
+    const PauseScene = "PauseScene";
 
     const isGamePaused = this.scene.isPaused(gameScene);
     const isHudPaused = this.scene.isPaused(gameHud);
     const isHudActive = this.scene.isActive(gameHud);
 
     if (isGamePaused) {
-      console.log('Jogo retomado');
+      console.log("Jogo retomado");
       this.scene.resume(gameScene);
       if (isHudPaused) this.scene.resume(gameHud);
       this.scene.stop(PauseScene);
     } else {
-      console.log('Jogo Pausado');
+      console.log("Jogo Pausado");
       this.scene.pause(gameScene);
-      this.scene.scene.input.setDefaultCursor('default');
+      this.scene.scene.input.setDefaultCursor("default");
       if (isHudActive) this.scene.pause(gameHud);
       this.scene.launch(PauseScene);
     }
   }
 
   shutdown() {
-    console.log('GameScene shutdown');
+    console.log("GameScene shutdown");
     
     SoundManager.stopCurrentWaveMusic();
 
@@ -168,7 +183,7 @@ export class GameScene extends Phaser.Scene {
     this.input.keyboard?.removeAllListeners();
     this.time.removeAllEvents();
     
-    ['gameHud', 'PlayerHealthBar', 'PlayerBoostCooldownUI', 'BossHealthBar'].forEach(sceneName => {
+    ["gameHud", "PlayerHealthBar", "PlayerBoostCooldownUI", "BossHealthBar"].forEach(sceneName => {
       if (this.scene.isActive(sceneName)) {
         this.scene.stop(sceneName);
         this.scene.remove(sceneName);
@@ -227,3 +242,5 @@ export class GameScene extends Phaser.Scene {
     this.scene.remove();
   }
 }
+
+

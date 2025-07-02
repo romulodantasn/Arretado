@@ -24,9 +24,8 @@ export const waveIndicator ={
   currentWave: 1,
   currentAct: 1,
 }
-
 export const gun = {
-  gunDamage: 10,
+  gunDamage: 3000,
   bulletSpeed: 600,
   fireRate: 250,
 }

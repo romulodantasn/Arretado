@@ -49,7 +49,7 @@ export class preloadAssets extends Phaser.Scene {
 
     this.time.delayedCall(1000, () => {
       this.scene.stop('BootScene');
-      this.scene.start('titleScene');
+      this.scene.start('gameScene', { waveKey: 'Wave_9' });
     });
   }
 
