@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { gameOptions, waveIndicator } from '../../config/GameOptionsConfig';
 import { playerStats } from '../../config/player/PlayerConfig';
 import { timer } from '../../components/timer/Timer';
-import { WaveManager } from '../../config/waves/waveManager';
+import { WaveManager, onWaveComplete, isBossWave } from '../../config/waves/waveManager';
 
 type hudElement = 'coins' | 'wave' | 'act' | 'timer' | 'gun';
 export class gameHud extends Phaser.Scene {
@@ -96,6 +96,10 @@ export class gameHud extends Phaser.Scene {
     if (this.#elementsToShow.includes('timer')) {
       this.events.on('timeUp', () => {
         console.log('timeUp disparado');
+        const waveKey = WaveManager.getWaveKey(waveIndicator.currentWave, waveIndicator.currentAct);
+        if (!isBossWave(waveKey)) {
+          onWaveComplete();
+        }
         this.phaseCount();
       });
       this.#timerInstance = new timer(this);

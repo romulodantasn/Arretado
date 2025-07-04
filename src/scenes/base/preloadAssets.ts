@@ -19,7 +19,16 @@ export class preloadAssets extends Phaser.Scene {
       'Colocando as precata...',
       'Ajeitando a cueca pra não mostrar o rego....',
       'Pedindo o uber pra Maria Bonita....',
-
+      'Conferindo as balas do rifle...',
+      'Passando sebo no chapéu de couro...',
+      'Amarrando o bornal na cintura...',
+      'Lustrando a fivela do cinturão...',
+      'Botando o bode pra pastar...',
+      'Acendendo o candeeiro...',
+      'Fazendo promessa pra Padim Ciço...',
+      'Dando milho às galinhas...',
+      'Benzendo o facão antes da batalha...',
+      'Coçando o pé rachado antes de sair...'
     ];
     this.currentMessageIndex = 0;
   }
@@ -49,7 +58,7 @@ export class preloadAssets extends Phaser.Scene {
 
     this.time.delayedCall(1000, () => {
       this.scene.stop('BootScene');
-      this.scene.start('gameScene', { waveKey: 'Wave_9' });
+      this.scene.start('gameScene', { waveKey: 'Wave_3_Act2' });
     });
   }
 

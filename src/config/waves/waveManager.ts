@@ -63,6 +63,11 @@ globalEventEmitter.on('bossKilled', () => {
   onWaveComplete();
 });
 
+export function isBossWave(waveKey: WaveNumbers): boolean {
+  const waveData = WaveManager.getWaveData(waveKey);
+  return waveData.enemies.includes('BossEnemy');
+}
+
 
 
 
