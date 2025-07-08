@@ -117,6 +117,13 @@
     "frames": [0, 1, 2, 3, 4],
     "repeat": -1,
     "assetKey": "loading"
+  },
+  {
+    "key": "boss",
+    "frameRate": 5,
+    "frames": [0, 1, 2],
+    "repeat": -1,
+    "assetKey": "boss"
   }
 ]
 

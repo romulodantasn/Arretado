@@ -93,6 +93,26 @@
       "url": "tilesets/tileset_wave_9.json"
     },
     {
+      "type": "tilemapTiledJSON",
+      "key": "tileset_wave_1_act2",
+      "url": "tilesets/tileset_wave_1_act2.json"
+    },
+    {
+      "type": "tilemapTiledJSON",
+      "key": "tileset_wave_2_act_2",
+      "url": "tilesets/tileset_wave_2_act_2.json"
+    },
+    {
+      "type": "tilemapTiledJSON",
+      "key": "tileset_wave_3_act_2",
+      "url": "tilesets/tileset_wave_3_act_2.json"
+    },
+    {
+      "type": "tilemapTiledJSON",
+      "key": "tileset_wave_1_act_3",
+      "url": "tilesets/tileset_wave_1_act_3.json"
+    },
+    {
       "type": "image",
       "key": "limbo_wave_1",
       "url": "/backgrounds/wave_1/limbo_wave_1.png"
@@ -136,6 +156,26 @@
       "type": "image",
       "key": "betrayel_wave_9",
       "url": "/backgrounds/wave_9/betrayel_wave_9.png"
+    },
+    {
+      "type": "image",
+      "key": "wave_1_act2",
+      "url": "backgrounds/wave_1_act_2/wave_1_act2.png"
+    },
+    {
+      "type": "image",
+      "key": "wave_2_act_2",
+      "url": "backgrounds/wave_2_act2/wave_2_act_2.png"
+    },
+    {
+      "type": "image",
+      "key": "wave_3_act_2",
+      "url": "backgrounds/wave_3_act_2/wave_3_act_2.png"
+    },
+    {
+      "type": "image",
+      "key": "wave_1_act_3",
+      "url": "backgrounds/wave_1_act_3/wave_1_act_3.png"
     },
     {
       "type": "image",
@@ -236,6 +276,46 @@
       "type": "image",
       "key": "manga",
       "url": "items/manga.png"
+    },
+    {
+      "type": "image",
+      "key": "cacto",
+      "url": "items/cacto.png"
+    },
+    {
+      "type": "image",
+      "key": "machadoDeLampião",
+      "url": "items/machadoDeLampião.png"
+    },
+    {
+      "type": "image",
+      "key": "rapadura",
+      "url": "items/rapadura.png"
+    },
+    {
+      "type": "image",
+      "key": "buchada",
+      "url": "items/buchada.png"
+    },
+    {
+      "type": "image",
+      "key": "carroDeMao",
+      "url": "items/carroDeMao.png"
+    },
+    {
+      "type": "image",
+      "key": "ventoDoAgreste",
+      "url": "items/ventoDoAgreste.png"
+    },
+    {
+      "type": "image",
+      "key": "foleDeOitoBaixos",
+      "url": "items/foleDeOitoBaixos.png"
+    },
+    {
+      "type": "image",
+      "key": "xilofoneDeCabaça",
+      "url": "items/xilofoneDeCabaça.png"
     },
     {
       "type": "image",
@@ -445,6 +525,11 @@
       "type":"image",
       "key": "cutscene4",
       "url":"cutscenes/cutscene4.png"
+    },
+    {
+      "type":"image",
+      "key": "cutscene5",
+      "url":"cutscenes/cutscene5.png"
     },
     {
       "type":"spritesheet",
