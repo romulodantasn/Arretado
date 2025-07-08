@@ -26,6 +26,10 @@ export class SoundManager {
   static wave7Music: Phaser.Sound.BaseSound;
   static wave8Music: Phaser.Sound.BaseSound;
   static wave9Music: Phaser.Sound.BaseSound;
+  static wave1Act3Music: Phaser.Sound.BaseSound;
+  static wave1Act2Music: Phaser.Sound.BaseSound;
+  static wave2Act2Music: Phaser.Sound.BaseSound;
+  static wave3Act2Music: Phaser.Sound.BaseSound
 
   private static readonly waveMusicKeys = {
     1: 'wave1Music',
@@ -36,7 +40,7 @@ export class SoundManager {
     6: 'wave6Music',
     7: 'wave7Music',
     8: 'wave8Music',
-    9: 'wave9Music'
+    9: 'wave9Music',
   } as const;
 
   static setInGameScene(value: boolean) {
@@ -123,20 +127,53 @@ export class SoundManager {
     }
   }
 
-  static playWaveMusic(waveNumber: number) {
+  static playWaveMusic(waveMusicKeyOrNumber: number | string) {
     if (!this.isInGameScene) {
       return;
     }
 
     this.stopCurrentWaveMusic();
-    
-    const musicKey = this.waveMusicKeys[waveNumber as keyof typeof this.waveMusicKeys];
+
+    if (typeof waveMusicKeyOrNumber === 'string') {
+      const musicKeyToProperty: Record<string, string> = {
+        'wave_1_music': 'wave1Music',
+        'wave_2_music': 'wave2Music',
+        'wave_3_music': 'wave3Music',
+        'wave_4_music': 'wave4Music',
+        'wave_5_music': 'wave5Music',
+        'wave_6_music': 'wave6Music',
+        'wave_7_music': 'wave7Music',
+        'wave_8_music': 'wave8Music',
+        'wave_9_music': 'wave9Music',
+        'wave_1_act_2_music': 'wave1Act2Music',
+        'wave_2_act_2_music': 'wave2Act2Music',
+        'wave_3_act_2_music': 'wave3Act2Music',
+        'wave_1_act_3_music': 'wave1Act3Music',
+      };
+      const property = musicKeyToProperty[waveMusicKeyOrNumber];
+      if (property && (this as any)[property]) {
+        this.currentWaveMusic = (this as any)[property] as Phaser.Sound.BaseSound;
+        (this.currentWaveMusic as Phaser.Sound.BaseSound).play({ loop: true, volume: 0.5 });
+        this.events.emit(`${waveMusicKeyOrNumber}_start`);
+        return;
+      }
+      // fallback para o comportamento antigo
+      const sound = (this as any)[waveMusicKeyOrNumber] as Phaser.Sound.BaseSound;
+      if (sound) {
+        this.currentWaveMusic = sound;
+        sound.play({ loop: true, volume: 0.5 });
+        this.events.emit(`${waveMusicKeyOrNumber}_start`);
+      }
+      return;
+    }
+
+    const musicKey = this.waveMusicKeys[waveMusicKeyOrNumber as keyof typeof this.waveMusicKeys];
     if (musicKey) {
       const waveMusic = this[musicKey] as Phaser.Sound.BaseSound;
       if (waveMusic) {
         this.currentWaveMusic = waveMusic;
         waveMusic.play({ loop: true, volume: 0.5 });
-        this.events.emit(`wave_${waveNumber}_music_start`);
+        this.events.emit(`wave_${waveMusicKeyOrNumber}_music_start`);
       }
     }
   }
@@ -183,6 +220,12 @@ export class SoundManager {
     this.wave7Music = scene.sound.add('wave_7_music');
     this.wave8Music = scene.sound.add('wave_8_music');
     this.wave9Music = scene.sound.add('wave_9_music');
+    this.wave1Act3Music = scene.sound.add('wave_1_act_3_music');
+    this.wave1Act2Music = scene.sound.add('wave_1_act_2_music');
+    this.wave2Act2Music = scene.sound.add('wave_2_act_2_music');
+    this.wave3Act2Music = scene.sound.add('wave_3_act_2_music');
+
+    
 
     scene.events.once('shutdown', () => {
       if (scene.scene.key === 'gameScene') {

@@ -72,6 +72,30 @@ export const damageItems: itemsContainer[] = [
       gun.gunDamage += 10;
     },
   },
+  {
+    imageKey: 'cacto',
+    name: 'Cacto Espinhoso',
+    type: 'dano',
+    description: '+15 de Dano',
+    sentence: '"Espeta mais que fofoca de comadre."',
+    cost: 25,
+    effect: () => {
+      console.log(`${name} Comprado, Dano aumentado`);
+      gun.gunDamage += 15;
+    },
+  },
+  {
+    imageKey: 'machadoDeLampião',
+    name: 'Machado de Lampião',
+    type: 'dano',
+    description: '+25 de Dano',
+    sentence: '"Corta mais que faca de umbanda."',
+    cost: 45,
+    effect: () => {
+      console.log(`${name} Comprado, Dano aumentado`);
+      gun.gunDamage += 25;
+    },
+  },
 ];
 
 export const lifeItems: itemsContainer[] = [
@@ -133,6 +157,30 @@ export const lifeItems: itemsContainer[] = [
     effect: () => {
       console.log(`${name} Comprado, Vida aumentada`);
       playerStats.Health += 35;
+    },
+  },
+  {
+    imageKey: 'rapadura',
+    name: 'Rapadura',
+    type: 'vida',
+    description: '+15 de Vida',
+    sentence: '"Doce que dá força, igual abraço de mainha."',
+    cost: 80,
+    effect: () => {
+      console.log(`${name} Comprado, Vida aumentada`);
+      playerStats.Health += 15;
+    },
+  },
+  {
+    imageKey: 'buchada',
+    name: 'Buchada de Bode',
+    type: 'vida',
+    description: '+40 de Vida',
+    sentence: '"Pra aguentar o tranco, só com uma buchada bem feita."',
+    cost: 250,
+    effect: () => {
+      console.log(`${name} Comprado, Vida aumentada`);
+      playerStats.Health += 40;
     },
   },
 ];
@@ -198,6 +246,30 @@ export const moveSpeedItems: itemsContainer[] = [
       playerStats.MoveSpeed += 50;
     },
   },
+  {
+    imageKey: 'carroDeMao',
+    name: 'Carro de Mão Turbinado',
+    type: 'Velocidade',
+    description: '+20% de Velocidade de Movimento',
+    sentence: '"Mais rápido que fofoca em feira livre."',
+    cost: 30,
+    effect: () => {
+      console.log(`${name} Comprado, MoveSpeed aumentada`);
+      playerStats.MoveSpeed += 20;
+    },
+  },
+  {
+    imageKey: 'ventoDoAgreste',
+    name: 'Vento do Agreste',
+    type: 'Velocidade',
+    description: '+35% de Velocidade de Movimento',
+    sentence: '"Ligeiro que nem vento no sertão."',
+    cost: 55,
+    effect: () => {
+      console.log(`${name} Comprado, MoveSpeed aumentada`);
+      playerStats.MoveSpeed += 35;
+    },
+  },
 ];
 
 export const firerateItems: itemsContainer[] = [
@@ -205,60 +277,86 @@ export const firerateItems: itemsContainer[] = [
     imageKey: 'olhoDeCobra',
     name: 'Olho de Cobra',
     type: 'Fire Rate',
-    description: '-15% no tempo entre tiros',
+    description: '-5% no tempo entre tiros',
     sentence: '"Ligeiro que nem bote de cobra!"',
     cost: 30,
     effect: () => {
       console.log(`${name} Comprado, Cadência aumentada`);
-      gun.fireRate *= 0.85;
+      gun.fireRate *= 0.95;
     },
   },
   {
     imageKey: 'cordel',
     name: 'Cordel do Cangaço',
     type: 'Fire Rate',
-    description: '-25% no tempo entre tiros',
+    description: '-10% no tempo entre tiros',
     sentence: '"Rápido nas rimas, rápido nos tiros!"',
     cost: 50,
     effect: () => {
       console.log(`${name} Comprado, Cadência aumentada`);
-      gun.fireRate *= 0.75;
+      gun.fireRate *= 0.90;
     },
   },
   {
     imageKey: 'dadoCangaceiro',
     name: 'Dado Cangaceiro',
     type: 'Fire Rate',
-    description: '-40% no tempo entre tiros',
+    description: '-15% no tempo entre tiros',
     sentence: '"A sorte favorece os rápidos!"',
     cost: 75,
     effect: () => {
       console.log(`${name} Comprado, Cadência aumentada`);
-      gun.fireRate *= 0.6;
+      gun.fireRate *= 0.85;
     },
   },
   {
     imageKey: 'ferradura',
     name: 'Ferradura',
     type: 'Fire Rate',
-    description: '-10% no tempo entre tiros',
+    description: '-3% no tempo entre tiros',
     sentence: '"Barato, mas vai que funciona..."',
     cost: 15,
     effect: () => {
       console.log(`${name} Comprado, Cadência aumentada`);
-      gun.fireRate *= 0.9;
+      gun.fireRate *= 0.97;
     },
   },
   {
     imageKey: 'guine',
     name: 'Pólvora Guiné',
     type: 'Fire Rate',
-    description: '-50% no tempo entre tiros',
+    description: '-20% no tempo entre tiros',
     sentence: '"Tão rápido que o cano fica vermelho!"',
     cost: 100,
     effect: () => {
       console.log(`${name} Comprado, Cadência aumentada`);
-      gun.fireRate *= 0.5;
+      gun.fireRate *= 0.80;
+    },
+  },
+  {
+    imageKey: 'foleDeOitoBaixos',
+    name: 'Fole de Oito Baixos',
+    type: 'Fire Rate',
+    description: '-7% no tempo entre tiros',
+    sentence: '"Ritmo acelerado, bala voando!"',
+    cost: 40,
+    effect: () => {
+      console.log(`${name} Comprado, Cadência aumentada`);
+      gun.fireRate *= 0.93;
+    },
+  },
+  {
+    imageKey: 'xilofoneDeCabaça',
+    name: 'Xilofone de Cabaça',
+    type: 'Fire Rate',
+    description: '-12% no tempo entre tiros',
+    sentence: '"Toca uma melodia de destruição."',
+    cost: 60,
+    effect: () => {
+      console.log(`${name} Comprado, Cadência aumentada`);
+      gun.fireRate *= 0.88;
     },
   },
 ];
+
+

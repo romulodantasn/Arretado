@@ -2,13 +2,16 @@ import { HealthComponent } from "../../components/playerHealth/HealthComponent";
 import { currentEnemyStats } from "../../config/enemies/EnemiesContainer";
 import { Player } from "../player/Player";
 import { SoundManager } from "../../config/SoundManager";
-
+import { CUTSCENES } from "../../config/CutscenesContainer";
+import { coinOnKillEvent } from "../../components/events/coinOnKillEvent";
+import { globalEventEmitter } from "../../components/events/globalEventEmitter";
 export class BossEnemy extends Phaser.Physics.Arcade.Sprite {
   #player: Player;
   public bulletGroup: Phaser.Physics.Arcade.Group;
 
   constructor(scene: Phaser.Scene, x: number, y: number, player: Player) {
-    super(scene, x, y, 'boss');
+    const spriteKey = 'boss';
+    super(scene, x, y, spriteKey);
     this.#player = player;
 
     scene.add.existing(this);
@@ -33,13 +36,15 @@ export class BossEnemy extends Phaser.Physics.Arcade.Sprite {
     this.setupContinuousShooting(scene);
 
     const bossId = `boss_${Date.now()}_${Math.random().toString(16).slice(2)}`;
-    const bossHealth = new HealthComponent(currentEnemyStats.BossEnemy.Health, currentEnemyStats.BossEnemy.Health, bossId);
+    const bossHealth = new HealthComponent(currentEnemyStats['BossEnemy'].Health, currentEnemyStats['BossEnemy'].Health, bossId);
     this.setData('healthComponent', bossHealth);
+    
+    this.play(spriteKey, true);
   }
   
   private setupContinuousShooting(scene: Phaser.Scene) {
     scene.time.addEvent({
-      delay: currentEnemyStats.BossEnemy.FireRate,
+      delay: currentEnemyStats['BossEnemy'].FireRate,
       loop: true,
       callback: () => {
         if (this.active && this instanceof Phaser.Physics.Arcade.Sprite) {
@@ -51,7 +56,7 @@ export class BossEnemy extends Phaser.Physics.Arcade.Sprite {
           bulletBody.setAllowGravity(false);
           
           this.bulletGroup.add(bullet);
-          scene.physics.moveToObject(bullet, this.#player, currentEnemyStats.BossEnemy.BulletSpeed);
+          scene.physics.moveToObject(bullet, this.#player, currentEnemyStats['BossEnemy'].BulletSpeed);
           
           scene.time.delayedCall(3000, () => {
             if (bullet.active) {
@@ -64,7 +69,8 @@ export class BossEnemy extends Phaser.Physics.Arcade.Sprite {
   }
 
   public updateEnemyBossMovement(scene: Phaser.Scene) {
-    this.scene.physics.moveToObject(this, this.#player, currentEnemyStats.BossEnemy.Speed);
+    if (!this.active || !this.scene) return;
+    this.scene.physics.moveToObject(this, this.#player, currentEnemyStats['BossEnemy'].Speed);
     if (this.x < this.#player.x) {
       this.setFlipX(false);
     } else {
@@ -94,26 +100,14 @@ export class BossEnemy extends Phaser.Physics.Arcade.Sprite {
   }
 
   #die(): void {
-    console.log('Juazeiro Derrotado!');
     SoundManager.playBossDeathSFX();
-    
     this.bulletGroup.clear(true, true);
-    
-    const currentScene = this.scene;
-    
     this.setActive(false);
     this.setVisible(false);
-    
-    if (currentScene) {
-      currentScene.scene.stop('gameHud');
-      currentScene.scene.stop('PlayerHealthBar');
-      currentScene.scene.stop('BossHealthBar');
-      currentScene.scene.stop('PlayerBoostCooldownUI');
-      currentScene.scene.stop('gameScene');
-      
-      currentScene.scene.start('cutscene4');
-    }
-    
+    coinOnKillEvent(this.scene);
+    globalEventEmitter.emit('bossKilled'); // Emit the event
     this.destroy();
   }
 }
+
+

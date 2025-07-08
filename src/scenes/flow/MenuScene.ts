@@ -38,7 +38,6 @@ export class menuScene extends Phaser.Scene {
     this.titleText();
     this.newGameButton();
     this.storeButton();
-    this.configButton();
     this.exitButton();
     
     SoundManager.init(this);
@@ -115,28 +114,21 @@ export class menuScene extends Phaser.Scene {
   }
 
   public newGameButton() {
-    const button = this.createMenuButton(202, 760, "Novo Jogo");
+    const button = this.createMenuButton(202, 800, "Novo Jogo");
     button.on("pointerup", () => {
       this.transitionToScene("CutscenesScene", CUTSCENES.cutscene1);
     });
   }
 
   public storeButton() {
-    const button = this.createMenuButton(155, 820, "Loja");
+    const button = this.createMenuButton(155, 860, "Loja");
     button.on("pointerup", () => {
       this.transitionToScene("StoreScene");
     });
   }
 
-  public configButton() {
-    const button = this.createMenuButton(240, 880, "Configurações", 230);
-    button.on("pointerup", () => {
-      this.transitionToScene("configScene");
-    });
-  }
-
   public exitButton() {
-    const button = this.createMenuButton(155, 940, "Sair");
+    const button = this.createMenuButton(155, 920, "Sair");
     button.on("pointerup", () => {
       this.transitionToScene("titleScene");
     });

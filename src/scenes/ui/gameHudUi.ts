@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { gameOptions, waveIndicator } from '../../config/GameOptionsConfig';
 import { playerStats } from '../../config/player/PlayerConfig';
 import { timer } from '../../components/timer/Timer';
+import { WaveManager, onWaveComplete, isBossWave } from '../../config/waves/waveManager';
 
 type hudElement = 'coins' | 'wave' | 'act' | 'timer' | 'gun';
 export class gameHud extends Phaser.Scene {
@@ -23,15 +24,24 @@ export class gameHud extends Phaser.Scene {
     });
   }
 
-  init(data?: { elementsToShow?: hudElement[] }) {
+  init(data?: { elementsToShow?: hudElement[], waveKey?: string }) {
     if (data?.elementsToShow) {
       this.#elementsToShow = data.elementsToShow;
     } else {
       this.#elementsToShow = ['coins', 'wave', 'act', 'timer', 'gun'];
     }
+    // Re-initialize waveIndicator based on the waveKey passed from GameScene or itemScene
+    // This ensures the HUD always displays the correct wave/act when it's launched.
+    if (data?.waveKey) {
+      const waveData = WaveManager.getWaveData(data.waveKey as any);
+      waveIndicator.currentWave = waveData.waveNumber;
+      waveIndicator.currentAct = waveData.belongToAct;
+      console.log(`gameHud init: waveIndicator.currentWave = ${waveIndicator.currentWave}, waveIndicator.currentAct = ${waveIndicator.currentAct}`);
+    }
   }
 
   create() {
+    console.log(`gameHud create: waveIndicator.currentWave = ${waveIndicator.currentWave}, waveIndicator.currentAct = ${waveIndicator.currentAct}`);
     this.game.events.removeListener('buyUpdatedCoin', this.coinCount, this);
     this.game.events.removeListener('enemyKilled', this.coinCount, this);
     this.events.removeListener('timeUp');
@@ -86,6 +96,10 @@ export class gameHud extends Phaser.Scene {
     if (this.#elementsToShow.includes('timer')) {
       this.events.on('timeUp', () => {
         console.log('timeUp disparado');
+        const waveKey = WaveManager.getWaveKey(waveIndicator.currentWave, waveIndicator.currentAct);
+        if (!isBossWave(waveKey)) {
+          onWaveComplete();
+        }
         this.phaseCount();
       });
       this.#timerInstance = new timer(this);
@@ -93,7 +107,7 @@ export class gameHud extends Phaser.Scene {
     }
 
     this.coinCount();
-    this.updateHud();
+    this.updateHud(); // Ensure HUD is updated with current waveIndicator values
 
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.game.events.off('buyUpdatedCoin', this.coinCount, this);
@@ -104,21 +118,11 @@ export class gameHud extends Phaser.Scene {
 
   public phaseCount() {
     if (!this.shouldIncrementWave || !this.#elementsToShow.includes('wave')) return;
-   
-    if (waveIndicator.currentWave >= 9) {
-      waveIndicator.currentWave = 1;
-      waveIndicator.currentAct++;
-    }
-
-    if (waveIndicator.currentAct == 2 && waveIndicator.currentWave == 3) {
-      waveIndicator.currentAct = 3;
-      waveIndicator.currentWave = 1;
-    };
     this.updateHud();
   }
 
   public updateHud() {
-    if (this.#waveText && this.#actText) {
+    if (this.#waveText) {
       this.#waveText.setText(`Onda: ${waveIndicator.currentWave}`);
     }
     if (this.#actText) {
@@ -145,3 +149,5 @@ export class gameHud extends Phaser.Scene {
     this.shouldIncrementWave = false;
   }
 }
+
+

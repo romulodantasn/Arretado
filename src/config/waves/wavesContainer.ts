@@ -14,9 +14,12 @@ export interface WaveConfig {
     layers?: string[];
     collisionLayers?: string[];
     belongToAct: number;
+    nextCutscene?: string;
 }
 
-export type WaveNumbers = 'Wave_1' | 'Wave_2' | 'Wave_3' | 'Wave_4' | 'Wave_5' | 'Wave_6' | 'Wave_7' | 'Wave_8' | 'Wave_9';
+export type WaveNumbers = 'Wave_1' | 'Wave_2' | 'Wave_3' | 'Wave_4' | 'Wave_5' | 'Wave_6' | 'Wave_7' | 'Wave_8' | 'Wave_9' |
+    'Wave_1_Act2' | 'Wave_2_Act2' | 'Wave_3_Act2' |
+    'Wave_1_Act3';
 
 export const Waves : Record <WaveNumbers, WaveConfig> = {
     Wave_1: {
@@ -142,7 +145,61 @@ export const Waves : Record <WaveNumbers, WaveConfig> = {
             {name: 'betrayel_wave_9', imageKey: 'betrayel_wave_9'},
         ],
         layers: ['Tile Layer 1'],
-        collisionLayers: ['Tile Layer 1'],
         belongToAct: 1,
     },
+    Wave_1_Act2: {
+        waveNumber: 1,
+        enemies: ['BasicEnemy', 'RangedEnemy', 'DashEnemy'],
+        duration: 25,
+        background: 'wave_1_act2',
+        music: 'wave_1_act_2_music',
+        tilemapKey: 'tileset_wave_1_act2',
+        tileset: [
+            { name: 'wave_1_act2', imageKey: 'wave_1_act2' }
+        ],
+        layers: ['Tile Layer 1'],
+        belongToAct: 2,
+    },
+    Wave_2_Act2: {
+        waveNumber: 2,
+        enemies: ['BasicEnemy', 'RangedEnemy', 'DashEnemy', 'TankEnemy'],
+        duration: 30,
+        background: 'wave_2_act_2',
+        music: 'wave_2_act_2_music',
+        tilemapKey: 'tileset_wave_2_act_2',
+        tileset: [
+            { name: 'wave_2_act2', imageKey: 'wave_2_act_2' }
+        ],
+        layers: ['Tile Layer 1'],
+        belongToAct: 2,
+    },
+    "Wave_3_Act2": {
+        waveNumber: 3,
+        enemies: ['BasicEnemy', 'RangedEnemy', 'DashEnemy', 'TankEnemy', 'BossEnemy'],
+        duration: 35,
+        background: 'wave_3_act_2',
+        music: 'wave_3_act_2_music',
+        tilemapKey: 'tileset_wave_3_act_2',
+        tileset: [
+            { name: 'wave_3_act_2', imageKey: 'wave_3_act_2' }
+        ],
+        layers: ['Tile Layer 1'],
+        belongToAct: 2,
+    },
+    Wave_1_Act3: {
+        waveNumber: 1,
+        enemies: ['BasicEnemy', 'RangedEnemy', 'DashEnemy', 'TankEnemy', 'BossEnemy'],
+        duration: 60,
+        background: 'wave_1_act_3',
+        music: 'wave_1_act_3_music',
+        tilemapKey: 'tileset_wave_1_act_3',
+        tileset: [
+            { name: 'wave_1_act3', imageKey: 'wave_1_act_3' }
+        ],
+        layers: ['Tile Layer 1'],
+        belongToAct: 3,
+        nextCutscene: 'cutscene5',
+    },
 }
+
+

@@ -288,21 +288,37 @@ export class shootingController {
   }
 
   destroy() {
-    if (this.#scene && this.#scene.physics) {
+    if (
+      this.#scene &&
+      this.#scene.physics &&
+      this.#scene.physics.world &&
+      this.#scene.physics.world.colliders
+    ) {
       const world = this.#scene.physics.world;
-      world.colliders.getActive().forEach((collider) => {
+      const colliders = world.colliders.getActive ? world.colliders.getActive() : [];
+      colliders.forEach((collider: any) => {
         if (collider.object1 === this.#bulletGroup || collider.object2 === this.#bulletGroup) {
           collider.destroy();
         }
       });
     }
 
-    if (this.#bulletGroup) {
-      this.#bulletGroup.getChildren().forEach((bullet) => {
-        bullet.destroy();
-      });
-      this.#bulletGroup.clear(true, true);
-      this.#bulletGroup.destroy();
+    try {
+      if (
+        this.#bulletGroup &&
+        typeof this.#bulletGroup.getChildren === 'function'
+      ) {
+        const children = this.#bulletGroup.getChildren();
+        if (Array.isArray(children)) {
+          children.forEach((bullet: any) => {
+            if (bullet && typeof bullet.destroy === 'function') bullet.destroy();
+          });
+        }
+        if (typeof this.#bulletGroup.clear === 'function') this.#bulletGroup.clear(true, true);
+        if (typeof this.#bulletGroup.destroy === 'function') this.#bulletGroup.destroy();
+      }
+    } catch (e) {
+      // Silenciosamente ignore qualquer erro de destruição do grupo
     }
     
     if (this.#reticle) {
