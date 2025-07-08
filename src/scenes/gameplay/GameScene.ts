@@ -43,12 +43,9 @@ export class GameScene extends Phaser.Scene {
     this.#waveData = WaveManager.getWaveData(this.#currentWaveKey);
     waveIndicator.currentWave = this.#waveData.waveNumber;
     waveIndicator.currentAct = this.#waveData.belongToAct;
-    console.log(`GameScene init: waveIndicator.currentWave = ${waveIndicator.currentWave}, waveIndicator.currentAct = ${waveIndicator.currentAct}`);
   }
 
   create() {
-    console.log("gameScene carregado");
-    console.log(`GameScene create: waveIndicator.currentWave = ${waveIndicator.currentWave}, waveIndicator.currentAct = ${waveIndicator.currentAct}`);
 
     if (this.physics && this.physics.world) {
       this.physics.world.colliders.destroy();
@@ -64,7 +61,7 @@ export class GameScene extends Phaser.Scene {
     gameOptions.waveDuration = currentWaveConfig.duration;
 
     SoundManager.init(this);
-    SoundManager.playWaveMusic(currentWaveConfig.waveNumber);
+    SoundManager.playWaveMusic(currentWaveConfig.music);
 
     if (currentWaveConfig.background) {
       const backgroundImg = this.add
@@ -72,7 +69,6 @@ export class GameScene extends Phaser.Scene {
         .setOrigin(0, 0)
         .setDisplaySize(gameOptions.gameSize.width, gameOptions.gameSize.height);
       backgroundImg.setDepth(-10); 
-      console.log(`Background atual: ${currentWaveConfig.background}`);
     }
 
     if (currentWaveConfig.tilemapKey && currentWaveConfig.tileset) {
@@ -105,12 +101,21 @@ export class GameScene extends Phaser.Scene {
       ? new BossEnemy(this, 300, 300, this.#player) 
       : undefined;
 
-    if(this.#boss) {
+    // Só lança a barra de vida do boss se houver boss na wave
+    if (Waves[this.#currentWaveKey].enemies.includes("BossEnemy")) {
       this.scene.launch("BossHealthBar");
-      const bossBody = this.#boss.body as Phaser.Physics.Arcade.Body;
-      bossBody.setImmovable(true);
-      bossBody.setBounce(0, 0);
-      bossBody.onCollide = true;
+      if(this.#boss) {
+        const bossBody = this.#boss.body as Phaser.Physics.Arcade.Body;
+        bossBody.setImmovable(true);
+        bossBody.setBounce(0, 0);
+        bossBody.onCollide = true;
+      }
+    } else {
+      // Se não tem boss, pare e remova a barra de vida do boss se estiver ativa
+      if (this.scene.isActive("BossHealthBar")) {
+        this.scene.stop("BossHealthBar");
+        this.scene.remove("BossHealthBar");
+      }
     }
 
     this.#shootingController = new shootingController(this, this.#player, this.#basicEnemy,this.#rangedEnemy, this.#dashEnemy, this.#tankEnemy, this.#boss, this.#reticle);
@@ -133,17 +138,27 @@ export class GameScene extends Phaser.Scene {
     this.cameras.main.startFollow(this.#player)
 
     globalEventEmitter.on("waveCompletedAndAdvance", () => {
-      console.log(`waveCompletedAndAdvance event received. Current waveIndicator: ${waveIndicator.currentWave}, ${waveIndicator.currentAct}`);
-      this.scene.stop("gameScene");
-      this.scene.start("nextPhaseScene");
+      const currentWaveKey = this.#currentWaveKey;
+      if (currentWaveKey === "Wave_1_Act3") {
+        this.scene.stop("gameScene");
+        this.shutdown();
+        this.scene.start("CutscenesScene", {
+          ...CUTSCENES.cutscene5
+        });
+      } else {
+        this.scene.stop("gameScene");
+        this.scene.start("nextPhaseScene");
+      }
     });
   }
 
   update() {
-    this.#shootingController.containReticle();
+    if (this.#shootingController) {
+      this.#shootingController.containReticle();
+    }
     this.handlePause();
-    this.#player.update();
-    this.#basicEnemy.updateEnemyMovement(this);
+    this.#player?.update();
+    this.#basicEnemy?.updateEnemyMovement(this);
     this.#rangedEnemy?.updateEnemyMovement(this);
     this.#dashEnemy?.updateEnemyMovement(this);
     this.#tankEnemy?.updateEnemyMovement(this);
@@ -151,6 +166,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   public handlePause() {
+    if (!this.#keys || !this.#keys.pause) return;
     if (!Phaser.Input.Keyboard.JustDown(this.#keys.pause)) return;
     const gameScene = "gameScene";
     const gameHud = "gameHud";
@@ -175,7 +191,6 @@ export class GameScene extends Phaser.Scene {
   }
 
   shutdown() {
-    console.log("GameScene shutdown");
     
     SoundManager.stopCurrentWaveMusic();
 

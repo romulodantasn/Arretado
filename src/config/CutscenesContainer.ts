@@ -24,6 +24,12 @@ export const CUTSCENES = {
       texto: 'A TERRA CASTIGADA SENTE O PESO DA REDENÇÃO. O PORTAO FINALMENTE SE ABRE PARA A REDENÇÃO',
       duracao: 6000,
       proximaCena: 'endScene'
+    },
+    cutscene5: {
+      backgroundKey: 'cutscene5',
+      texto: 'E AGORA LAMPIÃO E O NORDESTE, RECEBEM SUA REDENÇÃO....',
+      duracao: 6000,
+      proximaCena: 'titleScene',
     }
   };
   

@@ -50,16 +50,16 @@ export class preloadAssets extends Phaser.Scene {
     this.load.pack('asset_pack', 'assets/data/assets.json');
     this.load.pack('audio_pack', 'assets/data/audio_assets.json');
     this.load.font('Cordelina', 'assets/font/cordelina.otf');
+
+    this.load.on('complete', () => {
+      this.scene.stop('BootScene');
+      this.scene.start('titleScene')
+    });
   }
 
   create() {
     console.log('preloadAssets carregado');
     this.#createAnimations();
-
-    this.time.delayedCall(1000, () => {
-      this.scene.stop('BootScene');
-      this.scene.start('gameScene', { waveKey: 'Wave_3_Act2' });
-    });
   }
 
   #createAnimations() {

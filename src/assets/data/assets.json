@@ -487,6 +487,11 @@
       "url":"cutscenes/cutscene4.png"
     },
     {
+      "type":"image",
+      "key": "cutscene5",
+      "url":"cutscenes/cutscene5.png"
+    },
+    {
       "type":"spritesheet",
       "key": "bandeiraAlagoas",
       "url":"skins/skinFlag/bandeiraAlagoas.png",

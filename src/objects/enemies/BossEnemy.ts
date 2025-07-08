@@ -100,7 +100,6 @@ export class BossEnemy extends Phaser.Physics.Arcade.Sprite {
   }
 
   #die(): void {
-    console.log('Chefe derrotado! Transicionando para a próxima fase...');
     SoundManager.playBossDeathSFX();
     this.bulletGroup.clear(true, true);
     this.setActive(false);

@@ -18,20 +18,41 @@ export class CutscenesScene extends Phaser.Scene {
       nextCutscene?: CutsceneKey,
       waveKey?: string 
     }) {
-      const { backgroundKey, texto = '', duracao = 4000, proximaCena, selectedCharacterId, nextCutscene, waveKey } = data;
+      let { backgroundKey, texto = '', duracao = 4000, proximaCena, selectedCharacterId, nextCutscene, waveKey } = data;
+      if (backgroundKey === CUTSCENES.cutscene5.backgroundKey) {
+        duracao = 10000;
+        this.scene.manager.scenes.forEach(scene => {
+          if (scene.scene.key !== this.scene.key && scene.scene.isActive()) {
+            this.scene.stop(scene.scene.key);
+            this.scene.remove(scene.scene.key);
+          }
+        });
+      }
   
-      this.add.image(gameOptions.gameSize.width / 2, gameOptions.gameSize.height / 2, backgroundKey)
-        .setDisplaySize(gameOptions.gameSize.width, gameOptions.gameSize.height)
-        .setOrigin(0.5);
+      // Ajuste de aspecto para mostrar a imagem inteira, centralizada, sem cortes
+      const imgTexture = this.textures.get(backgroundKey).getSourceImage();
+      const imgW = imgTexture.width;
+      const imgH = imgTexture.height;
+      const canvasW = gameOptions.gameSize.width;
+      const canvasH = gameOptions.gameSize.height;
+      const scale = Math.min(canvasW / imgW, canvasH / imgH);
+      const displayW = imgW * scale;
+      const displayH = imgH * scale;
+      const bgImage = this.add.image(canvasW / 2, canvasH / 2, backgroundKey)
+        .setOrigin(0.5)
+        .setDisplaySize(displayW, displayH);
       
+      // Legenda sempre por cima, centralizada na parte inferior
       if (texto) {
-        this.add.text(gameOptions.gameSize.width / 2, gameOptions.gameSize.height * 0.8, texto, {
+        this.add.text(canvasW / 2, canvasH * 0.8, texto, {
           fontFamily: 'Cordelina',
           fontSize: '56px',
           color: '#ffffff',
-          wordWrap: { width: gameOptions.gameSize.width * 0.8 },
-          align: 'center'
-        }).setOrigin(0.5);
+          wordWrap: { width: canvasW * 0.8 },
+          align: 'center',
+          stroke: '#000000',
+          strokeThickness: 6
+        }).setOrigin(0.5).setDepth(10);
       }
 
       this.add.text(gameOptions.gameSize.width - 20, gameOptions.gameSize.height - 20, 'Pular Cutscene - Enter', {
@@ -48,6 +69,10 @@ export class CutscenesScene extends Phaser.Scene {
       const transitionToNextScene = () => {
         this.cameras.main.fadeOut(500);
         this.time.delayedCall(500, () => {
+          if (backgroundKey === CUTSCENES.cutscene5.backgroundKey) {
+            window.location.reload();
+            return;
+          }
           if (proximaCena === 'gameScene') {
             this.scene.start(proximaCena, {
               selectedCharacterId,

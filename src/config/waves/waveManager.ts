@@ -58,7 +58,6 @@ export function getNextWaveKey(currentKey: WaveNumbers): WaveNumbers {
 
 type WaveData = typeof Waves[WaveNumbers];
 
-// Listen for boss killed event to trigger wave completion
 globalEventEmitter.on('bossKilled', () => {
   onWaveComplete();
 });

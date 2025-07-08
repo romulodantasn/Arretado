@@ -14,6 +14,7 @@ export interface WaveConfig {
     layers?: string[];
     collisionLayers?: string[];
     belongToAct: number;
+    nextCutscene?: string;
 }
 
 export type WaveNumbers = 'Wave_1' | 'Wave_2' | 'Wave_3' | 'Wave_4' | 'Wave_5' | 'Wave_6' | 'Wave_7' | 'Wave_8' | 'Wave_9' |
@@ -151,7 +152,7 @@ export const Waves : Record <WaveNumbers, WaveConfig> = {
         enemies: ['BasicEnemy', 'RangedEnemy', 'DashEnemy'],
         duration: 25,
         background: 'wave_1_act2',
-        music: 'wave_1_act2_music',
+        music: 'wave_1_act_2_music',
         tilemapKey: 'tileset_wave_1_act2',
         tileset: [
             { name: 'wave_1_act2', imageKey: 'wave_1_act2' }
@@ -172,7 +173,7 @@ export const Waves : Record <WaveNumbers, WaveConfig> = {
         layers: ['Tile Layer 1'],
         belongToAct: 2,
     },
-    Wave_3_Act2: {
+    "Wave_3_Act2": {
         waveNumber: 3,
         enemies: ['BasicEnemy', 'RangedEnemy', 'DashEnemy', 'TankEnemy', 'BossEnemy'],
         duration: 35,
@@ -188,15 +189,16 @@ export const Waves : Record <WaveNumbers, WaveConfig> = {
     Wave_1_Act3: {
         waveNumber: 1,
         enemies: ['BasicEnemy', 'RangedEnemy', 'DashEnemy', 'TankEnemy', 'BossEnemy'],
-        duration: 40,
+        duration: 60,
         background: 'wave_1_act_3',
         music: 'wave_1_act_3_music',
         tilemapKey: 'tileset_wave_1_act_3',
         tileset: [
-            { name: 'wave_1_act_3', imageKey: 'wave_1_act_3' }
+            { name: 'wave_1_act3', imageKey: 'wave_1_act_3' }
         ],
         layers: ['Tile Layer 1'],
         belongToAct: 3,
+        nextCutscene: 'cutscene5',
     },
 }
 
