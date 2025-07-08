@@ -279,6 +279,46 @@
     },
     {
       "type": "image",
+      "key": "cacto",
+      "url": "items/cacto.png"
+    },
+    {
+      "type": "image",
+      "key": "machadoDeLampião",
+      "url": "items/machadoDeLampião.png"
+    },
+    {
+      "type": "image",
+      "key": "rapadura",
+      "url": "items/rapadura.png"
+    },
+    {
+      "type": "image",
+      "key": "buchada",
+      "url": "items/buchada.png"
+    },
+    {
+      "type": "image",
+      "key": "carroDeMao",
+      "url": "items/carroDeMao.png"
+    },
+    {
+      "type": "image",
+      "key": "ventoDoAgreste",
+      "url": "items/ventoDoAgreste.png"
+    },
+    {
+      "type": "image",
+      "key": "foleDeOitoBaixos",
+      "url": "items/foleDeOitoBaixos.png"
+    },
+    {
+      "type": "image",
+      "key": "xilofoneDeCabaça",
+      "url": "items/xilofoneDeCabaça.png"
+    },
+    {
+      "type": "image",
       "key": "sandaliaJesus",
       "url": "items/sandaliaJesus.png"
     },

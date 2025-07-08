@@ -277,84 +277,84 @@ export const firerateItems: itemsContainer[] = [
     imageKey: 'olhoDeCobra',
     name: 'Olho de Cobra',
     type: 'Fire Rate',
-    description: '-15% no tempo entre tiros',
+    description: '-5% no tempo entre tiros',
     sentence: '"Ligeiro que nem bote de cobra!"',
     cost: 30,
     effect: () => {
       console.log(`${name} Comprado, Cadência aumentada`);
-      gun.fireRate *= 0.85;
+      gun.fireRate *= 0.95;
     },
   },
   {
     imageKey: 'cordel',
     name: 'Cordel do Cangaço',
     type: 'Fire Rate',
-    description: '-25% no tempo entre tiros',
+    description: '-10% no tempo entre tiros',
     sentence: '"Rápido nas rimas, rápido nos tiros!"',
     cost: 50,
     effect: () => {
       console.log(`${name} Comprado, Cadência aumentada`);
-      gun.fireRate *= 0.75;
+      gun.fireRate *= 0.90;
     },
   },
   {
     imageKey: 'dadoCangaceiro',
     name: 'Dado Cangaceiro',
     type: 'Fire Rate',
-    description: '-40% no tempo entre tiros',
+    description: '-15% no tempo entre tiros',
     sentence: '"A sorte favorece os rápidos!"',
     cost: 75,
     effect: () => {
       console.log(`${name} Comprado, Cadência aumentada`);
-      gun.fireRate *= 0.6;
+      gun.fireRate *= 0.85;
     },
   },
   {
     imageKey: 'ferradura',
     name: 'Ferradura',
     type: 'Fire Rate',
-    description: '-10% no tempo entre tiros',
+    description: '-3% no tempo entre tiros',
     sentence: '"Barato, mas vai que funciona..."',
     cost: 15,
     effect: () => {
       console.log(`${name} Comprado, Cadência aumentada`);
-      gun.fireRate *= 0.9;
+      gun.fireRate *= 0.97;
     },
   },
   {
     imageKey: 'guine',
     name: 'Pólvora Guiné',
     type: 'Fire Rate',
-    description: '-50% no tempo entre tiros',
+    description: '-20% no tempo entre tiros',
     sentence: '"Tão rápido que o cano fica vermelho!"',
     cost: 100,
     effect: () => {
       console.log(`${name} Comprado, Cadência aumentada`);
-      gun.fireRate *= 0.5;
+      gun.fireRate *= 0.80;
     },
   },
   {
     imageKey: 'foleDeOitoBaixos',
     name: 'Fole de Oito Baixos',
     type: 'Fire Rate',
-    description: '-20% no tempo entre tiros',
+    description: '-7% no tempo entre tiros',
     sentence: '"Ritmo acelerado, bala voando!"',
     cost: 40,
     effect: () => {
       console.log(`${name} Comprado, Cadência aumentada`);
-      gun.fireRate *= 0.8;
+      gun.fireRate *= 0.93;
     },
   },
   {
     imageKey: 'xilofoneDeCabaça',
     name: 'Xilofone de Cabaça',
     type: 'Fire Rate',
-    description: '-30% no tempo entre tiros',
+    description: '-12% no tempo entre tiros',
     sentence: '"Toca uma melodia de destruição."',
     cost: 60,
     effect: () => {
       console.log(`${name} Comprado, Cadência aumentada`);
-      gun.fireRate *= 0.7;
+      gun.fireRate *= 0.88;
     },
   },
 ];
