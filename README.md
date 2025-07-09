@@ -1,6 +1,6 @@
 # Arretado 
 
-É um jogo de sobrevivência dinâmico desenvolvido com o framework
+Arretado é um jogo de sobrevivência dinâmico desenvolvido com o framework
 Phaser, criado como parte do programa de estágio Lifters 2025.1. O jogo mergulha os
 jogadores em um universo com temática do Nordeste brasileiro, combinando elementos
 culturais ricos do nordeste com uma temática inspirada na 'Divina Comédia" de Dante Alighieri jogabilidade desafiadora.
