@@ -5,13 +5,14 @@ Phaser, criado como parte do programa de estágio Lifters 2025.1. O jogo mergulh
 jogadores em um universo do Nordeste brasileiro, combinando elementos
 culturais ricos do nordeste com uma temática inspirada na 'Divina Comédia" de Dante Alighieri.
 
+Link para gitbook do projeto com a documentação completa: https://arretado.gitbook.io/arretado
+
+
 Este repositório contém o código-fonte completo do jogo, incluindo a lógica de
 jogabilidade, gerenciamento de cenas, sistemas de inimigos e colisões, e todos os assets
-necessários. O objetivo é fornecer um exemplo robusto de desenvolvimento de jogos com
-Phaser, demonstrando boas práticas de arquitetura de código, modularidade e
+necessários. O objetivo é fornecer uma boa documentação do desenvolvimento do jogo, demonstrando boas práticas de arquitetura de código, modularidade e
 gerenciamento de recursos.
 
-Link para gitbook do projeto com a documentação completa: https://arretado.gitbook.io/arretado
 
 
 # - Funcionalidades
