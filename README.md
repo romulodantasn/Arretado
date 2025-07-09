@@ -11,6 +11,8 @@ necessários. O objetivo é fornecer um exemplo robusto de desenvolvimento de jo
 Phaser, demonstrando boas práticas de arquitetura de código, modularidade e
 gerenciamento de recursos.
 
+Link para gitbook do projeto com a documentação completa: https://arretado.gitbook.io/arretado
+
 
 # - Funcionalidades
 
