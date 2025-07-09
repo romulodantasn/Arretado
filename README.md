@@ -2,10 +2,10 @@
 
 Arretado é um jogo de sobrevivência dinâmico desenvolvido com o framework
 Phaser, criado como parte do programa de estágio Lifters 2025.1. O jogo mergulha os
-jogadores em um universo com temática do Nordeste brasileiro, combinando elementos
-culturais ricos do nordeste com uma temática inspirada na 'Divina Comédia" de Dante Alighieri jogabilidade desafiadora.
+jogadores em um universo do Nordeste brasileiro, combinando elementos
+culturais ricos do nordeste com uma temática inspirada na 'Divina Comédia" de Dante Alighieri.
 
-**E**ste repositório contém o código-fonte completo do jogo, incluindo a lógica de
+Este repositório contém o código-fonte completo do jogo, incluindo a lógica de
 jogabilidade, gerenciamento de cenas, sistemas de inimigos e colisões, e todos os assets
 necessários. O objetivo é fornecer um exemplo robusto de desenvolvimento de jogos com
 Phaser, demonstrando boas práticas de arquitetura de código, modularidade e
