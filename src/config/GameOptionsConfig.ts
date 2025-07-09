@@ -25,9 +25,9 @@ export const waveIndicator ={
   currentAct: 1,
 }
 export const gun = {
-  gunDamage: 3000,
+  gunDamage: 8,
   bulletSpeed: 600,
-  fireRate: 250,
+  fireRate: 300,
 }
 
 export function setupTilemap(
