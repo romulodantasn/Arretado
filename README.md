@@ -10,8 +10,7 @@ Link para gitbook do projeto com a documentação completa: https://arretado.git
 
 Este repositório contém o código-fonte completo do jogo, incluindo a lógica de
 jogabilidade, gerenciamento de cenas, sistemas de inimigos e colisões, e todos os assets
-necessários. O objetivo é fornecer uma boa documentação do desenvolvimento do jogo, demonstrando boas práticas de arquitetura de código, modularidade e
-gerenciamento de recursos.
+necessários
 
 
 
@@ -26,16 +25,14 @@ alcance e chefes, cada um exigindo estratégias distintas.
 • **Sistema de Ondas Dinâmico**: Progressão do jogo baseada em ondas configuráveis,
 com duração, música e backgrounds únicos para cada uma.
 
-• **Controles Intuitivos:** Movimentação e tiro responsivos, com um sistema de boost para
-manobras rápidas.
+• **Controles Intuitivos:** Movimentação e tiro responsivos.
 
-• **Sistema de Saúde e Dano:** Gerenciamento de saúde para o jogador e inimigos, com
-feedback visual e sonoro.
+• **Sistema de Saúde e Dano:** Gerenciamento de saúde para o jogador e inimigos.
 
 • **Interface do Usuário (UI) Completa:** HUD com informações essenciais como saúde do
-jogador, indicador de onda e cooldown de habilidades.
+jogador, indicador de onda, tempo da onda, vida e fase.
 
-• **Narrativa Envolvente:** Cutscenes e trilhas sonoras específicas que aprofundam a
+• **Narrativa Envolvente:** Cutscenes e trilhas sonoras originais que aprofundam a
 história e a imersão no universo do jogo.
 
 • **Modularidade:** Arquitetura de código organizada em componentes e cenas, facilitando
